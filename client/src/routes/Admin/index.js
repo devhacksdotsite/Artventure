@@ -27,7 +27,7 @@ export const AdminPortal = () => {
 
   return (
 
-	<Login portal={ portal } onLogin={ handleStudentLogin } />
+	<Login portal={ portal } onSubmit={ handleStudentLogin } />
   );
 
 }	

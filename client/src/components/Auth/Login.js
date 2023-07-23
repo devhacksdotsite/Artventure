@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+// Form Validation
+import { useForm, Controller } from 'react-hook-form';
+
 // MUI Components
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -30,25 +33,23 @@ const capitalize = (word) => {
   + word.slice(1);
 }
 
-export const Login = (props) => {
+export const Login = ({ onSubmit, portal }) => {
   const [ showPassword, setShowPassword ] = useState(false);
-  const portalName = capitalize(props.portal);
+  const portalName = capitalize(portal);
+
+  const { 
+	control, 
+	handleSubmit, 
+	formState: { errors } 
+  }  = useForm();
   
   // Handlers
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   const handleMouseDownPassword = (event) => {
 	event.preventDefault();
   };
 
-
-  const handleSubmit = (e) => {
-	e.preventDefault();
-	const data = new FormData(e.currentTarget);
-	console.log({
-	  email: data.get('email'),
-	  password: data.get('password')
-	});
-  }
 
   return (
 	<Container component="main" maxWidth="xs">
@@ -73,45 +74,83 @@ export const Login = (props) => {
 
 		<Typography component="h1" variant="h5">{ portalName } Portal</Typography>
 
-		<Box component="form" onSubmit={ handleSubmit } noValidate sx={{ mt: 1 }}>
-		  <TextField
-			error
-			margin="normal"
-			required
-			fullWidth
-			id="email"
+		<Box component="form" onSubmit={ handleSubmit(onSubmit) } noValidate sx={{ mt: 1 }}>
+		  <Controller
 			name="email"
-			label="Email Address"
-			autoComplete="email"
-			autoFocus
-		  /> 
-
-		  <TextField
-			margin="normal"
-			required
-			fullWidth
-			id="password"
-			name="password"
-			label='Password'
-			autoComplete="current-password"
-			type={ showPassword ? "text" : "password" } 
-			InputProps={{ 
-			  endAdornment: (
-				<InputAdornment position="end">
-				  <IconButton
-					aria-label="toggle password visibility"
-					onClick={ handleClickShowPassword }
-					onMouseDown={ handleMouseDownPassword }
-				  >
-					{ showPassword ? <Visibility /> : <VisibilityOff /> }
-				  </IconButton>
-				</InputAdornment>
-			  )
+			control={ control }
+			defaultValue=""
+			rules={{ 
+			  required: 'Email is required', 
+			  pattern: {
+				value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 
+				message: 'Invalid email address'
+			  }
 			}}
-		  /> 
+			render={ ({ field}) => (
+			  <TextField
+				margin="normal"
+				required
+				fullWidth
+				label="Email Address"
+				autoComplete="email"
+				autoFocus
+				value={ field.value }
+				error={ !!errors.email }
+				onChange={ (e) => field.onChange(e.target.value) }
+				helperText={ errors.email?.message }
+			  /> 
+			) }
+		  />
+
+		  <Controller
+			name="password"
+			control={ control }
+			defaultValue=""
+			rules={{ 
+			  required: 'Password is required', 
+			  minLength: {
+				value: 6, 
+				message: 'Password must be atleast 6 characters'
+			  }
+			}}
+			render={ ({field}) => (
+			  <TextField
+				margin="normal"
+				required
+				fullWidth
+				label='Password'
+				autoComplete="current-password"
+				type={ showPassword ? "text" : "password" } 
+				InputProps={{ 
+				  endAdornment: (
+					<InputAdornment position="end">
+					  <IconButton
+						aria-label="toggle password visibility"
+						onClick={ handleClickShowPassword }
+						onMouseDown={ handleMouseDownPassword }
+					  >
+						{ showPassword ? <Visibility /> : <VisibilityOff /> }
+					  </IconButton>
+					</InputAdornment>
+				  )
+				}}
+				value={ field.value }
+				onChange={ (e) => field.onChange(e.target.value) }
+				error={ !!errors.password }
+				helperText={ errors.password?.message } 
+			  /> 
+			) }
+		  />
 
 		  <FormControlLabel
-			control={ <Checkbox value="remember" color="primary" /> }
+			control={ 
+			  <Controller 
+				name="rememberMe" 
+				control={ control } 
+				defaultValue={ false } 
+				render={ ({ field }) => <Checkbox color="primary" { ...field } /> } 
+			  />
+			}
 			label="Remember me"
 		  />
 
