@@ -1,0 +1,20 @@
+# Node.js and NPM
+server/node_modules
+client/node_modules
+
+# Production build
+client/public
+
+# Editor and IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swn
+*.swo
+
+# Enviornment configuration files
+/.env
+
+# Docker
+.dockerignore
+
