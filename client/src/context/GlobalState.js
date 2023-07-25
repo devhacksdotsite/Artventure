@@ -9,7 +9,8 @@ import AppReducer from './AppReducer';
 
 // Set application's initial state
 const initialState = {
-  portal: 'student'
+  portal: 'student',
+  authenticated: false
 }
 
 // Create application Context
@@ -27,9 +28,18 @@ export const GlobalProvider = ({ children }) => {
 	});
   }
 
+  const setAuthenticated = (authenticated) => {
+	dispatch({
+	  type: 'SET_AUTHENTICATED',
+	  payload: authenticated
+	});
+  }
+
   return (
 	<GlobalCtx.Provider value={{
 	  portal: state.portal,
+	  authenticated: state.authenticated,
+	  setAuthenticated,
 	  setPortal,
 	}}>
 	  { children }

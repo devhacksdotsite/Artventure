@@ -5,6 +5,7 @@
 */
 
 import { useContext, useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 // Context
 import { GlobalCtx } from '../../context/GlobalState';
@@ -15,7 +16,7 @@ import { Login } from '../../components/Auth/Login';
 export const AdminPortal = () => {
   const { portal, setPortal } = useContext(GlobalCtx);
 
-  const handleStudentLogin = (userData) => {
+  const handleAdminLogin = (userData) => {
 	console.log('student login data: ', userData);
   }
 
@@ -26,8 +27,9 @@ export const AdminPortal = () => {
   }, [ setPortal ]);
 
   return (
-
-	<Login portal={ portal } onSubmit={ handleStudentLogin } />
+	<Routes>
+	  <Route path="/" element={ <Login portal={ portal } onSubmit={ handleAdminLogin } /> } />
+	</Routes>
   );
 
 }	

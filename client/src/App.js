@@ -8,6 +8,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
   Link
 } from 'react-router-dom';
 
@@ -21,23 +22,35 @@ import { StudentPortal } from './routes/Student/';
 export default function App() {
   return (
 	<GlobalProvider>
-	  <Router>
-		{/* Testing code, remove me */}
+
+	<Router>
+		{ /*  route refs */ }
 		<nav>
 		  <ul>
 			<li>
 			  <Link to="/admin">admin</Link>
 			</li>
 			<li>
-			  <Link to="/student">student</Link>
+			  <Link to="/student">Student Portal</Link>
+			</li>
+			<li>
+			  <Link to="/student/register">Student Register</Link>
+			</li>
+			<li>
+			  <Link to="/student/reset">Student Reset</Link>
 			</li>
 		  </ul>
 		</nav>
 
 		<Routes>
-		  <Route exact path="/" element={ <StudentPortal /> } />
-		  <Route exact path="/student" element={ <StudentPortal /> } />
-		  <Route exact path="/admin" element={ <AdminPortal /> } />
+
+		  { /*  Student routes */ }
+		  <Route path="/student/*" element={ <StudentPortal /> } />
+
+		  { /*  Admin routes */ }
+		  <Route path="/admin/*" element={ <AdminPortal /> } />
+
+		  <Route path="/" element={ <Navigate to="student" /> } />
 		</Routes>
 	  </Router>
 	</GlobalProvider>
