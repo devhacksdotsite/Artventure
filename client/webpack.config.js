@@ -7,6 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
+	publicPath: '/'
   },
   module: {
     rules: [
@@ -40,7 +41,8 @@ module.exports = {
   devServer: {
     static: path.join(__dirname, 'public'),
     port: 3000,
-	allowedHosts: "all"
+	allowedHosts: "all",
+	historyApiFallback: true
   },
 };
 
