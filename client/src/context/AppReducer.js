@@ -15,7 +15,7 @@ export default (state, action) => {
 	case 'SET_AUTHENTICATED':
 	  return {
 		...state,
-		portal: action.authenticated,
+		authenticated: action.payload,
 	  }
 
 	default: 

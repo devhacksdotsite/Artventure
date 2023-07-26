@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { Link as RouterLink } from 'react-router-dom';
 // Form Validation
 import { useForm, Controller } from 'react-hook-form';
 
@@ -165,11 +166,11 @@ export const Login = ({ onSubmit, portal }) => {
 
 		  <Grid container>
 			<Grid item xs>
-			  <Link href="#" variant="body2">Forgot Password?</Link>
+			  <Link component={ RouterLink } to="reset" variant="body2">Forgot Password?</Link>
 			</Grid>
 
 			<Grid item>
-			  <Link href="#" variant="body2">Dont have an account? Sign Up</Link>
+			  <Link component={ RouterLink } to="register" variant="body2">Dont have an account? Sign Up</Link>
 			</Grid>
 		  </Grid>
 

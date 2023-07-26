@@ -1,6 +1,7 @@
 // routes\Register.jsx
 
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 // Form Validation
 import { useForm, Controller } from 'react-hook-form';
@@ -76,6 +77,67 @@ export const Register = ({ onSubmit, portal }) => {
 		<Typography component="p" variant="p">Sign up</Typography>
 
 		<Box component="form" onSubmit={ handleSubmit(onSubmit) } noValidate sx={{ mt: 1 }}>
+		  <Grid container spacing={2}>
+			<Grid item xs={12} sm={6}>
+			  <Controller
+				name="firstname"
+				control={ control }
+				defaultValue=""
+				rules={{ 
+				  required: 'Firstname is required', 
+				  minLength: {
+					value: 2, 
+					message: 'Firstname must be atleast 2 characters'
+				  }
+				}}
+				render={ ({ field}) => (
+				  <TextField
+					margin="normal"
+					required
+					fullWidth
+					label="Firstname"
+					autoComplete="firstname"
+					autoFocus
+					value={ field.value }
+					error={ !!errors.firstname }
+					onChange={ (e) => field.onChange(e.target.value) }
+					helperText={ errors.firstname?.message }
+				  /> 
+				) }
+			  />
+			</Grid>
+
+			<Grid item xs={12} sm={6}>
+			  <Controller
+				name="lastname"
+				control={ control }
+				defaultValue=""
+				rules={{ 
+				  required: 'Lastname is required', 
+				  minLength: {
+					value: 2, 
+					message: 'Lastname must be atleast 2 characters'
+				  }
+				}}
+				render={ ({ field}) => (
+				  <TextField
+					margin="normal"
+					required
+					fullWidth
+					label="Lastname"
+					autoComplete="lastname"
+					autoFocus
+					value={ field.value }
+					error={ !!errors.lastname }
+					onChange={ (e) => field.onChange(e.target.value) }
+					helperText={ errors.lastname?.message }
+				  /> 
+				) }
+			  />
+			</Grid>
+			
+		  </Grid>
+
 		  <Controller
 			name="email"
 			control={ control }
@@ -166,11 +228,11 @@ export const Register = ({ onSubmit, portal }) => {
 
 		  <Grid container>
 			<Grid item xs>
-			  <Link href="#" variant="body2">Forgot Password?</Link>
+			  <Link component={ RouterLink } to="/reset" variant="body2">Forgot Password?</Link>
 			</Grid>
 
 			<Grid item>
-			  <Link href="#" variant="body2">Dont have an account? Sign Up</Link>
+			  <Link component={ RouterLink } to="/" variant="body2">Already have an account? Login</Link>
 			</Grid>
 		  </Grid>
 
