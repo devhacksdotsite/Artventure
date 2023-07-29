@@ -18,6 +18,12 @@ export default (state, action) => {
 		authenticated: action.payload,
 	  }
 
+	case 'SET_DARK_MODE':
+	  return {
+		...state,
+		darkMode: action.payload,
+	  }
+
 	default: 
 	  return state;
   }

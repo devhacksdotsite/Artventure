@@ -10,7 +10,8 @@ import AppReducer from './AppReducer';
 // Set application's initial state
 const initialState = {
   portal: 'student',
-  authenticated: false
+  authenticated: false,
+  darkMode: false,
 }
 
 // Create application Context
@@ -35,12 +36,21 @@ export const GlobalProvider = ({ children }) => {
 	});
   }
 
+  const setDarkMode = (darkMode) => {
+	dispatch({
+	  type: 'SET_DARK_MODE',
+	  payload: darkMode
+	});
+  }
+
   return (
 	<GlobalCtx.Provider value={{
 	  portal: state.portal,
 	  authenticated: state.authenticated,
+	  darkMode: state.darkMode,
 	  setAuthenticated,
 	  setPortal,
+	  setDarkMode,
 	}}>
 	  { children }
 	</GlobalCtx.Provider>

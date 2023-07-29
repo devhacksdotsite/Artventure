@@ -28,7 +28,6 @@ export const StudentPortal = () => {
   const { portal, setPortal } = useContext(GlobalCtx);
 
   const handleStudentLogin = (userData) => {
-	console.log('student login data: ', userData);
 
 	// Login
     login().then((res) => {
