@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles';
 import {
   AppBar as MuiAppBar,
   Drawer as MuiDrawer,
+  Box,
   Divider,
   List,
   Toolbar,
@@ -131,7 +132,7 @@ export const Nav = () => {
 			noWrap
 			sx={{ flexGrow: 1 }}
 		  >
-			Dashboard
+            Dashboard
 		  </Typography>
 
 		  <IconButton color="inherit">
