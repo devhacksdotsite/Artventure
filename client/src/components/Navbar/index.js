@@ -41,7 +41,7 @@ import {
 } from '@mui/icons-material';
 
 // data
-import { mainListItems, secondaryListItems } from '../../data/navData';
+import { mainAdminListItems, secondaryAdminListItems } from '../../data/navData';
 
 // components
 import { NavItem } from './NavItem';
@@ -98,7 +98,6 @@ export const Nav = () => {
 
   const { darkMode, handleDarkMode } = useThemeMode();
 
-  console.log(mainListItems);
   // handlers
   const toggleDrawer = () => {
 	setOpen(!open);
@@ -181,8 +180,9 @@ export const Nav = () => {
 			</Toolbar>
 			<Divider />
 			<List component="nav">
-              { mainListItems && mainListItems.map((item, idx) => (
+              { mainAdminListItems && mainAdminListItems.map((item, idx) => (
                 <NavItem 
+                  idx
                   name={ item.name }
                   url={ item.url }
                   icon={ item.icon }
@@ -192,8 +192,9 @@ export const Nav = () => {
               <ListSubheader component="div" inset>
                 Saved reports
               </ListSubheader>
-              { secondaryListItems && secondaryListItems.map((item, idx) => (
+              { secondaryAdminListItems && secondaryAdminListItems.map((item, idx) => (
                 <NavItem 
+                  idx
                   name={ item.name }
                   url={ item.url }
                   icon={ item.icon }
@@ -219,8 +220,9 @@ export const Nav = () => {
 		  </Toolbar>
 		  <Divider />
 		  <List component="nav">
-			{ mainListItems && mainListItems.map((item, idx) => (
+			{ mainAdminListItems && mainAdminListItems.map((item, idx) => (
 			  <NavItem 
+                idx
 				name={ item.name }
 				url={ item.url }
 				icon={ item.icon }
@@ -230,8 +232,9 @@ export const Nav = () => {
             <ListSubheader component="div" inset>
               Saved reports
             </ListSubheader>
-			{ secondaryListItems && secondaryListItems.map((item, idx) => (
+			{ secondaryAdminListItems && secondaryAdminListItems.map((item, idx) => (
 			  <NavItem 
+                idx
 				name={ item.name }
 				url={ item.url }
 				icon={ item.icon }

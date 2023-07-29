@@ -13,12 +13,18 @@ import { GlobalCtx } from '../../context/GlobalState';
 // Hooks
 import { useAuth } from '../../hooks/useAuth';
 
+// Layouts
+import { PortalLayout } from '../../layouts/portal/';
+
 // Components
 import { Login } from '../../components/Auth/Login';
 import { Reset } from '../../components/Auth/Reset';
 
 import { RequireAuth } from '../../components/Auth/';
+
+// Routes
 import { Dashboard } from './Dashboard';
+import { Calendar } from './Calendar';
 
 export const AdminPortal = () => {
   const navigate = useNavigate();
@@ -51,9 +57,23 @@ export const AdminPortal = () => {
 		path="dashboard" 
 		element={ 
 		  <RequireAuth>
-			<Dashboard /> 
+            <PortalLayout>
+			  <Dashboard /> 
+            </PortalLayout>
 		  </RequireAuth>
-		} />
+		} 
+      />
+
+	  <Route 
+		path="calendar" 
+		element={ 
+		  <RequireAuth>
+            <PortalLayout>
+			  <Calendar /> 
+            </PortalLayout>
+		  </RequireAuth>
+		} 
+      />
 
 	  <Route exact path="/" element={ <Login portal={ portal } onSubmit={ handleAdminLogin } /> } />
 	</Routes>

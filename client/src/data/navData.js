@@ -13,7 +13,34 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-export const mainListItems = [
+// Admin main links
+export const mainAdminListItems = [
+  {
+	name: 'Dashboard',
+	url: '/admin/dashboard',
+	icon: <DashboardIcon />
+  }, {
+	name: 'Calendar',
+	url: '/admin/calendar',
+	icon: <CalendarMonthIcon />
+  }
+];
+
+// Admin secondary links
+export const secondaryAdminListItems = [
+  {
+	name: 'Dashboard',
+	url: '/admin/dashboard',
+	icon: <DashboardIcon />
+  }, {
+	name: 'Calendar',
+	url: '/admin/calendar',
+	icon: <CalendarMonthIcon />
+  }
+];
+
+// Student main links
+export const mainStudentListItems = [
   {
 	name: 'Dashboard',
 	url: '/student/dashboard',
@@ -25,7 +52,8 @@ export const mainListItems = [
   }
 ];
 
-export const secondaryListItems = [
+// Student secondary links
+export const secondaryStudentListItems = [
   {
 	name: 'Dashboard',
 	url: '/student/dashboard',

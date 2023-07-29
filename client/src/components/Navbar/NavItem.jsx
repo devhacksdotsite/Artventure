@@ -14,13 +14,13 @@ import {
   ListSubheader,
 } from '@mui/material';
 
-export const NavItem = ({ name, url, icon }) => {
+export const NavItem = ({ idx, name, url, icon }) => {
   const navigate = useNavigate();
 
   return (
 	<>
 	  <ListItemButton
-		key={ name }
+		key={ idx }
 		onClick={ () => navigate(url) }
 	  >
 		<ListItemIcon>
