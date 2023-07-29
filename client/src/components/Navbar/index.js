@@ -182,7 +182,7 @@ export const Nav = () => {
 			<List component="nav">
               { mainAdminListItems && mainAdminListItems.map((item, idx) => (
                 <NavItem 
-                  idx
+                  key={ item.id }
                   name={ item.name }
                   url={ item.url }
                   icon={ item.icon }
@@ -194,7 +194,7 @@ export const Nav = () => {
               </ListSubheader>
               { secondaryAdminListItems && secondaryAdminListItems.map((item, idx) => (
                 <NavItem 
-                  idx
+                  key={ item.id }
                   name={ item.name }
                   url={ item.url }
                   icon={ item.icon }
@@ -222,7 +222,7 @@ export const Nav = () => {
 		  <List component="nav">
 			{ mainAdminListItems && mainAdminListItems.map((item, idx) => (
 			  <NavItem 
-                idx
+                key={ item.id }
 				name={ item.name }
 				url={ item.url }
 				icon={ item.icon }
@@ -234,7 +234,7 @@ export const Nav = () => {
             </ListSubheader>
 			{ secondaryAdminListItems && secondaryAdminListItems.map((item, idx) => (
 			  <NavItem 
-                idx
+                key={ item.id }
 				name={ item.name }
 				url={ item.url }
 				icon={ item.icon }

@@ -4,6 +4,8 @@
   * Date: 07/25/2023
 */
 
+import { v4 as uuidv4 } from 'uuid'; // Import the UUID generator
+
 // MUI Icons
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -16,10 +18,12 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 // Admin main links
 export const mainAdminListItems = [
   {
+    id: uuidv4(),
 	name: 'Dashboard',
 	url: '/admin/dashboard',
 	icon: <DashboardIcon />
   }, {
+    id: uuidv4(),
 	name: 'Calendar',
 	url: '/admin/calendar',
 	icon: <CalendarMonthIcon />
@@ -29,10 +33,12 @@ export const mainAdminListItems = [
 // Admin secondary links
 export const secondaryAdminListItems = [
   {
+    id: uuidv4(),
 	name: 'Dashboard',
 	url: '/admin/dashboard',
 	icon: <DashboardIcon />
   }, {
+    id: uuidv4(),
 	name: 'Calendar',
 	url: '/admin/calendar',
 	icon: <CalendarMonthIcon />
@@ -42,10 +48,12 @@ export const secondaryAdminListItems = [
 // Student main links
 export const mainStudentListItems = [
   {
+    id: uuidv4(),
 	name: 'Dashboard',
 	url: '/student/dashboard',
 	icon: <DashboardIcon />
   }, {
+    id: uuidv4(),
 	name: 'Calendar',
 	url: '/student/calendar',
 	icon: <CalendarMonthIcon />
@@ -55,10 +63,12 @@ export const mainStudentListItems = [
 // Student secondary links
 export const secondaryStudentListItems = [
   {
+    id: uuidv4(),
 	name: 'Dashboard',
 	url: '/student/dashboard',
 	icon: <DashboardIcon />
   }, {
+    id: uuidv4(),
 	name: 'Calendar',
 	url: '/student/calendar',
 	icon: <CalendarMonthIcon />
