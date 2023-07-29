@@ -7,12 +7,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-// hooks
+// Hooks
 import { useThemeMode } from '../../hooks/useThemeMode';
+import { useNavLinks } from '../../hooks/useNavLinks';
 
-import { styled } from '@mui/material/styles';
+// Components
+import { NavItem } from './NavItem';
 
 // MUI
+import { styled } from '@mui/material/styles';
 import {
   AppBar as MuiAppBar,
   Drawer as MuiDrawer,
@@ -40,12 +43,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
 } from '@mui/icons-material';
 
-// data
-import { mainAdminListItems, secondaryAdminListItems } from '../../data/navData';
-
-// components
-import { NavItem } from './NavItem';
-
+// handlers
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -96,7 +94,9 @@ export const Nav = () => {
   const navigate = useNavigate();
   const [ open, setOpen ] = useState(true);
 
+  // hooks
   const { darkMode, handleDarkMode } = useThemeMode();
+  const { mainListItems, secondaryListItems } = useNavLinks();
 
   // handlers
   const toggleDrawer = () => {
@@ -180,7 +180,7 @@ export const Nav = () => {
 			</Toolbar>
 			<Divider />
 			<List component="nav">
-              { mainAdminListItems && mainAdminListItems.map((item, idx) => (
+              { mainListItems && mainListItems.map((item, idx) => (
                 <NavItem 
                   key={ item.id }
                   name={ item.name }
@@ -192,7 +192,7 @@ export const Nav = () => {
               <ListSubheader component="div" inset>
                 Saved reports
               </ListSubheader>
-              { secondaryAdminListItems && secondaryAdminListItems.map((item, idx) => (
+              { secondaryListItems && secondaryListItems.map((item, idx) => (
                 <NavItem 
                   key={ item.id }
                   name={ item.name }
@@ -220,7 +220,7 @@ export const Nav = () => {
 		  </Toolbar>
 		  <Divider />
 		  <List component="nav">
-			{ mainAdminListItems && mainAdminListItems.map((item, idx) => (
+			{ mainListItems && mainListItems.map((item, idx) => (
 			  <NavItem 
                 key={ item.id }
 				name={ item.name }
@@ -232,7 +232,7 @@ export const Nav = () => {
             <ListSubheader component="div" inset>
               Saved reports
             </ListSubheader>
-			{ secondaryAdminListItems && secondaryAdminListItems.map((item, idx) => (
+			{ secondaryListItems && secondaryListItems.map((item, idx) => (
 			  <NavItem 
                 key={ item.id }
 				name={ item.name }

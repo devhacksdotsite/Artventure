@@ -15,38 +15,8 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-// Admin main links
-export const mainAdminListItems = [
-  {
-    id: uuidv4(),
-	name: 'Dashboard',
-	url: '/admin/dashboard',
-	icon: <DashboardIcon />
-  }, {
-    id: uuidv4(),
-	name: 'Calendar',
-	url: '/admin/calendar',
-	icon: <CalendarMonthIcon />
-  }
-];
-
-// Admin secondary links
-export const secondaryAdminListItems = [
-  {
-    id: uuidv4(),
-	name: 'Dashboard',
-	url: '/admin/dashboard',
-	icon: <DashboardIcon />
-  }, {
-    id: uuidv4(),
-	name: 'Calendar',
-	url: '/admin/calendar',
-	icon: <CalendarMonthIcon />
-  }
-];
-
 // Student main links
-export const mainStudentListItems = [
+export const mainListItems = [
   {
     id: uuidv4(),
 	name: 'Dashboard',
@@ -61,7 +31,7 @@ export const mainStudentListItems = [
 ];
 
 // Student secondary links
-export const secondaryStudentListItems = [
+export const secondaryListItems = [
   {
     id: uuidv4(),
 	name: 'Dashboard',
