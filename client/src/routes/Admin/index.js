@@ -51,8 +51,11 @@ export const AdminPortal = () => {
 
   return (
 	<Routes>
+
+      { /* Unauthenticated Routes */ }
 	  <Route path="reset" element={ <Reset portal={ portal } /> } />
 
+      { /* Authenticated Routes */ }
 	  <Route 
 		path="dashboard" 
 		element={ 
@@ -75,6 +78,7 @@ export const AdminPortal = () => {
 		} 
       />
 
+      { /* Default Route */ }
 	  <Route exact path="/" element={ <Login portal={ portal } onSubmit={ handleAdminLogin } /> } />
 	</Routes>
   );

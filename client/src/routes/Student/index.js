@@ -13,6 +13,9 @@ import { GlobalCtx } from '../../context/GlobalState';
 // Hooks
 import { useAuth } from '../../hooks/useAuth';
 
+// Layouts
+import { PortalLayout } from '../../layouts/portal/';
+
 // Components
 import { Login } from '../../components/Auth/Login';
 import { Register } from '../../components/Auth/Register';
@@ -45,17 +48,24 @@ export const StudentPortal = () => {
 
   return (
 	<Routes>
+
+      { /* Unauthenticated Routes */ }
 	  <Route path="register" element={ <Register portal={ portal } /> } />
 	  <Route path="reset" element={ <Reset portal={ portal } /> } />
 
+      { /* Authenticated Routes */ }
 	  <Route 
 		path="dashboard" 
 		element={ 
 		  <RequireAuth>
-			<Dashboard /> 
+            <PortalLayout>
+			  <Dashboard /> 
+            </PortalLayout>
 		  </RequireAuth>
 		} />
 
+
+      { /* Default Route */ }
 	  <Route exact path="/" element={ <Login portal={ portal } onSubmit={ handleStudentLogin } /> } />
 	</Routes>
   );

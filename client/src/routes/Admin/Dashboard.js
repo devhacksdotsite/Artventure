@@ -4,9 +4,6 @@
   * Date: 07/25/2023
 */
 
-// Components
-import { PortalLayout } from '../../layouts/portal/';
-
 export const Dashboard = () => {
 
   return (
