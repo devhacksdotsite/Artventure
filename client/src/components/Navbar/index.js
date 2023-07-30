@@ -12,6 +12,7 @@ import { useThemeMode } from '../../hooks/useThemeMode';
 import { useNavLinks } from '../../hooks/useNavLinks';
 
 // Components
+import { AccountMenu } from './AccountMenu';
 import { NavItem } from './NavItem';
 
 // MUI
@@ -140,16 +141,18 @@ export const Nav = () => {
 			</Badge>
 		  </IconButton>
 
-        {/* Toggle dark theme component */}
-        <Tooltip title="Toggle dark mode">
-          <IconButton color="inherit" onClick={() => handleDarkMode()}>
-            {darkMode ? (
-              <Brightness7 fontSize="small" />
-            ) : (
-              <Brightness4 fontSize="small" />
-            )}
-          </IconButton>
-        </Tooltip>
+          {/* Toggle dark theme component */}
+          <Tooltip title="Toggle dark mode">
+            <IconButton color="inherit" onClick={() => handleDarkMode()}>
+              {darkMode ? (
+                <Brightness7 fontSize="small" />
+              ) : (
+                <Brightness4 fontSize="small" />
+              )}
+            </IconButton>
+          </Tooltip>
+
+          <AccountMenu />
 		</Toolbar>
 	  </AppBar>
 
