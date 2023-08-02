@@ -18,11 +18,13 @@ import { PortalLayout } from '../../layouts/portal/';
 
 // Components
 import { Login } from '../../components/Auth/Login';
-import { Register } from '../../components/Auth/Register';
+import { Signup } from '../../components/Auth/Signup';
 import { Reset } from '../../components/Auth/Reset';
-
 import { RequireAuth } from '../../components/Auth/';
+
+// Routes
 import { Dashboard } from './Dashboard';
+import { Register } from './Register';
 
 export const StudentPortal = () => {
   const navigate = useNavigate();
@@ -50,8 +52,14 @@ export const StudentPortal = () => {
 	<Routes>
 
       { /* Unauthenticated Routes */ }
-	  <Route path="register" element={ <Register portal={ portal } /> } />
+	  <Route path="signup" element={ <Signup portal={ portal } /> } />
 	  <Route path="reset" element={ <Reset portal={ portal } /> } />
+	  <Route 
+        path="register" 
+		element={ 
+          <Register /> 
+		} 
+      />
 
       { /* Authenticated Routes */ }
 	  <Route 

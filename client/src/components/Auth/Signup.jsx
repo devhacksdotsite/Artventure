@@ -1,4 +1,4 @@
-// routes\Register.jsx
+// routes\Signup.jsx
 
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -38,7 +38,7 @@ const capitalize = (word) => {
   + word.slice(1);
 }
 
-export const Register = ({ onSubmit, portal }) => {
+export const Signup = ({ onSubmit, portal }) => {
   const [ showPassword, setShowPassword ] = useState(false);
   const portalName = capitalize(portal);
 

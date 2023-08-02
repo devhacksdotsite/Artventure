@@ -174,7 +174,7 @@ export const Login = ({ onSubmit, portal }) => {
 			</Grid>
 
 			<Grid item>
-			  <Link component={ RouterLink } to="register" variant="body2">Dont have an account? Sign Up</Link>
+			  <Link component={ RouterLink } to="signup" variant="body2">Dont have an account? Sign Up</Link>
 			</Grid>
 		  </Grid>
 
