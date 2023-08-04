@@ -24,6 +24,7 @@ import { RequireAuth } from '../../components/Auth/';
 
 // Routes
 import { Dashboard } from './Dashboard';
+import { Calendar } from './Calendar';
 import { Register } from './Register';
 
 export const StudentPortal = () => {
@@ -68,6 +69,16 @@ export const StudentPortal = () => {
 		  <RequireAuth>
             <PortalLayout>
 			  <Dashboard /> 
+            </PortalLayout>
+		  </RequireAuth>
+		} />
+
+	  <Route 
+		path="calendar" 
+		element={ 
+		  <RequireAuth>
+            <PortalLayout>
+			  <Calendar /> 
             </PortalLayout>
 		  </RequireAuth>
 		} />

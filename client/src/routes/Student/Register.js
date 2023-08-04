@@ -106,12 +106,11 @@ export const Register = () => {
           {activeStep === steps.length ? (
             <>
               <Typography variant="h5" gutterBottom>
-                Thank you for your order.
+                Thank you for your joining us!
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                We look forward to seeing you. <Link component={ RouterLink } to="/student/signup" variant="body2">Create an account</Link> to manage any future classes.
+                { /* This should send the email address used duting the registration maybe this can be sent back from square... */ }
               </Typography>
             </>
           ) : (
