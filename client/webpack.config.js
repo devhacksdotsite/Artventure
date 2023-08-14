@@ -24,6 +24,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'], // Make sure you have 'style-loader' installed as well
+      },
     ],
   },
   resolve: {

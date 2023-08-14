@@ -1,4 +1,8 @@
-// routes\Signup.jsx
+/*
+  * routes\Signup.jsx
+  * Author: Jesse Salinas
+  * Date: 08/03/2023
+*/
 
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
