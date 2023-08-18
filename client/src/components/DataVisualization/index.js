@@ -35,12 +35,14 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import TuneIcon from '@mui/icons-material/Tune';
 
 // Components
-import { RowDialog } from '../RowDialog';
 import { MasonryView } from './Masonry';
 import { TableView } from './Table';
 import { ListView } from './List';
-
 import { Modal } from '../Modal/';
+import { ProfileCard } from './Masonry/ProfileCard';
+
+import { AddInstructorForm } from '../Forms/Instructor/AddInstructor';
+import { FilterOptionForm } from '../Forms/Instructor/FilterOption';
 
 const CXPaper = styled(Paper)(({ theme }) => ({
   //background: '#f5f5f5', // Light gray background
@@ -58,30 +60,99 @@ const CXCard = styled(Card)(({ theme }) => ({
   overflow: 'scroll'
 }));
 
+// helper functions
+const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+const convertToSingular = (word) => {
+  const irregularPlurals = {
+    instructors: "Instructor",
+    students: "Student",
+    patrons: "Patron",
+    // Add more irregular plurals as needed
+  };
+
+  if (irregularPlurals[word]) {
+
+    return irregularPlurals[word];
+  } else if (word.endsWith("s")) {
+
+    return word.slice(0, -1);
+  } else {
+
+    return word;
+  }
+}
+
+const getFormattedDate = () => {
+  const months = [
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
+  ];
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = months[today.getMonth()];
+  const day = today.getDate();
+
+  const formattedDate = `${month} ${day}, ${year}`;
+  return formattedDate;
+}
+
+
 const viewComponents = {
   masonry: MasonryView,
   table: TableView,
   list: ListView,
 };
 
-export const DataVisualization = ({ columns, data }) => {
+// move to data folder
+const modalContent = {
+  instructors: {
+    add: AddInstructorForm,
+    filter: FilterOptionForm, 
+  },
+  students: {
+    add: 'addComp',
+    filter: 'filterComp'
+  },
+  patrons: {
+    add: 'addComp',
+    filter: 'filterComp'
+  }
+}
+
+export const DataVisualization = ({ slug, columns, data }) => {
   const [ view, setView ] = useState('table');
-
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [ open, setOpen ] = useState(false);
-
   const CurrentView = viewComponents[view];
 
+  // Dialogs
+  const [ selectedRow, setSelectedRow ] = useState(null);
+  const [ dialogOpen, setDialogOpen ] = useState(false);
+  const [ filterOpen, setFilterOpen ] = useState(false);
+  const [ addOpen, setAddOpen ] = useState(false);
+
+  const ModalContent = modalContent[slug];
+
+  // pagination
+  const [ page, setPage ] = useState(2);
+  const [ rowsPerPage, setRowsPerPage ] = useState(10);
+
   // handlers
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const handleRowClick = (rowData) => {
     console.log(rowData);
     setSelectedRow(rowData);
     setDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
-    setDialogOpen(false);
   };
 
   return (
@@ -119,19 +190,19 @@ export const DataVisualization = ({ columns, data }) => {
           action={
             <>
               <Tooltip title="Filter options">
-                <IconButton aria-label="filter">
+                <IconButton onClick={ () => setFilterOpen(true) } aria-label="filter">
                   <TuneIcon />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Add new">
-                <IconButton onClick={ () => setOpen(true) } aria-label="settings">
+                <IconButton onClick={ () => setAddOpen(true) } aria-label="settings">
                   <AddCircleIcon />
                 </IconButton>
               </Tooltip>
             </>
           }
-          title="Instructors"
-          subheader="September 14, 2016"
+          title={ capitalizeFirstLetter(slug) }
+          subheader={ getFormattedDate() }
         />
         
         <CardContent>
@@ -141,28 +212,44 @@ export const DataVisualization = ({ columns, data }) => {
             handleRowClick={ handleRowClick } 
           />
 
-          { /* <TablePagination
-            rowsPerPageOptions={[5, 10, 20]}
+          <TablePagination
             component="div"
-            count={totalCount}
-            rowsPerPage={pageSize}
-            page={page - 1} // Substracting 1 since the API uses 1-based indexing for pages.
-            onChangePage={(event, newPage) => onPageChange(newPage + 1)}
-            onChangeRowsPerPage={(event) => onPageChange(1, parseInt(event.target.value, 10))}
-          /> */ }
+            count={ 100 }
+            page={ page }
+            onPageChange={ handleChangePage }
+            rowsPerPage={ rowsPerPage }
+            onRowsPerPageChange={ handleChangeRowsPerPage }
+          />
         </CardContent>
       </CXCard>
 
-      <RowDialog
-        open={ dialogOpen }
-        onClose={ handleDialogClose }
-        rowData={ selectedRow }
-      />
+      <Modal
+        open={ dialogOpen } 
+        setOpen={ setDialogOpen }
+        title={ convertToSingular(slug) }
+        subtitle="Add a new slug here"
+      >
+        <ProfileCard rowData={ selectedRow } elevation={ 0 } backgroundColor="transparent" border="none" />
+      </Modal>
 
       <Modal
-        open={ open }
-        setOpen={ setOpen }
-      />
+        open={ addOpen }
+        setOpen={ setAddOpen }
+        title={ convertToSingular(slug) }
+        subtitle="Add a new slug here"
+      >
+        { <ModalContent.add /> }
+      </Modal>
+
+      <Modal
+        open={ filterOpen }
+        setOpen={ setFilterOpen }
+        title={ convertToSingular(slug) }
+        subtitle="Add a new slug here"
+      >
+
+        { <ModalContent.filter /> }
+      </Modal>
     </CXPaper>
   )
 }

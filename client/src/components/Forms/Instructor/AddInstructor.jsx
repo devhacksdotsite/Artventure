@@ -143,76 +143,31 @@ export const AddInstructorForm = () => {
       />
 
       <Controller
-        name="password"
+        name="phone"
         control={ control }
         defaultValue=""
         rules={{ 
-          required: 'Password is required', 
-          minLength: {
-            value: 6, 
-            message: 'Password must be atleast 6 characters'
+          required: 'Phone is required', 
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 
+            message: 'Invalid email address'
           }
         }}
-        render={ ({field}) => (
+        render={ ({ field}) => (
           <TextField
             margin="normal"
             required
             fullWidth
-            label='Password'
-            autoComplete="current-password"
-            type={ showPassword ? "text" : "password" } 
-            InputProps={{ 
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={ handleClickShowPassword }
-                    onMouseDown={ handleMouseDownPassword }
-                  >
-                    { showPassword ? <Visibility /> : <VisibilityOff /> }
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
+            label="Phone Number"
+            autoComplete="phone"
+            autoFocus
             value={ field.value }
+            error={ !!errors.email }
             onChange={ (e) => field.onChange(e.target.value) }
-            error={ !!errors.password }
-            helperText={ errors.password?.message } 
+            helperText={ errors.email?.message }
           /> 
         ) }
       />
-
-      <FormControlLabel
-        control={ 
-          <Controller 
-            name="rememberMe" 
-            control={ control } 
-            defaultValue={ false } 
-            render={ ({ field }) => <Checkbox color="primary" { ...field } /> } 
-          />
-        }
-        label="Remember me"
-      />
-
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-      >
-        Sign In
-      </Button>
-
-      <Grid container>
-        <Grid item xs>
-          <Link component={ RouterLink } to="/reset" variant="body2">Forgot Password?</Link>
-        </Grid>
-
-        <Grid item>
-          <Link component={ RouterLink } to="/" variant="body2">Already have an account? Login</Link>
-        </Grid>
-      </Grid>
-
     </Box>
   );
 }

@@ -7,43 +7,36 @@
 import { useState } from 'react';
 
 // MUI
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material/';
 
-// Components
-import { AddInstructorForm } from '../Forms/Instructor/AddInstructor';
+export const Modal = ({ children, title, subtitle, open, setOpen }) => {
 
-export const Modal = ({ open, setOpen }) =>{
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+  // handlers
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
-    <>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add Instructor</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please complete the following information:
-          </DialogContentText>
+    <Dialog fullWidth={ true } open={ open } onClose={ handleClose }>
+      <DialogTitle>{ title }</DialogTitle>
+      <DialogContent>
+        <DialogContentText>{ subtitle }</DialogContentText>
 
-          <AddInstructorForm />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        { children }
+      </DialogContent>
+
+      <DialogActions>
+        <Button onClick={ handleClose } variant="outlined">Cancel</Button>
+        <Button onClick={ handleClose } variant="contained">Apply</Button>
+      </DialogActions>
+    </Dialog>
   );
 }

@@ -65,6 +65,7 @@ export const Instructors = () => {
       <DataVisualization
         columns={ columns } 
         data={ data }
+        slug="instructors"
       />
     </>
   );
