@@ -20,14 +20,14 @@ export const TableView = ({ columns, data, handleRowClick }) => {
       <Table>
         <TableHead>
           <TableRow>
-            { columns.map((column) => (
+            { columns && columns.map((column) => (
               <TableCell key={ column.id }>{ column.label }</TableCell>
             )) }
           </TableRow>
         </TableHead>
 
         <TableBody>
-          { data.map((item) => (
+          { data && data.map((item) => (
             <TableRow key={ item.id } onClick={ () => handleRowClick(item)}>
               { columns.map((column) => (
                 <TableCell key={ column.id }>{ item[column.id] }</TableCell>

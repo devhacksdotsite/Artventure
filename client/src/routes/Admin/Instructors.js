@@ -14,7 +14,11 @@ import {
 // Components
 import { DataVisualization } from '../../components/DataVisualization/';
 
+// Hooks
+import { useFetch } from '../../hooks/useFetch';
+
 export const Instructors = () => {
+  const fetcher = useFetch();
 
   const [ data, setData ] = useState([
     {
