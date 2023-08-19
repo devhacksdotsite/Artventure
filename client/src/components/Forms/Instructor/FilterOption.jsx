@@ -39,7 +39,6 @@ import {
 } from '@mui/icons-material';
 
 export const FilterOptionForm = () => {
-  const [ showPassword, setShowPassword ] = useState('');
   const { 
 	control, 
 	handleSubmit, 
@@ -47,12 +46,6 @@ export const FilterOptionForm = () => {
   }  = useForm();
   
   // Handlers
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-	event.preventDefault();
-  };
-
   const onSubmit = () => {
     console.log('submit the form here');
   }

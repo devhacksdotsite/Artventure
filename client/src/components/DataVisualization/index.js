@@ -6,6 +6,9 @@
 
 import { useState, useEffect } from 'react';
 
+// Data
+import { modalData } from '../../data/admin/modalData';
+
 // MUI
 import {
   Box,
@@ -41,9 +44,10 @@ import { ListView } from './List';
 import { Modal } from '../Modal/';
 import { ProfileCard } from './Masonry/ProfileCard';
 
-import { AddInstructorForm } from '../Forms/Instructor/AddInstructor';
-import { FilterOptionForm } from '../Forms/Instructor/FilterOption';
+// Hooks
+import { useModal } from '../../hooks/useModal';
 
+// MUI styled
 const CXPaper = styled(Paper)(({ theme }) => ({
   //background: '#f5f5f5', // Light gray background
   height: '100vh', // 100% of the viewport height
@@ -107,37 +111,19 @@ const viewComponents = {
   list: ListView,
 };
 
-// move to data folder
-const modalContent = {
-  instructors: {
-    add: AddInstructorForm,
-    filter: FilterOptionForm, 
-  },
-  students: {
-    add: 'addComp',
-    filter: 'filterComp'
-  },
-  patrons: {
-    add: 'addComp',
-    filter: 'filterComp'
-  }
-}
-
 export const DataVisualization = ({ slug, columns, data }) => {
+  // state
   const [ view, setView ] = useState('table');
-  const CurrentView = viewComponents[view];
-
-  // Dialogs
   const [ selectedRow, setSelectedRow ] = useState(null);
-  const [ dialogOpen, setDialogOpen ] = useState(false);
-  const [ filterOpen, setFilterOpen ] = useState(false);
-  const [ addOpen, setAddOpen ] = useState(false);
-
-  const ModalContent = modalContent[slug];
-
-  // pagination
   const [ page, setPage ] = useState(2);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
+
+  // hooks
+  const { modal, openModal, closeModal } = useModal();
+
+  // variables
+  const CurrentView = viewComponents[view];
+  const ModalData = modalData[slug];
 
   // handlers
   const handleChangePage = (event, newPage) => {
@@ -150,9 +136,8 @@ export const DataVisualization = ({ slug, columns, data }) => {
   };
 
   const handleRowClick = (rowData) => {
-    console.log(rowData);
     setSelectedRow(rowData);
-    setDialogOpen(true);
+    openModal(<ProfileCard rowData={ selectedRow } elevation={ 0 } backgroundColor="transparent" border="none" />, 'Instructor', 'this is a subtitle');
   };
 
   return (
@@ -179,7 +164,6 @@ export const DataVisualization = ({ slug, columns, data }) => {
             variant={ view === 'masonry' ? 'contained' : 'outlined' }
             onClick={ () => setView('masonry') }
           >
-            <GridView />
           </Button>
           
         </ButtonGroup>
@@ -190,12 +174,22 @@ export const DataVisualization = ({ slug, columns, data }) => {
           action={
             <>
               <Tooltip title="Filter options">
-                <IconButton onClick={ () => setFilterOpen(true) } aria-label="filter">
+                <IconButton 
+                  aria-label="filter"
+                  onClick={() =>
+                    openModal(<ModalData.filter.component />, ModalData.filter.title, ModalData.filter.subtitle)
+                  }
+                >
                   <TuneIcon />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Add new">
-                <IconButton onClick={ () => setAddOpen(true) } aria-label="settings">
+                <IconButton
+                  aria-label="add"
+                  onClick={() =>
+                    openModal(<ModalData.add.component />, ModalData.add.title, ModalData.add.subtitle)
+                  }
+                >
                   <AddCircleIcon />
                 </IconButton>
               </Tooltip>
@@ -224,31 +218,12 @@ export const DataVisualization = ({ slug, columns, data }) => {
       </CXCard>
 
       <Modal
-        open={ dialogOpen } 
-        setOpen={ setDialogOpen }
-        title={ convertToSingular(slug) }
-        subtitle="Add a new slug here"
+        open={ modal.open }
+        setOpen={ closeModal }
+        title={ modal.title }
+        subtitle={ modal.subtitle }
       >
-        <ProfileCard rowData={ selectedRow } elevation={ 0 } backgroundColor="transparent" border="none" />
-      </Modal>
-
-      <Modal
-        open={ addOpen }
-        setOpen={ setAddOpen }
-        title={ convertToSingular(slug) }
-        subtitle="Add a new slug here"
-      >
-        { <ModalContent.add /> }
-      </Modal>
-
-      <Modal
-        open={ filterOpen }
-        setOpen={ setFilterOpen }
-        title={ convertToSingular(slug) }
-        subtitle="Add a new slug here"
-      >
-
-        { <ModalContent.filter /> }
+        { modal.content }
       </Modal>
     </CXPaper>
   )
