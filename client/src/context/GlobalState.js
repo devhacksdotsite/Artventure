@@ -9,8 +9,10 @@ import AppReducer from './AppReducer';
 
 // Set application's initial state
 const initialState = {
-  portal: 'student',
-  authenticated: false,
+  //portal: 'student',
+  portal: 'admin',
+  //authenticated: false,
+  authenticated: true,
   darkMode: false,
   slug: {
     name: '',

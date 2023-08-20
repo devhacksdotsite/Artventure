@@ -113,8 +113,6 @@ const viewComponents = {
 
 export const DataVisualization = ({ slug, columns, data }) => {
 
-  console.log('slug is: ', slug);
-
   // state
   const [ view, setView ] = useState('table');
   const [ selectedRow, setSelectedRow ] = useState(null);

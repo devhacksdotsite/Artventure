@@ -19,7 +19,7 @@ export const useThemeMode = () => {
   // if enabled then, use dark theme by default
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");   
   useEffect(() => {
-    console.log('usethem!!');
+
     if (localStorage.getItem('theme') === "dark") {
       // if user has opted for dark theme
       // then set the value of darkMode as true
