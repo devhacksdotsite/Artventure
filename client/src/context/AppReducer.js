@@ -24,6 +24,12 @@ export default (state, action) => {
 		darkMode: action.payload,
 	  }
 
+    case 'SET_SLUG':
+      return {
+        ...state,
+        slug: action.payload,
+      }
+
 	default: 
 	  return state;
   }

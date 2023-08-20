@@ -15,10 +15,13 @@ import {
 import { DataVisualization } from '../../components/DataVisualization/';
 
 // Hooks
+import { useSlug } from '../../hooks/useSlug';
 import { useFetch } from '../../hooks/useFetch';
 
 export const Instructors = () => {
-  const fetcher = useFetch();
+  //const fetcher = useFetch();
+  const { slug } = useSlug();
+
 
   const [ data, setData ] = useState([
     {

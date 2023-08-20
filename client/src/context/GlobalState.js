@@ -12,6 +12,7 @@ const initialState = {
   portal: 'student',
   authenticated: false,
   darkMode: false,
+  slug: '',
 }
 
 // Create application Context
@@ -43,14 +44,23 @@ export const GlobalProvider = ({ children }) => {
 	});
   }
 
+  const setSlug = (slug) => {
+    dispatch({
+      type: 'SET_SLUG',
+      payload: slug
+    });
+  }
+
   return (
 	<GlobalCtx.Provider value={{
 	  portal: state.portal,
 	  authenticated: state.authenticated,
 	  darkMode: state.darkMode,
+      slug: state.slug,
 	  setAuthenticated,
 	  setPortal,
 	  setDarkMode,
+      setSlug,
 	}}>
 	  { children }
 	</GlobalCtx.Provider>
