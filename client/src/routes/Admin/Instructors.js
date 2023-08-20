@@ -22,7 +22,6 @@ export const Instructors = () => {
   //const fetcher = useFetch();
   const { slug } = useSlug();
 
-
   const [ data, setData ] = useState([
     {
       id: '2353JD343',
@@ -72,7 +71,7 @@ export const Instructors = () => {
       <DataVisualization
         columns={ columns } 
         data={ data }
-        slug="instructors"
+        slug={ slug }
       />
     </>
   );

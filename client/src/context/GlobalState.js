@@ -12,7 +12,10 @@ const initialState = {
   portal: 'student',
   authenticated: false,
   darkMode: false,
-  slug: '',
+  slug: {
+    name: '',
+    singularName: '',
+  },
 }
 
 // Create application Context

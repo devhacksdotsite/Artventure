@@ -112,6 +112,9 @@ const viewComponents = {
 };
 
 export const DataVisualization = ({ slug, columns, data }) => {
+
+  console.log('slug is: ', slug);
+
   // state
   const [ view, setView ] = useState('table');
   const [ selectedRow, setSelectedRow ] = useState(null);
@@ -123,7 +126,7 @@ export const DataVisualization = ({ slug, columns, data }) => {
 
   // variables
   const CurrentView = viewComponents[view];
-  const ModalData = modalData[slug];
+  const ModalData = modalData[slug.name];
 
   // handlers
   const handleChangePage = (event, newPage) => {
@@ -195,7 +198,7 @@ export const DataVisualization = ({ slug, columns, data }) => {
               </Tooltip>
             </>
           }
-          title={ capitalizeFirstLetter(slug) }
+          title={ capitalizeFirstLetter(slug.name) }
           subheader={ getFormattedDate() }
         />
         

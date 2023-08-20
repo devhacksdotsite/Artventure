@@ -8,25 +8,20 @@ import { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const determineSlug = (pathname) => {
-  let slug = '';
-  let singularName = '';
-  
-  // Extract slug from routes
-  if (pathname.includes('/instructors')) {
-    slug = 'instructors';
-    singularName = 'instructor';
-  } else if (pathname.includes('/students')) {
-    slug = 'students';
-    singularName = 'student';
-  } else if (pathname.includes('/patrons')) {
-    slug = 'patrons';
-    singularName = 'patron';
-  }
+
+  const slugMap = {
+    'instructors': 'instructor',
+    'students': 'student',
+    'patrons': 'patron'
+  };
+
+  const name = Object.keys(slugMap).find((key) => pathname.includes(key));
+  const singularName = name.endsWith('s') ? name.slice(0, -1) : name;
 
   return {
-    slug,
+    name,
     singularName
-  }
+  };
 };
 
 // Context
@@ -36,22 +31,17 @@ export const useSlug = () => {
   const { slug, setSlug } = useContext(GlobalCtx);
 
   const location = useLocation();
-  const slugInfo = determineSlug(location.pathname);
 
   useEffect(() => {
-    console.log('Executing slug effect for pathname:', location.pathname);
 
     // Set the slug ctx
-    setSlug(slugInfo.slug);
+    setSlug({
+      ...determineSlug(location.pathname)
+    });
 
   }, [ location.pathname ]);
 
-  console.log('Returning slug:', slug);
-
-  return {
-    slug
-  }
-
+  return { slug }
 }
 
 
