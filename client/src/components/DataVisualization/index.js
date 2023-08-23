@@ -69,26 +69,6 @@ const capitalizeFirstLetter = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const convertToSingular = (word) => {
-  const irregularPlurals = {
-    instructors: "Instructor",
-    students: "Student",
-    patrons: "Patron",
-    // Add more irregular plurals as needed
-  };
-
-  if (irregularPlurals[word]) {
-
-    return irregularPlurals[word];
-  } else if (word.endsWith("s")) {
-
-    return word.slice(0, -1);
-  } else {
-
-    return word;
-  }
-}
-
 const getFormattedDate = () => {
   const months = [
     "January", "February", "March", "April", "May", "June", "July",

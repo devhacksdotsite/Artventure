@@ -18,9 +18,16 @@ import { DataVisualization } from '../../components/DataVisualization/';
 import { useSlug } from '../../hooks/useSlug';
 import { useFetch } from '../../hooks/useFetch';
 
+const d = async () => {}
+
 export const Instructors = () => {
-  //const fetcher = useFetch();
   const { slug } = useSlug();
+  const { useGetData, usePostData, usePutData, useDeleteData } = useFetch();
+
+  // Call the useGetData function outside the render function
+  const placeholderData = useGetData('https://jsonplaceholder.typicode.com/todos/1');
+
+  console.log(placeholderData);
 
   const [ data, setData ] = useState([
     {
