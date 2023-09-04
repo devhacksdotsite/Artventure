@@ -84,7 +84,6 @@ const getFormattedDate = () => {
   return formattedDate;
 }
 
-
 const viewComponents = {
   masonry: MasonryView,
   table: TableView,
