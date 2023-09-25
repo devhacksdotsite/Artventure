@@ -22,6 +22,7 @@ const adminRoutes = require('./routes/api/admin/index');
 
 app.use('/', require('./routes/root'));
 app.use('/admin', adminRoutes);
+
 //app.use('/student', studentRoutes);
 //app.use('/shared', sharedRoutes);
 
