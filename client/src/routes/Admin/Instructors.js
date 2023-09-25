@@ -30,6 +30,11 @@ const columns = [
     sort: true,
     filter: true
   }, {
+    id: 'location',
+    label: 'Location',
+    sort: true,
+    filter: true
+  }, {
     id: 'address',
     label: 'Address',
     sort: true,

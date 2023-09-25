@@ -6,6 +6,7 @@
 
 // MUI
 import {
+  TableContainer,
   Table,
   TableHead,
   TableRow,
@@ -16,8 +17,8 @@ import {
 export const TableView = ({ columns, data, handleRowClick }) => {
 
   return (
-    <>
-      <Table>
+    <TableContainer>
+      <Table style={{ overflowX: 'auto' }}>
         <TableHead>
           <TableRow>
             { columns && columns.map((column) => (
@@ -28,7 +29,11 @@ export const TableView = ({ columns, data, handleRowClick }) => {
 
         <TableBody>
           { data && data.map((item) => (
-            <TableRow key={ item.id } onClick={ () => handleRowClick(item)}>
+            <TableRow 
+              key={ item.id } 
+              onClick={ () => handleRowClick(item)}
+              style={{ cursor: 'pointer' }}
+            >
               { columns.map((column) => (
                 <TableCell key={ column.id }>{ item[column.id] }</TableCell>
               )) }
@@ -36,7 +41,7 @@ export const TableView = ({ columns, data, handleRowClick }) => {
           )) }
         </TableBody>
       </Table>
-    </>
+    </TableContainer>
   );
 
 }

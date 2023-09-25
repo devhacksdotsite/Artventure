@@ -30,7 +30,6 @@ import {
 // MUI Icons
 import {
   TableChart,
-  FormatListBulleted,
   GridView
 } from '@mui/icons-material';
 
@@ -40,7 +39,6 @@ import TuneIcon from '@mui/icons-material/Tune';
 // Components
 import { MasonryView } from './Masonry';
 import { TableView } from './Table';
-import { ListView } from './List';
 import { Modal } from '../Modal/';
 import { ProfileCard } from './Masonry/ProfileCard';
 
@@ -87,7 +85,6 @@ const getFormattedDate = () => {
 const viewComponents = {
   masonry: MasonryView,
   table: TableView,
-  list: ListView,
 };
 
 export const DataVisualization = ({ slug, columns, data }) => {
@@ -129,12 +126,6 @@ export const DataVisualization = ({ slug, columns, data }) => {
           aria-label="Disabled elevation buttons"
         >
           <Button 
-            variant={ view === 'list' ? 'contained' : 'outlined' }
-            onClick={ () => setView('list') }
-          >
-            <FormatListBulleted />
-          </Button>
-          <Button 
             variant={ view === 'table' ? 'contained' : 'outlined' }
             onClick={ () => setView('table') }
           >
@@ -144,6 +135,7 @@ export const DataVisualization = ({ slug, columns, data }) => {
             variant={ view === 'masonry' ? 'contained' : 'outlined' }
             onClick={ () => setView('masonry') }
           >
+            <GridView />
           </Button>
           
         </ButtonGroup>
