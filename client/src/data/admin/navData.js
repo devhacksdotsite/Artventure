@@ -36,11 +36,15 @@ export const mainListItems = [
 	name: 'Schools',
 	url: '/admin/schools',
 	icon: <SchoolIcon />
-  },
-{
+  }, {
     id: uuidv4(),
 	name: 'Instructors',
 	url: '/admin/instructors',
+	icon: <PeopleIcon />
+  }, {
+    id: uuidv4(),
+	name: 'Students',
+	url: '/admin/students',
 	icon: <PeopleIcon />
   }, {
     id: uuidv4(),

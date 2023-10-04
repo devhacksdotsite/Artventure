@@ -26,6 +26,8 @@ import { RequireAuth } from '../../components/Auth/';
 import { Dashboard } from './Dashboard';
 import { Calendar } from './Calendar';
 import { Instructors } from './Instructors';
+import { Students } from './Students';
+import { Patrons } from './Patrons';
 
 export const AdminPortal = () => {
   const navigate = useNavigate();
@@ -85,6 +87,28 @@ export const AdminPortal = () => {
 		  <RequireAuth>
             <PortalLayout>
 			  <Instructors /> 
+            </PortalLayout>
+		  </RequireAuth>
+		} 
+      />
+
+	  <Route 
+		path="students" 
+		element={ 
+		  <RequireAuth>
+            <PortalLayout>
+			  <Students /> 
+            </PortalLayout>
+		  </RequireAuth>
+		} 
+      />
+
+	  <Route 
+		path="patrons" 
+		element={ 
+		  <RequireAuth>
+            <PortalLayout>
+			  <Patrons /> 
             </PortalLayout>
 		  </RequireAuth>
 		} 
