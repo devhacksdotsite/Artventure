@@ -1,3 +1,9 @@
+/*
+  * data\demo\appointments.js
+  * Author: Jesse Salinas
+  * Date: 10/03/2023
+*/
+
 const generateAppointments = () => {
   const today = new Date();
   const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
