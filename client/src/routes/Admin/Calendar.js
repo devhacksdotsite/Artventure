@@ -3,8 +3,10 @@
   * Author: Jesse Salinas
   * Date: 07/28/2023
 */
+
 import React, { useState, useCallback } from 'react';
-import Paper from '@mui/material/Paper';
+
+// Components
 import {
   ViewState,
   EditingState,
@@ -28,17 +30,20 @@ import {
   Resources,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-
-import IconButton from '@mui/material/IconButton';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import Grid from '@mui/material/Grid';
-import Room from '@mui/icons-material/Room';
-import { styled } from '@mui/material/styles';
 import classNames from 'clsx';
 
-import { CustomAppointmentTooltip } from '../../components/Calendar/CustomAppointmentTooltip'; 
+// MUI
+import Paper from '@mui/material/Paper';
+
+// Custom components
+import { CustomTooltipHeader } from '../../components/Calendar/Tooltip/Header'; 
+import { CustomTooltipContent } from '../../components/Calendar/Tooltip/Content'; 
+
+// fix me below
 import { CustomAppointmentForm } from '../../components/Calendar/CustomAppointmentForm'; 
 import { EditingOptionsSelector, classes } from '../../components/Calendar/EditingOptionsSelector'; 
+
+// Dummy data
 import { appointments } from '../../data/demo/appointments';
 
 const owners = [
@@ -87,90 +92,12 @@ const classes2 = {
   commandButton: `${PREFIX}-commandButton`,
 };
 
-const Header = (({
-  children, appointmentData, ...restProps
-}) => (
-  <StyledAppointmentTooltipHeader
-    {...restProps}
-    className={classNames(getClassByLocation(classes2, appointmentData.location), classes2.header)}
-    appointmentData={appointmentData}
-  >
-    <StyledIconButton
-      /* eslint-disable-next-line no-alert */
-      onClick={() => alert(JSON.stringify(appointmentData))}
-      className={classes2.commandButton}
-      size="large"
-    >
-      <MoreIcon />
-    </StyledIconButton>
-  </StyledAppointmentTooltipHeader>
-));
-
-const Content = (({
-  children, appointmentData, ...restProps
-}) => (
-  <AppointmentTooltip.Content 
-    {...restProps} 
-    appointmentData={ appointmentData }
-  >
-    <Grid container alignItems="center">
-      <StyledGrid item xs={2} className={classes2.textCenter}>
-        <StyledRoom className={classes2.icon} />
-      </StyledGrid>
-      <Grid item xs={10}>
-        <span>{appointmentData.location || "Room 1" }</span>
-      </Grid>
-    </Grid>
-  </AppointmentTooltip.Content>
-));
-
-const StyledAppointmentTooltipHeader = styled(AppointmentTooltip.Header)(() => ({
-  [`&.${classes2.firstRoom}`]: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/Lobby-4.jpg)',
-  },
-  [`&.${classes2.secondRoom}`]: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-4.jpg)',
-  },
-  [`&.${classes2.thirdRoom}`]: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-0.jpg)',
-  },
-  [`&.${classes2.header}`]: {
-    height: '260px',
-    backgroundSize: 'cover',
-  },
-}));
-
-const StyledIconButton = styled(IconButton)(() => ({
-  [`&.${classes2.commandButton}`]: {
-    backgroundColor: 'rgba(255,255,255,0.65)',
-  },
-}));
-
-const StyledGrid = styled(Grid)(() => ({
-  [`&.${classes2.textCenter}`]: {
-    textAlign: 'center',
-  },
-}));
-
-const StyledRoom = styled(Room)(({ theme: { palette } }) => ({
-  [`&.${classes2.icon}`]: {
-    color: palette.action.active,
-  },
-}));
-
-const getClassByLocation = (location) => {
-  if (location === 'Room 1') return classes2.firstRoom;
-  if (location === 'Room 2') return classes2.secondRoom;
-  return classes2.thirdRoom;
-};
-
-
 const CommandButton = (({
   ...restProps
 }) => (
   <StyledAppointmentTooltipCommandButton 
-    {...restProps} 
-    className={classes2.commandButton} 
+    { ...restProps } 
+    className={ classes2.commandButton } 
   />
 ));
 
@@ -334,21 +261,12 @@ export const Calendar = () => {
           onOptionsChange={handleEditingOptionsChange}
         />*/}
 
-        {/*<CustomAppointmentTooltip />*/}
-
-    {/*<AppointmentTooltip 
-          showOpenButton 
-          showDeleteButton={editingOptions.allowDeleting} 
-        />*/}
-
-          <AppointmentTooltip
-            headerComponent={Header}
-            contentComponent={Content}
-            commandButtonComponent={CommandButton}
-            showCloseButton
-            showOpenButton 
-            showDeleteButton={editingOptions.allowDeleting} 
-          />
+        <AppointmentTooltip
+          headerComponent={ CustomTooltipHeader }
+          contentComponent={ CustomTooltipContent } 
+          commandButtonComponent={ CommandButton }
+          showCloseButton
+        />
 
         <AppointmentForm
           commandButtonComponent={ CommandButton } 
