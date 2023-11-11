@@ -87,7 +87,7 @@ const viewComponents = {
   table: TableView,
 };
 
-export const DataVisualization = ({ slug, columns, data }) => {
+export const DataVisualization = ({ children, slug, columns, data, pagination }) => {
 
   // state
   const [ view, setView ] = useState('table');
@@ -120,51 +120,58 @@ export const DataVisualization = ({ slug, columns, data }) => {
   return (
     <CXPaper>
       <Box sx={{ width: '95%', display: 'flex', justifyContent: 'flex-end', mt: 12 }}>
-        <ButtonGroup
-          disableElevation
-          variant="contained"
-          aria-label="Disabled elevation buttons"
-        >
-          <Button 
-            variant={ view === 'table' ? 'contained' : 'outlined' }
-            onClick={ () => setView('table') }
+        { !children && (
+          <ButtonGroup
+            disableElevation
+            variant="contained"
+            aria-label="Disabled elevation buttons"
           >
-            <TableChart />
-          </Button>
-          <Button 
-            variant={ view === 'masonry' ? 'contained' : 'outlined' }
-            onClick={ () => setView('masonry') }
-          >
-            <GridView />
-          </Button>
-          
-        </ButtonGroup>
+            <Button 
+              variant={ view === 'table' ? 'contained' : 'outlined' }
+              onClick={ () => setView('table') }
+            >
+              <TableChart />
+            </Button>
+            <Button 
+              variant={ view === 'masonry' ? 'contained' : 'outlined' }
+              onClick={ () => setView('masonry') }
+            >
+              <GridView />
+            </Button>
+            
+          </ButtonGroup>
+        ) }
       </Box>
 
       <CXCard sx={{ mt: 2 }}>
         <CardHeader
           action={
             <>
-              <Tooltip title="Filter options">
-                <IconButton 
-                  aria-label="filter"
-                  onClick={() =>
-                    openModal(<ModalData.filter.component />, ModalData.filter.title, ModalData.filter.subtitle)
-                  }
-                >
-                  <TuneIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Add new">
-                <IconButton
-                  aria-label="add"
-                  onClick={() =>
-                    openModal(<ModalData.add.component />, ModalData.add.title, ModalData.add.subtitle)
-                  }
-                >
-                  <AddCircleIcon />
-                </IconButton>
-              </Tooltip>
+              { !!ModalData.filter && (
+                <Tooltip title="Filter options">
+                  <IconButton 
+                    aria-label="filter"
+                    onClick={() =>
+                      openModal(<ModalData.filter.component />, ModalData.filter.title, ModalData.filter.subtitle)
+                    }
+                  >
+                    <TuneIcon />
+                  </IconButton>
+                </Tooltip>
+              ) }
+
+              { !!ModalData.add && (
+                <Tooltip title="Add new">
+                  <IconButton
+                    aria-label="add"
+                    onClick={() =>
+                      openModal(<ModalData.add.component />, ModalData.add.title, ModalData.add.subtitle)
+                    }
+                  >
+                    <AddCircleIcon />
+                  </IconButton>
+                </Tooltip>
+              ) }
             </>
           }
           title={ capitalizeFirstLetter(slug.name) }
@@ -172,20 +179,27 @@ export const DataVisualization = ({ slug, columns, data }) => {
         />
         
         <CardContent>
-          <CurrentView 
-            columns={ columns } 
-            data={ data } 
-            handleRowClick={ handleRowClick } 
-          />
 
-          <TablePagination
-            component="div"
-            count={ 100 }
-            page={ page }
-            onPageChange={ handleChangePage }
-            rowsPerPage={ rowsPerPage }
-            onRowsPerPageChange={ handleChangeRowsPerPage }
-          />
+          { !!children ? (
+            children 
+          ) : (
+            <CurrentView 
+              columns={ columns } 
+              data={ data } 
+              handleRowClick={ handleRowClick } 
+            />
+          ) }
+
+          { !!pagination && (
+            <TablePagination
+              component="div"
+              count={ 100 }
+              page={ page }
+              onPageChange={ handleChangePage }
+              rowsPerPage={ rowsPerPage }
+              onRowsPerPageChange={ handleChangeRowsPerPage }
+            />
+          ) }
         </CardContent>
       </CXCard>
 

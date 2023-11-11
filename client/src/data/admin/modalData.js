@@ -8,6 +8,9 @@
 import { AddInstructorForm } from '../../components/Forms/Instructor/AddInstructor';
 import { FilterOptionForm } from '../../components/Forms/Instructor/FilterOption';
 
+import { AddStudentAttendanceForm } from '../../components/Forms/Attendance/AddStudent';
+import { ManageAttendanceForm } from '../../components/Forms/Attendance/ManageAttendance';
+
 export const modalData = {
   instructors: {
     add: {
@@ -26,7 +29,20 @@ export const modalData = {
   },
   patrons: {
 
-  }
+  },
+  attendance: {
+    add: {
+      component: AddStudentAttendanceForm,
+      title: 'Add Student',
+      subtitle: 'Add student to the attendance for this appointment',
+    },
+    manage: {
+      component: ManageAttendanceForm, 
+      title: 'Attendance',
+      subtitle: 'Manage attendance',
+      fullScreen: true,
+    }
+  },
 }
 
 

@@ -28,6 +28,7 @@ import { Calendar } from './Calendar';
 import { Instructors } from './Instructors';
 import { Students } from './Students';
 import { Patrons } from './Patrons';
+import { Attendance } from './Attendance';
 
 export const AdminPortal = () => {
   const navigate = useNavigate();
@@ -109,6 +110,17 @@ export const AdminPortal = () => {
 		  <RequireAuth>
             <PortalLayout>
 			  <Patrons /> 
+            </PortalLayout>
+		  </RequireAuth>
+		} 
+      />
+
+	  <Route 
+		path="attendance" 
+		element={ 
+		  <RequireAuth>
+            <PortalLayout>
+			  <Attendance /> 
             </PortalLayout>
 		  </RequireAuth>
 		} 

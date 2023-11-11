@@ -28,12 +28,15 @@ import {
   AppointmentTooltip,
   AppointmentForm,
   Resources,
+  ConfirmationDialog,
+  CurrentTimeIndicator
 } from '@devexpress/dx-react-scheduler-material-ui';
 
 import classNames from 'clsx';
 
 // MUI
-import Paper from '@mui/material/Paper';
+import { Paper, Tooltip } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 // Custom components
 import { CustomTooltipHeader } from '../../components/Calendar/Tooltip/Header'; 
@@ -92,14 +95,27 @@ const classes2 = {
   commandButton: `${PREFIX}-commandButton`,
 };
 
-const CommandButton = (({
+const StyledAppointmentTooltipCommandButton = styled(AppointmentTooltip.CommandButton)(() => ({
+  [`&.${classes2.commandButton}`]: {
+    backgroundColor: 'rgba(255,255,255,0.65)',
+    margin: '0 1px',
+  },
+}));
+
+const CustomTooltipCommandButton = ({
   ...restProps
-}) => (
-  <StyledAppointmentTooltipCommandButton 
-    { ...restProps } 
-    className={ classes2.commandButton } 
-  />
-));
+}) => {
+
+  console.log(restProps.id);
+  return (
+    <Tooltip title={ restProps.id }>
+      <StyledAppointmentTooltipCommandButton 
+        { ...restProps } 
+        className={ classes2.commandButton } 
+      />
+    </Tooltip>
+  );
+};
 
 export const Calendar = () => {
   const [ data, setData ] = useState(appointments);
@@ -260,11 +276,15 @@ export const Calendar = () => {
           options={editingOptions}
           onOptionsChange={handleEditingOptionsChange}
         />*/}
-
+        <CurrentTimeIndicator 
+          shadePreviousCells
+        />
         <AppointmentTooltip
           headerComponent={ CustomTooltipHeader }
           contentComponent={ CustomTooltipContent } 
-          commandButtonComponent={ CommandButton }
+          commandButtonComponent={ CustomTooltipCommandButton }
+          showDeleteButton
+          showOpenButton
           showCloseButton
         />
 
@@ -273,11 +293,7 @@ export const Calendar = () => {
           readOnly={isAppointmentBeingCreated ? false : !editingOptions.allowUpdating}
         />
 
-        {/*<CustomAppointmentForm
-          commandButtonComponent={ CommandButton } 
-          readOnly={ isAppointmentBeingCreated ? false : !editingOptions.allowUpdating }
-        />*/}
-
+        <ConfirmationDialog />
       </Scheduler>
     </Paper>
   );

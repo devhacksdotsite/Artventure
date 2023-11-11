@@ -17,7 +17,7 @@ import {
   DialogTitle,
 } from '@mui/material/';
 
-export const Modal = ({ children, title, subtitle, open, setOpen }) => {
+export const Modal = ({ children, title, subtitle, fullScreen, open, setOpen }) => {
 
   // handlers
   const handleClose = () => {
@@ -25,7 +25,12 @@ export const Modal = ({ children, title, subtitle, open, setOpen }) => {
   };
 
   return (
-    <Dialog fullWidth={ true } open={ open } onClose={ handleClose }>
+    <Dialog 
+      fullWidth 
+      fullScreen={ fullScreen }
+      open={ open } 
+      onClose={ handleClose }
+    >
       <DialogTitle>{ title }</DialogTitle>
       <DialogContent>
         <DialogContentText>{ subtitle }</DialogContentText>
