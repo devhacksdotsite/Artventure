@@ -1,17 +1,18 @@
  /*
-  * models\instructors\index.js
+  * models\students\index.js
+  * Name: StudentModelBase
   * Author: Jesse Salinas
   * Date: 08/27/2023
 */
 
 const BaseModel = require('../_Base');
 
-class InstructorModelBase extends BaseModel {
+class StudentModelBase extends BaseModel {
   /*constructor() {
     // super base ...
   }*/
 
-  async getAllInstructors() {
+  async getAllStudents() {
     /*try {
       const query = 'SELECT * FROM instructors';
       const instructors = await this.queryAsync(query);
@@ -57,5 +58,5 @@ class InstructorModelBase extends BaseModel {
   // Other methods...
 }
 
-module.exports = InstructorModelBase;
+module.exports = StudentModelBase;
 

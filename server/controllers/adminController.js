@@ -1,21 +1,33 @@
  /*
   * controllers\adminController.js
+  * Name: AdminController
   * Author: Jesse Salinas
   * Date: 08/27/2023
 */
 
-const Instructor = require('../models/instructors/index.js');
+class AdminController {
+  constructor(studentModel, instructorModel) {
+    this.studentModel = studentModel;
+    this.instructorModel = instructorModel;
+  }
 
-exports.getAdminDashboard = (req, res) => {
-  // Admin-specific logic for the dashboard
-};
+  getAllAdmins(req, res) {
+    // Access this.studentModel and this.instructorModel as needed
+    // Implement logic here
+  }
 
-exports.getAdminInstructors = (req, res) => {
-  const instructors = Instructor.getAll();
+   async getAllInstructors(req, res) {
+    const instructors = await this.instructorModel.getAllInstructors();
+    console.log(instructors);
 
-  return res.json({
-    status: 'sucess',
-    instructors,
-  });
-};
+    return res.json({
+      status: 'success',
+      instructors,
+    });   
+  }
+
+  // Other methods...
+}
+
+module.exports = AdminController;
 
