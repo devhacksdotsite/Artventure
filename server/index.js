@@ -5,8 +5,6 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
-/* Set middleware. TODO: Move me to a middleware dir */
 // built-in middleware to handle urlencoded from data
 app.use(express.urlencoded({ extended: false }));
 
@@ -16,15 +14,16 @@ app.use(express.json());
 // serve static files
 app.use('/', express.static(path.join(__dirname, '/public')));
 
-const adminRoutes = require('./routes/api/admin/index');
-//const studentRoutes = require('./routes/studentRoutes');
-//const sharedRoutes = require('./routes/sharedRoutes');
+const appRoutes = require('./routes/root')
+const apiPublicRoutes = require('./routes/api/public');
+const apiPrivateRoutes = require('./routes/api/private');
 
-app.use('/', require('./routes/root'));
-app.use('/admin', adminRoutes);
+// Express app routes
+app.use('/', appRoutes);
 
-//app.use('/student', studentRoutes);
-//app.use('/shared', sharedRoutes);
+// API routes
+app.use('/public/', apiPublicRoutes);
+app.use('/private/', apiPrivateRoutes);
 
 app.all('*', (req, res) => {
   res.status(404);
@@ -43,9 +42,4 @@ app.all('*', (req, res) => {
 app.listen(PORT, () => {
 	console.log(`listening on port ${ PORT }`);
 });
-
-
-
-
-
 

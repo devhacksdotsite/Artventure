@@ -2,6 +2,7 @@
  * routes\root.js
  * Author: Jesse Salinas
  * Date: 11/11/2023
+ * Description: Express application routes
  */
 
 const express = require('express');
