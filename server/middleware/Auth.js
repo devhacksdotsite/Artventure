@@ -1,4 +1,4 @@
- /*
+/*
   * middleware\Auth.js
   * Name: authenticationToken
   * Author: Jesse Salinas
@@ -16,7 +16,7 @@ function authenticateToken(req, res, next) {
     });
   }
 
-  jwt.verify(token, 'your-secret-key', (err, user) => {
+  jwt.verify(token, 'app-secret-key-here', (err, user) => {
     if (err) {
       return res.status(403).json({
         message: 'Invalid token' 

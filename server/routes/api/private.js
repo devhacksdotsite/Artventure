@@ -10,13 +10,13 @@ const router = express.Router();
 const path = require('path');
 
 // Middleware
-//const authenticate = require('../../middleware/Auth');
+const authenticate = require('../../middleware/Auth');
 
 // API protected routes
 const apiAdminRoutes = require('./Admin/');
 const apiStudentRoutes = require('./Student/');
 
-//app.use('/private/', authenticate);
+router.use('/', authenticate);
 
 router.use('/student/', apiStudentRoutes);
 router.use('/admin/', apiAdminRoutes);
