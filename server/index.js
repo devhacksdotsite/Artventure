@@ -15,6 +15,7 @@ app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
 
 const appRoutes = require('./routes/root')
+const apiAuthRoutes = require('./routes/api/');
 const apiPublicRoutes = require('./routes/api/public');
 const apiPrivateRoutes = require('./routes/api/private');
 
@@ -22,6 +23,7 @@ const apiPrivateRoutes = require('./routes/api/private');
 app.use('/', appRoutes);
 
 // API routes
+app.use('/auth/', apiAuthRoutes);
 app.use('/public/', apiPublicRoutes);
 app.use('/private/', apiPrivateRoutes);
 

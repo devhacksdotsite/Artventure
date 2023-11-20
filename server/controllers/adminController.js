@@ -11,12 +11,7 @@ class AdminController {
     this.instructorModel = instructorModel;
   }
 
-  getAllAdmins(req, res) {
-    // Access this.studentModel and this.instructorModel as needed
-    // Implement logic here
-  }
-
-   async getAllInstructors(req, res) {
+  async getAllInstructors(req, res) {
     const instructors = await this.instructorModel.getAllInstructors();
     console.log(instructors);
 

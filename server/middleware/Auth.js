@@ -8,7 +8,9 @@
 const jwt = require('jsonwebtoken');
 
 function authenticateToken(req, res, next) {
-  const token = req.header('Authorization');
+  // Token format: Bearer token-key
+  const authHeader = req.header('Authorization');
+  const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
     return res.status(401).json({ 
@@ -16,7 +18,7 @@ function authenticateToken(req, res, next) {
     });
   }
 
-  jwt.verify(token, 'app-secret-key-here', (err, user) => {
+  jwt.verify(token, 'secret-key', (err, user) => {
     if (err) {
       return res.status(403).json({
         message: 'Invalid token' 
