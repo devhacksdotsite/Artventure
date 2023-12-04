@@ -13,14 +13,19 @@ class UserModelBase extends BaseModel {
     // super base ...
   }*/
 
-  authenticateUserCredentials(username, password) {
-    /*try {
-      const query = 'SELECT * FROM instructors';
-      const instructors = await this.queryAsync(query);
-      return instructors;
+  async authenticateUserCredentials(username, password) {
+    const sql = 'SELECT * FROM users WHERE id = ?';
+    const params = [username] || [];
+    console.log(params);
+
+    try {
+      const results = await this.query(sql, params);
+      console.log('res:', results);
+      return results;
+      return user;
     } catch (error) {
       throw error;
-    }*/
+    }
 
     return {
       id: '3432',
@@ -32,6 +37,7 @@ class UserModelBase extends BaseModel {
   async signIn(username, password) {
 
     const claims = await this.authenticateUserCredentials(username, password);
+    console.log('claims', claims);
 
     if (!claims) {
 

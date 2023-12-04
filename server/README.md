@@ -23,3 +23,8 @@ docker build -f Dockerfile.dev -t jsalinas8/artventure-server .
 ```
 docker run -it -p 4003:5000 jsalinas8/artventure-server
 ```
+
+## Access MySQL Container
+```
+docker exec -it <container_id_or_name> /bin/bash
+```

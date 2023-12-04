@@ -15,6 +15,7 @@ class UserController {
 
     // Validate user credentials
     const user = await this.userModel.signIn(username, password);
+    console.log('user', user);
   
     if (!user) {
       return res.status(401).json({ message: 'Invalid username or password' });

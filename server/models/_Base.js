@@ -5,37 +5,50 @@
   * Date: 11/11/2023
 */
 
+//const connectionPool = require('../config/dbConnection');
 const mysql = require('mysql2');
 
 class BaseModel {
-  constructor() {
-    this.connection = null;
-    //this.setupConnection();
-  }
-
-  async setupConnection() {
-    try {
-      /*this.connection = await mysql.createConnection({
-        // MySQL connection configuration, switch me to use an .env
-        host: 'localhost',
-        user: 'root',
-        password: 'password',
-        database: 'your_database',
-      });*/
-    } catch (error) {
-      console.error('Error setting up database connection:', error);
-      throw error;
-    }
-  }
 
   async query(sql, params) {
-    try {
-      const [results] = await this.connection.execute(sql, params);
-      return results;
-    } catch (error) {
-      console.error('Database query error:', error);
-      throw error;
-    }
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'art_dev',
+      password: '2023Artventure%%%',
+      database: 'artventure',
+    });
+
+    // Attempt to connect to the database
+    connection.connect((err) => {
+      if (err) {
+        console.error('Error connecting to MySQL:', err);
+        return;
+      }
+
+      console.log('Connected to MySQL!');
+
+      // Perform a simple query to fetch a user
+      connection.query('SELECT * FROM artventure.user LIMIT 1', (queryErr, results) => {
+        if (queryErr) {
+          console.error('Error querying MySQL:', queryErr);
+          return;
+        }
+
+        // Display the fetched user
+        const user = results[0];
+        console.log('Fetched user:', user);
+
+        // Close the connection after testing
+        connection.end((endErr) => {
+          if (endErr) {
+            console.error('Error closing MySQL connection:', endErr);
+            return;
+          }
+          console.log('Connection closed.');
+        });
+      });
+    });
+
   }
 }
 
