@@ -24,6 +24,8 @@ services:
 
   # Node.js Backend
   api:
+    depends_on:
+      - mysql
     build:
       dockerfile: Dockerfile.dev
       context: ./server
