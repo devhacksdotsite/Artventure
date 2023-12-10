@@ -5,51 +5,61 @@
   * Date: 11/11/2023
 */
 
-//const connectionPool = require('../config/dbConnection');
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
+
+// MySQL connection configuration, switch me to use an .env
+const conf = {
+  host: 'mysql', // NOTE: hostname needs to be set to what the service is named in docker.
+  user: 'root',
+  password: 'mysql_password',
+  database: 'artventure',
+}
 
 class BaseModel {
+  constructor(config = conf) {
+    this.connection = this.setupConnection(config);
+  }
+
+  async setupConnection(config) {
+    try {
+
+      // Create DB Conneciton
+      const connection = await mysql.createConnection(config);
+
+      console.log('Connected to MySQL database');
+
+      // Await and return the connection.
+      return connection;
+
+    } catch (error) {
+
+      console.error('Error setting up database connection:', error);
+      throw error;
+      process.exit(1); // Exit the process if the connection setup fails
+    }
+  }
 
   async query(sql, params) {
-    const connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'art_dev',
-      password: '2023Artventure%%%',
-      database: 'artventure',
-    });
+    try {
 
-    // Attempt to connect to the database
-    connection.connect((err) => {
-      if (err) {
-        console.error('Error connecting to MySQL:', err);
-        return;
-      }
+      // DB Connection
+      const conn = await this.connection;
 
-      console.log('Connected to MySQL!');
+      // Deconstruct the results and DB fields
+      const [ results, fields ] = await conn.execute(sql, params);
 
-      // Perform a simple query to fetch a user
-      connection.query('SELECT * FROM artventure.user LIMIT 1', (queryErr, results) => {
-        if (queryErr) {
-          console.error('Error querying MySQL:', queryErr);
-          return;
-        }
+      // Connection is automatically closed
+      console.log('Connection closed.');
 
-        // Display the fetched user
-        const user = results[0];
-        console.log('Fetched user:', user);
+      // return results and DB fields
+      return { results, fields };
 
-        // Close the connection after testing
-        connection.end((endErr) => {
-          if (endErr) {
-            console.error('Error closing MySQL connection:', endErr);
-            return;
-          }
-          console.log('Connection closed.');
-        });
-      });
-    });
-
+    } catch (error) {
+      console.error('Oops something went wrong: ', error);
+      throw error;
+    }
   }
+
 }
 
 module.exports = BaseModel;

@@ -39,49 +39,7 @@ router.get('/signout', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  //res.send('Artventure Auth API routes...');
-
-  // Replace these with your actual database connection details
-  const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'mysql_password',
-    database: 'artventure',
-  });
-
-  // Attempt to connect to the database
-  connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to MySQL:', err);
-      return;
-    }
-
-    console.log('Connected to MySQL!');
-
-    // Perform a simple query to fetch a user
-    connection.query('SELECT * FROM artventure.user LIMIT 1', (queryErr, results) => {
-      if (queryErr) {
-        console.error('Error querying MySQL:', queryErr);
-        return;
-      }
-
-      // Display the fetched user
-      const user = results[0];
-      console.log('Fetched user:', user);
-
-      // Close the connection after testing
-      connection.end((endErr) => {
-        if (endErr) {
-          console.error('Error closing MySQL connection:', endErr);
-          return;
-        }
-        console.log('Connection closed.');
-      });
-    });
-  });
-
   res.send('Artventure Auth API routes...');
-
 });
 
 module.exports = router;

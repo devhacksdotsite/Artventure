@@ -9,40 +9,46 @@ const jwt = require('jsonwebtoken');
 const BaseModel = require('../_Base');
 
 class UserModelBase extends BaseModel {
-  /*constructor() {
-    // super base ...
-  }*/
+  constructor() {
+    super(); // call the constructor parent class
+  }
 
   async authenticateUserCredentials(username, password) {
-    const sql = 'SELECT * FROM users WHERE id = ?';
-    const params = [username] || [];
-    console.log(params);
+
+    // Format params
+    const params = [ username ] || [];
+
+    // TODO: SQL - compare passwords...
+    const sql = 'SELECT * FROM `artventure`.`user` WHERE username = ?';
 
     try {
-      const results = await this.query(sql, params);
-      console.log('res:', results);
+
+      // Query the DB
+      const { results } = await this.query(sql, params);
+
+      // Await and return the results
       return results;
-      return user;
+
     } catch (error) {
       throw error;
-    }
-
-    return {
-      id: '3432',
-      username: 'jsalinas',
-      fullname: 'Jesse Salinas',
     }
   }
 
   async signIn(username, password) {
 
-    const claims = await this.authenticateUserCredentials(username, password);
-    console.log('claims', claims);
+    // Authenticate the user
+    const [ results ] = await this.authenticateUserCredentials(username, password);
 
-    if (!claims) {
+    if (!results) {
 
       return;
     }
+
+    console.log(results);
+    const claims = {
+      username: results.username,
+      user_id: results.user_id
+    };
 
     //Generate JWT
     const token = jwt.sign(claims, 'secret-key', { expiresIn: '1h' });
@@ -51,6 +57,7 @@ class UserModelBase extends BaseModel {
       ...claims,
       token 
     };
+
   }
 
   async signOut(userId) {

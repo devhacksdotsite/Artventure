@@ -8,6 +8,7 @@ const connection = mysql.createConnection({
   database: 'artventure',
 });
 
+console.log(connection);
 // Attempt to connect to the database
 connection.connect((err) => {
   if (err) {
