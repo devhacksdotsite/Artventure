@@ -5,7 +5,7 @@
 */
 
 const jwt = require('jsonwebtoken');
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Models
 const BaseModel = require('../_Base');
@@ -20,7 +20,7 @@ class UserModelBase extends BaseModel {
     // Format params
     const params = [ username ] || [];
 
-    // TODO: SQL - compare passwords...
+    // SQL 
     const sql = 'SELECT * FROM `artventure`.`user` WHERE username = ?';
 
     try {
@@ -35,14 +35,12 @@ class UserModelBase extends BaseModel {
       // Deconstruct the user data
       const [ user ] = results;
 
-      // Compare the entered password with the stored hashed password
-      /*bcrypt.compare(password, user.hashedPassword, (err, result) => {
-        if (err || !result) {
-          return res.status(401).json({ message: 'Invalid username or password' });
-        }
-      });*/
+      const authenticated = await bcrypt.compare(password, user.password)
 
-      // Await and return the results
+      if (!authenticated) {
+        return;
+      } 
+
       return user;
 
     } catch (error) {
