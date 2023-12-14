@@ -15,13 +15,13 @@ class UserModelBase extends BaseModel {
     super(); // call the constructor parent class
   }
 
-  async authenticateUserCredentials(username, password) {
+  async authenticateUserCredentials(email, password) {
 
     // Format params
-    const params = [ username ] || [];
+    const params = [ email ] || [];
 
     // SQL 
-    const sql = 'SELECT * FROM `artventure`.`user` WHERE username = ?';
+    const sql = 'SELECT * FROM `artventure`.`user` WHERE email = ?';
 
     try {
 
@@ -48,10 +48,10 @@ class UserModelBase extends BaseModel {
     }
   }
 
-  async signIn(username, password) {
+  async signIn(email, password) {
 
     // Authenticate the user
-    const user = await this.authenticateUserCredentials(username, password);
+    const user = await this.authenticateUserCredentials(email, password);
 
     if (!user) {
 

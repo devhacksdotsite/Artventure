@@ -11,8 +11,8 @@ import AppReducer from './AppReducer';
 const initialState = {
   //portal: 'student',
   portal: 'admin',
-  //authenticated: false,
-  authenticated: true,
+  token: null,
+  authenticated: false,
   darkMode: false,
   slug: {
     name: '',
@@ -33,6 +33,13 @@ export const GlobalProvider = ({ children }) => {
 	  type: 'SET_PORTAL',
 	  payload: portal
 	});
+  }
+
+  const setToken = (token) => {
+    dispatch({
+      type: 'SET_TOKEN',
+      payload: token
+    });
   }
 
   const setAuthenticated = (authenticated) => {
@@ -59,9 +66,11 @@ export const GlobalProvider = ({ children }) => {
   return (
 	<GlobalCtx.Provider value={{
 	  portal: state.portal,
+      token: state.token,
 	  authenticated: state.authenticated,
 	  darkMode: state.darkMode,
       slug: state.slug,
+      setToken,
 	  setAuthenticated,
 	  setPortal,
 	  setDarkMode,

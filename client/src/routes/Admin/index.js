@@ -36,15 +36,17 @@ export const AdminPortal = () => {
 
   const { portal, setPortal } = useContext(GlobalCtx);
 
-  const handleAdminLogin = (userData) => {
-	console.log('Admin login data: ', userData);
-
+  const handleAdminLogin = async (userData) => {
 	// Login
-    login().then((res) => {
+    const user = await login(userData);
 
-	  // Send to the Admin Portal Dashboard
-	  navigate('dashboard');
-	});
+    if (!user) {
+      //throw new Error('Network response was not ok');
+      alert('Failed to authenticate user.');
+      return;
+    }
+    
+    navigate('dashboard');
   }
 
   useEffect(() => {

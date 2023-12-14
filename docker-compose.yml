@@ -47,4 +47,5 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
-
+    environment:
+      - API_URL=http://localhost:3050/api

@@ -9,15 +9,59 @@ import { useContext, useEffect } from 'react';
 // Context
 import { GlobalCtx } from '../context/GlobalState';
 
+// Hooks
+import { useFetch } from './useFetch';
+
 export const useAuth = () => {
-  const { authenticated, setAuthenticated, portal, setPortal } = useContext(GlobalCtx);
+  const { 
+    authenticated, 
+    setAuthenticated, 
+    portal, 
+    setPortal, 
+    token, 
+    setToken 
+  } = useContext(GlobalCtx);
 
-  const login = () => {
+  const login = async ({ email, password }) => {
+    try {
+      const url = `http://localhost:3050/api/auth/signin`; 
+      const payload = { email, password };
 
-	return new Promise((res) => {
-	  setAuthenticated(true);
-      res();
-    });
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(payload) 
+      });
+
+      if (!response.ok) {
+        setAuthenticated(false);
+        //throw new Error('Network response was not ok');
+        alert('Invalid user');
+        return;
+      } 
+
+      // Parse the response as JSON
+      const responseData = await response.json();     
+
+      // Handle the data from the response
+
+      // store JWT Token
+      const { token } = responseData.user;
+      setToken(token);
+      localStorage.setItem('token', token);
+
+      // setAuthenticated
+      setAuthenticated(true);
+
+      return responseData.user.user_id;
+
+    } catch (error) {
+
+      setAuthenticated(false);
+      console.error("Login error:", error);
+    }
   }
 
   const logout = () => {

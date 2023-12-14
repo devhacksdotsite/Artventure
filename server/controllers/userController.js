@@ -11,14 +11,14 @@ class UserController {
   }
 
   async signIn(req, res) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     // Validate user credentials
-    const user = await this.userModel.signIn(username, password);
+    const user = await this.userModel.signIn(email, password);
     console.log('user', user);
   
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     return res.json({
