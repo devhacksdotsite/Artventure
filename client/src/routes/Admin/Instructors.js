@@ -4,7 +4,7 @@
   * Date: 08/06/2023
 */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 // MUI
 import {
@@ -12,11 +12,14 @@ import {
 } from '@mui/material';
 
 // Components
-import { DataVisualization } from '../../components/DataVisualization/';
+import { DataVisualization } from '@/components/DataVisualization/';
 
 // Hooks
-import { useSlug } from '../../hooks/useSlug';
-import { useFetch } from '../../hooks/useFetch';
+import { useSlug } from '@/hooks/useSlug';
+import { useFetch } from '@/hooks/useFetch';
+
+// Context
+import { GlobalCtx } from '@/context/GlobalState';
 
 const columns = [
   {
@@ -48,6 +51,10 @@ const columns = [
 ];
 
 export const Instructors = () => {
+  const { 
+    token, 
+    setToken 
+  } = useContext(GlobalCtx);
 
   // state
   const [data, setData] = useState(null);
@@ -61,7 +68,15 @@ export const Instructors = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3050/api/admin/instructors');
+
+        const response = await fetch('http://localhost:3050/api/private/admin/instructors', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${ token }`
+          },
+        });
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

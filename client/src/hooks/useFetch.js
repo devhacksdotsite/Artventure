@@ -48,8 +48,12 @@ export const useFetch = () => {
     };
   };
 
-  const useGetData = (url) => useFetchData(url, {
+  const useGetData = (url, token) => useFetchData(url, {
     method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${ token }`
+    },
   });
 
   const usePostData = (url, body) => useFetchData(url, {

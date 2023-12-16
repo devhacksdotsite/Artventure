@@ -6,11 +6,11 @@
 
 import { useContext, useEffect } from 'react';
 
-// Context
-import { GlobalCtx } from '../context/GlobalState';
+// CTX
+import { GlobalCtx } from '@/context/GlobalState';
 
 // Hooks
-import { useFetch } from './useFetch';
+import { useFetch } from '@/hooks/useFetch'; //change me to a utility
 
 export const useAuth = () => {
   const { 
@@ -21,6 +21,8 @@ export const useAuth = () => {
     token, 
     setToken 
   } = useContext(GlobalCtx);
+
+  const { useGetData, usePostData, usePutData, useDeleteData } = useFetch();
 
   const login = async ({ email, password }) => {
     try {

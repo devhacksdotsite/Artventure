@@ -12,6 +12,12 @@ export default (state, action) => {
 		portal: action.payload,
 	  }
 
+	case 'SET_TOKEN':
+	  return {
+		...state,
+		token: action.payload,
+	  }
+
 	case 'SET_AUTHENTICATED':
 	  return {
 		...state,

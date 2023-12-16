@@ -1,9 +1,11 @@
-// routes\Login.js
+/*
+  * components\Auth\Login.jsx
+  * Author: Jesse Salinas
+  * Date: 07/25/2023
+*/
 
 import { useState } from 'react';
-
 import { Link as RouterLink } from 'react-router-dom';
-// Form Validation
 import { useForm, Controller } from 'react-hook-form';
 
 // MUI Components
@@ -30,7 +32,7 @@ import {
 } from '@mui/icons-material';
 
 // Components
-import { CopyRight } from '../../components/CopyRight';
+import { CopyRight } from '@/components/CopyRight';
 
 // Transformers
 const capitalize = (word) => {
@@ -54,7 +56,6 @@ export const Login = ({ onSubmit, portal }) => {
   const handleMouseDownPassword = (event) => {
 	event.preventDefault();
   };
-
 
   return (
 	<Container component="main" maxWidth="xs">

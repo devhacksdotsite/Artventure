@@ -4,9 +4,10 @@
   * Date: 07/25/2023
 */
 
-// Hooks
-import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+
+// Hooks
+import { useAuth } from '@/hooks/useAuth';
 
 export const RequireAuth = ({ children }) => {
   const { authenticated } = useAuth();

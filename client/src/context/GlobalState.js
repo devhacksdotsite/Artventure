@@ -5,7 +5,9 @@
 */
 
 import { createContext, useReducer } from 'react';
-import AppReducer from './AppReducer';
+
+// CTX
+import AppReducer from '@/context/AppReducer';
 
 // Set application's initial state
 const initialState = {
