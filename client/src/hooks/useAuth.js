@@ -4,7 +4,7 @@
   * Date: 07/22/2023
 */
 
-import { useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 // CTX
 import { GlobalCtx } from '@/context/GlobalState';
@@ -13,6 +13,11 @@ import { GlobalCtx } from '@/context/GlobalState';
 import { useFetch } from '@/hooks/useFetch'; //change me to a utility
 
 export const useAuth = () => {
+
+  // State
+  const [loading, setLoading] = useState(true);
+
+  // CTX
   const { 
     authenticated, 
     setAuthenticated, 
@@ -22,7 +27,25 @@ export const useAuth = () => {
     setToken 
   } = useContext(GlobalCtx);
 
+  // Hooks
   const { useGetData, usePostData, usePutData, useDeleteData } = useFetch();
+
+  // Check for token in localStorage during initialization
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+
+      setToken(token);
+      setAuthenticated(true);
+    } else {
+
+      setToken(null);
+      setAuthenticated(false);
+    }
+
+    setLoading(false);
+  }, []);
 
   const login = async ({ email, password }) => {
     try {
@@ -46,8 +69,6 @@ export const useAuth = () => {
 
       // Parse the response as JSON
       const responseData = await response.json();     
-
-      // Handle the data from the response
 
       // store JWT Token
       const { token } = responseData.user;
@@ -77,7 +98,8 @@ export const useAuth = () => {
   return {
 	authenticated,
 	login,
-	logout
+	logout,
+    loading
   }
 }
 

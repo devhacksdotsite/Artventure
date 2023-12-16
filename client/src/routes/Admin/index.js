@@ -32,14 +32,26 @@ import { Attendance } from '@/routes/Admin/Attendance';
 
 export const AdminPortal = () => {
 
+  // Navigation
   const navigate = useNavigate();
 
-  // hooks
-  const { authenticated, login, logout } = useAuth();
-
+  // CTX
   const { portal, setPortal } = useContext(GlobalCtx);
 
+  // Hooks
+  const { authenticated, login, logout } = useAuth();
+
+  useEffect(() => {
+
+	// the effect is set to run once on mount, setting portal to admin, it will run again if the setPortal function changes(unlikely to change). This will avoid any stale closures/bugs.
+	if (portal !== 'admin') {
+      setPortal('admin');
+    }
+
+  }, [ setPortal ]);
+
   const handleAdminLogin = async (userData) => {
+
 	// Login
     const user = await login(userData);
 
@@ -51,12 +63,6 @@ export const AdminPortal = () => {
     
     navigate('dashboard');
   }
-
-  useEffect(() => {
-	// the effect is set to run once on mount, setting portal to admin, it will run again if the setPortal function changes(unlikely to change). This will avoid any stale closures/bugs.
-	if (portal !== 'admin') setPortal('admin');
-
-  }, [ setPortal ]);
 
   return (
 	<Routes>

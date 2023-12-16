@@ -10,7 +10,14 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 
 export const RequireAuth = ({ children }) => {
-  const { authenticated } = useAuth();
+
+  const { authenticated, loading } = useAuth();
+
+  if (loading) {
+
+    // TODO: Add custom loader.
+    return <div>Loading...</div>;
+  }
 
   return authenticated === true ? children : <Navigate to="/" replace />
 }
