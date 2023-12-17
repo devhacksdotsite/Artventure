@@ -9,13 +9,13 @@ import { useState, useContext, useEffect } from 'react';
 // CTX
 import { GlobalCtx } from '@/context/GlobalState';
 
-// Hooks
-import { useFetch } from '@/hooks/useFetch'; //change me to a utility
+// Utils
+import { getData, postData, putData, deleteData } from '@/utils/fetchData';
 
 export const useAuth = () => {
 
   // State
-  const [loading, setLoading] = useState(true);
+  const [ loading, setLoading ] = useState(true);
 
   // CTX
   const { 
@@ -28,61 +28,55 @@ export const useAuth = () => {
   } = useContext(GlobalCtx);
 
   // Hooks
-  const { useGetData, usePostData, usePutData, useDeleteData } = useFetch();
-
-  // Check for token in localStorage during initialization
   useEffect(() => {
-    const token = localStorage.getItem('token');
+   
+    const tokenAuth = () => {
 
-    if (token) {
+      const token = localStorage.getItem('token');
 
-      setToken(token);
-      setAuthenticated(true);
-    } else {
+      if (token) {
 
-      setToken(null);
-      setAuthenticated(false);
+        setToken(token);
+        setAuthenticated(true);
+      } else {
+
+        setToken(null);
+        setAuthenticated(false);
+      }
+
+      setLoading(false);
     }
 
-    setLoading(false);
-  }, []);
+    tokenAuth();
+
+  }, []); // OnMount
 
   const login = async ({ email, password }) => {
+
     try {
       const url = `http://localhost:3050/api/auth/signin`; 
       const payload = { email, password };
 
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify(payload) 
-      });
+      const response = await postData(url, payload);
 
-      if (!response.ok) {
-        setAuthenticated(false);
-        //throw new Error('Network response was not ok');
-        alert('Invalid user');
-        return;
-      } 
+      const { token, user_id } = response.user;
 
-      // Parse the response as JSON
-      const responseData = await response.json();     
-
-      // store JWT Token
-      const { token } = responseData.user;
+      // Set token CTX
       setToken(token);
+
+      // Store token in local storage
       localStorage.setItem('token', token);
 
-      // setAuthenticated
+      // Set authenticated CTX
       setAuthenticated(true);
 
-      return responseData.user.user_id;
+      return user_id;
 
     } catch (error) {
 
+      // Set authenticated CTX
       setAuthenticated(false);
+
       console.error("Login error:", error);
     }
   }

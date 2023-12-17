@@ -16,7 +16,9 @@ import { DataVisualization } from '@/components/DataVisualization/';
 
 // Hooks
 import { useSlug } from '@/hooks/useSlug';
-import { useFetch } from '@/hooks/useFetch';
+
+// Utils
+import { getData, postData, putData, deleteData } from '@/utils/fetchData';
 
 // Context
 import { GlobalCtx } from '@/context/GlobalState';
@@ -63,28 +65,16 @@ export const Instructors = () => {
 
   // hooks
   const { slug } = useSlug();
-  const { useGetData, usePostData, usePutData, useDeleteData } = useFetch();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
 
-        const response = await fetch('http://localhost:3050/api/private/admin/instructors', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${ token }`
-          },
-        });
+        const response = await getData('http://localhost:3050/api/private/admin/instructors', token);
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        setData(response.instructors);
 
-        const responseData = await response.json();
-        setData(responseData.instructors);
         setLoading(false);
-        setError(null);
 
       } catch (error) {
 
