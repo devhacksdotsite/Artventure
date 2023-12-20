@@ -20,6 +20,10 @@ const initialState = {
     name: '',
     singularName: '',
   },
+  school: {
+    name: 'ArtventureOC',
+    code: 'AOC'
+  },
 }
 
 // Create application Context
@@ -72,6 +76,7 @@ export const GlobalProvider = ({ children }) => {
 	  authenticated: state.authenticated,
 	  darkMode: state.darkMode,
       slug: state.slug,
+      school: state.school,
       setToken,
 	  setAuthenticated,
 	  setPortal,

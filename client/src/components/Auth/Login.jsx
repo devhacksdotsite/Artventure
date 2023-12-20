@@ -148,7 +148,11 @@ export const Login = ({ onSubmit, portal }) => {
 			) }
 		  />
 
-		  <FormControlLabel
+          {/* 
+          -- Use Token Storage:
+          If the user checks "Remember Me," you store the token persistently (e.g., in a long-lived cookie or local storage).
+          If the user doesn't check "Remember Me," you store the token in a session or a short-lived cookie.
+          <FormControlLabel
 			control={ 
 			  <Controller 
 				name="rememberMe" 
@@ -159,6 +163,7 @@ export const Login = ({ onSubmit, portal }) => {
 			}
 			label="Remember me"
 		  />
+          */}
 
 		  <Button
 			type="submit"

@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
 });
 
 //router.get('/dashboard', adminController.getAdminDashboard);
-router.get('/instructors', (req, res) => adminController.getAllInstructors(req, res));
+router.get('/instructors', (req, res) => adminController.getInstructors(req, res));
 
 module.exports = router;
 

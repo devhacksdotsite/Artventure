@@ -42,9 +42,13 @@ export const AdminPortal = () => {
   const { authenticated, login, logout } = useAuth();
 
   useEffect(() => {
+    // Top level admin component
+    
+    // GET/SET school data
 
 	// the effect is set to run once on mount, setting portal to admin, it will run again if the setPortal function changes(unlikely to change). This will avoid any stale closures/bugs.
 	if (portal !== 'admin') {
+
       setPortal('admin');
     }
 
@@ -62,6 +66,23 @@ export const AdminPortal = () => {
     }
     
     navigate('dashboard');
+  }
+
+  // Move me to auth hooks...
+  const handleAdminLogout = async () => {
+
+	// Login
+    const user = await logout();
+
+    if (!user) {
+
+      alert('Failed to logout user.');
+      return;
+    }
+
+    // logout here...
+    
+    // navigate('/');
   }
 
   return (

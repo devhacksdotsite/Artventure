@@ -19,7 +19,8 @@ export const RequireAuth = ({ children }) => {
     return <div>Loading...</div>;
   }
 
-  return authenticated === true ? children : <Navigate to="/" replace />
+  // TODO: Fix me, I need to redirct to either student or admin depending on the portal I am in...
+  return authenticated === true ? children : <Navigate to="/admin" replace />
 }
 
 

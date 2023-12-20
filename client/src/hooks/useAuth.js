@@ -5,6 +5,7 @@
 */
 
 import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // CTX
 import { GlobalCtx } from '@/context/GlobalState';
@@ -26,6 +27,9 @@ export const useAuth = () => {
     token, 
     setToken 
   } = useContext(GlobalCtx);
+
+  // Navigate
+  const navigate = useNavigate();
 
   // Hooks
   useEffect(() => {
@@ -50,6 +54,24 @@ export const useAuth = () => {
     tokenAuth();
 
   }, []); // OnMount
+
+  const logout = () => {
+     
+    // TODO: We will need to blacklist the token, POST request here...
+
+    // Clear the token from localStorage
+    localStorage.removeItem('token');
+
+    // Clear the token and setAuthenticated in the CTX
+    setToken(null);
+    setAuthenticated(false);
+  
+    // Redirect to login page
+    // TODO: Fix me, I need to redirct to either student or admin depending on the portal I am in...
+    navigate('/admin');
+
+    return true;
+  }
 
   const login = async ({ email, password }) => {
 
@@ -79,14 +101,6 @@ export const useAuth = () => {
 
       console.error("Login error:", error);
     }
-  }
-
-  const logout = () => {
-
-	return new Promise((res) => {
-	  setAuthenticated(false);
-      res();
-    });
   }
 
   return {

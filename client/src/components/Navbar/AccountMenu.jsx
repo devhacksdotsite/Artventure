@@ -17,6 +17,9 @@ import {
   IconButton,
   Typography,
   Tooltip,
+  Select,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 
 // MUI Icons
@@ -26,8 +29,18 @@ import {
   Logout,
 } from '@mui/icons-material';
 
+// Hooks
+import { useAuth } from '@/hooks/useAuth';
+
 export const AccountMenu = () => {
+
+  // State
   const [ anchorEl, setAnchorEl ] = useState(null);
+  const [ school, setSchool ] = useState({ name: 'ArventureOC', code: 'AOC' });
+
+  // Hooks
+  const { authenticated, logout } = useAuth();
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -36,6 +49,26 @@ export const AccountMenu = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+
+    console.log('logout...');
+    logout();
+  };
+
+  const handleSchoolChange = (event) => {
+    const newSchoolCode = event.target.value;
+    // Fetch school data here...
+    //const newSchoolData = fetchSchoolData(newSchoolCode);
+    const newSchoolData = {
+      name: 'NewSchool',
+      code: 'NS',
+    };
+    
+    // Update the school context using the custom hook
+    //updateSchool(newSchoolData);
+
   };
 
   return (
@@ -57,7 +90,6 @@ export const AccountMenu = () => {
         id="account-menu"
         open={ open }
         onClose={ handleClose }
-        onClick={ handleClose }
         PaperProps={{
           elevation: 0,
           sx: {
@@ -87,9 +119,22 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={ handleClose }>
-          <Avatar /> Profile
+        {/* School Change Dropdown */}
+        <MenuItem>
+          <FormControl fullWidth>
+            <InputLabel id="school-dropdown-label">School</InputLabel>
+            <Select
+              labelId="school-dropdown-label"
+              id="school-dropdown"
+              value={ school.code }
+              onChange={ handleSchoolChange }
+            >
+              <MenuItem value="AOC">ArtventureOC</MenuItem>
+              {/* Add more options as needed */}
+            </Select>
+          </FormControl>
         </MenuItem>
+
         <MenuItem onClick={ handleClose }>
           <Avatar /> My account
         </MenuItem>
@@ -106,7 +151,7 @@ export const AccountMenu = () => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={ handleClose }>
+        <MenuItem onClick={ handleLogout }>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

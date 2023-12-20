@@ -11,8 +11,9 @@ class AdminController {
     this.instructorModel = instructorModel;
   }
 
-  async getAllInstructors(req, res) {
-    const instructors = await this.instructorModel.getAllInstructors();
+  async getInstructors(req, res) {
+    const instructors = await this.instructorModel.getInstructors();
+
     console.log(instructors);
 
     return res.json({

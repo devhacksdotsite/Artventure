@@ -7,20 +7,48 @@
 const BaseModel = require('../_Base');
 
 class InstructorModelBase extends BaseModel {
-  /*constructor() {
-    // super base ...
-  }*/
 
-  async getAllInstructors() {
-    /*try {
-      const query = 'SELECT * FROM instructors';
-      const instructors = await this.queryAsync(query);
-      return instructors;
+  constructor() {
+    super(); // call the constructor parent class
+  }
+
+  async getInstructors() {
+    const sql = `
+      SELECT 
+        ins.instructor_id, 
+        ins.instructor_name, 
+        ins.birthdate, 
+        ins.date_started, 
+        ins.user_id, 
+        loc.address, 
+        sch.school_id, 
+        sch.school_code, 
+        sch.school_name 
+      FROM artventure.instructor ins
+      INNER JOIN artventure.location loc
+        ON ins.location_id = loc.location_id
+      INNER JOIN artventure.school sch
+        ON loc.school_id = sch.school_id;
+    `;
+
+    try {
+      const { results } = await this.query(sql);
+
+      console.log('results...', results);
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
     } catch (error) {
+  
       throw error;
-    }*/
+    }
 
-    return [
+
+
+    /*return [
       {
         id: '2353JD343',
         fullname: 'Mindy Shafer',
@@ -41,7 +69,7 @@ class InstructorModelBase extends BaseModel {
         address: '27975 Mazagon, Mission Viejo Ca, 92659',
         phone: '(714) 345-2234'
       },
-    ];
+    ];*/
   }
 
   async getInstructorById(instructorId) {

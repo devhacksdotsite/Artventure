@@ -16,6 +16,7 @@ import { DataVisualization } from '@/components/DataVisualization/';
 
 // Hooks
 import { useSlug } from '@/hooks/useSlug';
+import { useAuth } from '@/hooks/useAuth';
 
 // Utils
 import { getData, postData, putData, deleteData } from '@/utils/fetchData';
@@ -25,28 +26,28 @@ import { GlobalCtx } from '@/context/GlobalState';
 
 const columns = [
   {
-    id: 'id',
+    id: 'instructor_id',
     label: 'ID',
     sort: true,
     filter: true
   }, {
-    id: 'fullname',
+    id: 'instructor_name',
     label: 'Full Name',
     sort: true,
     filter: true
   }, {
-    id: 'location',
-    label: 'Location',
+    id: 'school_name',
+    label: 'School',
     sort: true,
     filter: true
   }, {
     id: 'address',
-    label: 'Address',
+    label: 'Location',
     sort: true,
     filter: true
   }, {
-    id: 'phone',
-    label: 'Phone Number',
+    id: 'date_started',
+    label: 'Date Started',
     sort: true,
     filter: true
   }
@@ -59,18 +60,19 @@ export const Instructors = () => {
   } = useContext(GlobalCtx);
 
   // state
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [ data, setData ] = useState(null);
+  const [ loading, setLoading ] = useState(true);
+  const [ error, setError ] = useState(null);
 
   // hooks
   const { slug } = useSlug();
+  const { logout } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
 
-        const response = await getData('http://localhost:3050/api/private/admin/instructors', token);
+        const response = await getData('http://localhost:3050/api/private/admin/instructors', token, logout);
 
         setData(response.instructors);
 

@@ -7,13 +7,14 @@
 import { useContext, useEffect, useState } from 'react';
 
 // Context
-import { GlobalCtx } from '../context/GlobalState';
+import { GlobalCtx } from '@/context/GlobalState';
 
 // Data
-import { mainListItems as studentMainListItems, secondaryListItems as studentSecondaryListItems } from '../data/student/navData';
-import { mainListItems as adminMainListItems, secondaryListItems as adminSecondaryListItems } from '../data/admin/navData';
+import { mainListItems as studentMainListItems, secondaryListItems as studentSecondaryListItems } from '@/data/student/navData';
+import { mainListItems as adminMainListItems, secondaryListItems as adminSecondaryListItems } from '@/data/admin/navData';
 
 export const useNavLinks= () => {
+
   const { portal, setPortal } = useContext(GlobalCtx);
 
   const [navigationItems, setNavigationItems] = useState({});

@@ -8,7 +8,7 @@
 import Box from '@mui/material/Box';
 
 // components
-import { Nav } from '../../components/Navbar/';
+import { Nav } from '@/components/Navbar/';
 
 export const PortalLayout = ({ children }) => {
 

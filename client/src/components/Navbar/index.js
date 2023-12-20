@@ -8,12 +8,12 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Hooks
-import { useThemeMode } from '../../hooks/useThemeMode';
-import { useNavLinks } from '../../hooks/useNavLinks';
+import { useThemeMode } from '@/hooks/useThemeMode';
+import { useNavLinks } from '@/hooks/useNavLinks';
 
 // Components
-import { AccountMenu } from './AccountMenu';
-import { NavItem } from './NavItem';
+import { AccountMenu } from '@/components/Navbar/AccountMenu';
+import { NavItem } from '@/components/Navbar/NavItem';
 
 // MUI
 import { styled } from '@mui/material/styles';
@@ -92,10 +92,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export const Nav = () => {
+
   const navigate = useNavigate();
   const [ open, setOpen ] = useState(true);
 
-  // hooks
+  // Hooks
   const { darkMode, handleDarkMode } = useThemeMode();
   const { mainListItems, secondaryListItems } = useNavLinks();
 

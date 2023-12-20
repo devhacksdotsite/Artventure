@@ -4,25 +4,31 @@
   * Date: 12/16/2023
 */
 
-const fetchData = async (url, options) => {
+const fetchData = async (url, options, logout) => {
 
   try {
     const response = await fetch(url, options);
 
     if (!response.ok) {
+
+      // Check error status 403 (Forbidden)
+      if (response && response.status === 403 && logout) {
+        logout();
+      }
+
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const responseData = await response.json();
 
     return responseData;
-  } catch (err) {
+  } catch (error) {
 
-    throw err;
+    throw error;
   }
 };
 
-export const getData = async (url, token) => {
+export const getData = async (url, token, logout) => {
 
   return fetchData(url, {
     method: 'GET',
@@ -30,10 +36,10 @@ export const getData = async (url, token) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  });
+  }, logout);
 };
 
-export const postData = async (url, body, token) => {
+export const postData = async (url, body, token, logout) => {
 
   return fetchData(url, {
     method: 'POST',
@@ -42,10 +48,10 @@ export const postData = async (url, body, token) => {
       'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify(body),
-  });
+  }, logout);
 };
 
-export const putData = async (url, body) => {
+export const putData = async (url, body, logout) => {
 
   return fetchData(url, {
     method: 'PUT',
@@ -54,10 +60,10 @@ export const putData = async (url, body) => {
       'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify(body),
-  });
+  }, logout);
 };
 
-export const deleteData = async (url) => {
+export const deleteData = async (url, logout) => {
 
   return fetchData(url, {
     method: 'DELETE',
@@ -65,6 +71,6 @@ export const deleteData = async (url) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  });
+  }, logout);
 };
 
