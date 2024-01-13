@@ -17,7 +17,6 @@ import { ManageAttendanceForm } from '../../components/Forms/Attendance/ManageAt
 
 // Hooks
 import { useSlug } from '../../hooks/useSlug';
-import { useFetch } from '../../hooks/useFetch';
 
 const columns = [
   {
@@ -57,7 +56,6 @@ export const Attendance = () => {
 
   // hooks
   const { slug } = useSlug();
-  const { useGetData, usePostData, usePutData, useDeleteData } = useFetch();
 
   console.log('slug', slug);
 

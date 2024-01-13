@@ -42,6 +42,12 @@ export default (state, action) => {
         slug: action.payload,
       }
 
+    case 'SET_INSTRUCTORS':
+      return {
+        ...state,
+        instructors: action.payload,
+      }
+
 	default: 
 	  return state;
   }

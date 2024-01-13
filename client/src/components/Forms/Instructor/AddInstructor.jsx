@@ -4,7 +4,8 @@
   * Date: 08/13/2023
 */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import { Link as RouterLink } from 'react-router-dom';
 
 // Form Validation
@@ -26,6 +27,11 @@ import {
   Link, 
 } from '@mui/material';
 
+// MUI Date Pickers
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+
+
 // MUI Icons
 import {
   LockOutlined,
@@ -33,27 +39,28 @@ import {
   VisibilityOff,
 } from '@mui/icons-material';
 
-export const AddInstructorForm = () => {
-  const [ showPassword, setShowPassword ] = useState('');
+export const AddInstructorForm = ({ data, setter }) => {
+
+  // State
+  const [ selectedBirthdate, setSelectedBirthdate ] = useState(null);
+  const [ selectedDateStarted, setSelectedDateStarted ] = useState(null);
+
+  // Hooks
   const { 
 	control, 
 	handleSubmit, 
 	formState: { errors } 
   }  = useForm();
+
   
   // Handlers
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const onSubmission = async (formData) => {
 
-  const handleMouseDownPassword = (event) => {
-	event.preventDefault();
-  };
-
-  const onSubmit = () => {
-    console.log('submit the form here');
+    console.log('submit the form here', formData);
   }
 
   return (
-    <Box component="form" onSubmit={ handleSubmit(onSubmit) } noValidate sx={{ mt: 1 }}>
+    <Box component="form" onSubmit={ handleSubmit(onSubmission) } noValidate sx={{ mt: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Controller
@@ -142,6 +149,33 @@ export const AddInstructorForm = () => {
         ) }
       />
 
+      <Grid container spacing={2}>
+
+        <Grid item xs={12} sm={6}>
+          <Controller
+            name="dateStarted"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <LocalizationProvider dateAdapter={AdapterMoment}>
+                <TextField
+                  id="date2"
+                  label="Start Date"
+                  type="date"
+                  defaultValue="2017-05-24"
+                  sx={{ width: 220 }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={ field.value }
+                  onChange={ (e) => field.onChange(e.target.value) }
+                />
+              </LocalizationProvider>
+            )}
+          />
+        </Grid>
+      </Grid>
+
       <Controller
         name="phone"
         control={ control }
@@ -149,8 +183,8 @@ export const AddInstructorForm = () => {
         rules={{ 
           required: 'Phone is required', 
           pattern: {
-            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 
-            message: 'Invalid email address'
+            value: /^[0-9]{10}$/, 
+            message: 'Invalid phone'
           }
         }}
         render={ ({ field}) => (
@@ -162,12 +196,21 @@ export const AddInstructorForm = () => {
             autoComplete="phone"
             autoFocus
             value={ field.value }
-            error={ !!errors.email }
+            error={ !!errors.phone }
             onChange={ (e) => field.onChange(e.target.value) }
-            helperText={ errors.email?.message }
+            helperText={ errors.phone?.message }
           /> 
         ) }
       />
+
+      <Button 
+	    type="submit"
+		fullWidth
+		variant="contained"
+		sx={{ mt: 3, mb: 2 }}
+      >
+        Submit
+      </Button>
     </Box>
   );
 }

@@ -53,7 +53,6 @@ export const AccountMenu = () => {
 
   const handleLogout = () => {
 
-    console.log('logout...');
     logout();
   };
 

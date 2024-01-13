@@ -5,11 +5,11 @@
 */
 
 // Components
-import { AddInstructorForm } from '../../components/Forms/Instructor/AddInstructor';
-import { FilterOptionForm } from '../../components/Forms/Instructor/FilterOption';
+import { AddInstructorForm } from '@/components/Forms/Instructor/AddInstructor';
+import { FilterOptionForm } from '@/components/Forms/Instructor/FilterOption';
 
-import { AddStudentAttendanceForm } from '../../components/Forms/Attendance/AddStudent';
-import { ManageAttendanceForm } from '../../components/Forms/Attendance/ManageAttendance';
+import { AddStudentAttendanceForm } from '@/components/Forms/Attendance/AddStudent';
+import { ManageAttendanceForm } from '@/components/Forms/Attendance/ManageAttendance';
 
 export const modalData = {
   instructors: {

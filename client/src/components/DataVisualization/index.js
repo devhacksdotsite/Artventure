@@ -7,7 +7,7 @@
 import { useState, useEffect } from 'react';
 
 // Data
-import { modalData } from '../../data/admin/modalData';
+import { modalData } from '@/data/admin/modalData';
 
 // MUI
 import {
@@ -37,13 +37,13 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import TuneIcon from '@mui/icons-material/Tune';
 
 // Components
-import { MasonryView } from './Masonry';
-import { TableView } from './Table';
-import { Modal } from '../Modal/';
-import { ProfileCard } from './Masonry/ProfileCard';
+import { MasonryView } from '@/components/DataVisualization/Masonry';
+import { TableView } from '@/components/DataVisualization/Table';
+import { ProfileCard } from '@/components/DataVisualization/Masonry/ProfileCard';
+import { Modal } from '@/components/Modal/';
 
 // Hooks
-import { useModal } from '../../hooks/useModal';
+import { useModal } from '@/hooks/useModal';
 
 // MUI styled
 const CXPaper = styled(Paper)(({ theme }) => ({
@@ -87,7 +87,7 @@ const viewComponents = {
   table: TableView,
 };
 
-export const DataVisualization = ({ children, slug, columns, data, pagination }) => {
+export const DataVisualization = ({ children, slug, columns, data, setter, pagination }) => {
 
   // state
   const [ view, setView ] = useState('table');
@@ -114,7 +114,15 @@ export const DataVisualization = ({ children, slug, columns, data, pagination })
 
   const handleRowClick = (rowData) => {
     setSelectedRow(rowData);
-    openModal(<ProfileCard rowData={ selectedRow } elevation={ 0 } backgroundColor="transparent" border="none" />, 'Instructor', 'this is a subtitle');
+
+    openModal(
+      <ProfileCard 
+        rowData={ selectedRow } 
+        elevation={ 0 } 
+        backgroundColor="transparent" 
+        border="none" 
+      />, 'Instructor', 'this is a subtitle'
+    );
   };
 
   return (
@@ -165,7 +173,7 @@ export const DataVisualization = ({ children, slug, columns, data, pagination })
                   <IconButton
                     aria-label="add"
                     onClick={() =>
-                      openModal(<ModalData.add.component />, ModalData.add.title, ModalData.add.subtitle)
+                      openModal(<ModalData.add.component data={ data } setter={ setter } />, ModalData.add.title, ModalData.add.subtitle)
                     }
                   >
                     <AddCircleIcon />

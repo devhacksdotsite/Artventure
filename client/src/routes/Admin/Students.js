@@ -16,7 +16,6 @@ import { DataVisualization } from '../../components/DataVisualization/';
 
 // Hooks
 import { useSlug } from '../../hooks/useSlug';
-import { useFetch } from '../../hooks/useFetch';
 
 const columns = [
   {
@@ -56,7 +55,6 @@ export const Students = () => {
 
   // hooks
   const { slug } = useSlug();
-  const { useGetData, usePostData, usePutData, useDeleteData } = useFetch();
 
   useEffect(() => {
     const fetchData = async () => {

@@ -24,6 +24,9 @@ const initialState = {
     name: 'ArtventureOC',
     code: 'AOC'
   },
+
+  // instructors
+  instructors: [],
 }
 
 // Create application Context
@@ -69,6 +72,14 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  // Instructors
+  const setInstructors = (instructors) => {
+    dispatch({
+      type: 'SET_INSTRUCTORS',
+      payload: instructors
+    });
+  } 
+
   return (
 	<GlobalCtx.Provider value={{
 	  portal: state.portal,
@@ -77,11 +88,14 @@ export const GlobalProvider = ({ children }) => {
 	  darkMode: state.darkMode,
       slug: state.slug,
       school: state.school,
+      instructors: state.instructors,
+
       setToken,
 	  setAuthenticated,
 	  setPortal,
 	  setDarkMode,
       setSlug,
+      setInstructors
 	}}>
 	  { children }
 	</GlobalCtx.Provider>

@@ -56,11 +56,11 @@ const columns = [
 export const Instructors = () => {
   const { 
     token, 
-    setToken 
+    instructors,
+    setInstructors
   } = useContext(GlobalCtx);
 
   // state
-  const [ data, setData ] = useState(null);
   const [ loading, setLoading ] = useState(true);
   const [ error, setError ] = useState(null);
 
@@ -68,13 +68,20 @@ export const Instructors = () => {
   const { slug } = useSlug();
   const { logout } = useAuth();
 
+  const handlers = {
+    addInstructor: () => {
+
+      console.log('add instructor logic here');
+    }, 
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
 
         const response = await getData('http://localhost:3050/api/private/admin/instructors', token, logout);
 
-        setData(response.instructors);
+        setInstructors(response.instructors);
 
         setLoading(false);
 
@@ -100,8 +107,9 @@ export const Instructors = () => {
     <>
       <DataVisualization
         columns={ columns } 
-        data={ data }
+        data={ instructors }
         slug={ slug }
+        setter={ setInstructors }
       />
     </>
   );
