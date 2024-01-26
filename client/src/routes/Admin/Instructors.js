@@ -21,7 +21,7 @@ import { useAuth } from '@/hooks/useAuth';
 // Utils
 import { getData, postData, putData, deleteData } from '@/utils/fetchData';
 
-// Context
+// CTX
 import { GlobalCtx } from '@/context/GlobalState';
 
 const columns = [
@@ -31,7 +31,7 @@ const columns = [
     sort: true,
     filter: true
   }, {
-    id: 'instructor_name',
+    id: 'fullname',
     label: 'Full Name',
     sort: true,
     filter: true
@@ -55,7 +55,6 @@ const columns = [
 
 export const Instructors = () => {
   const { 
-    token, 
     instructors,
     setInstructors
   } = useContext(GlobalCtx);
@@ -64,9 +63,9 @@ export const Instructors = () => {
   const [ loading, setLoading ] = useState(true);
   const [ error, setError ] = useState(null);
 
-  // hooks
+  // Hooks
   const { slug } = useSlug();
-  const { logout } = useAuth();
+  const { token, logout } = useAuth();
 
   const handlers = {
     addInstructor: () => {
@@ -80,6 +79,7 @@ export const Instructors = () => {
       try {
 
         const response = await getData('http://localhost:3050/api/private/admin/instructors', token, logout);
+        console.log(response.instructors);
 
         setInstructors(response.instructors);
 

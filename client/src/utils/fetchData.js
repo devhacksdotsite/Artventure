@@ -51,7 +51,7 @@ export const postData = async (url, body, token, logout) => {
   }, logout);
 };
 
-export const putData = async (url, body, logout) => {
+export const putData = async (url, body, token, logout) => {
 
   return fetchData(url, {
     method: 'PUT',
@@ -63,7 +63,7 @@ export const putData = async (url, body, logout) => {
   }, logout);
 };
 
-export const deleteData = async (url, logout) => {
+export const deleteData = async (url, token, logout) => {
 
   return fetchData(url, {
     method: 'DELETE',

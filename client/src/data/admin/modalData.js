@@ -5,7 +5,7 @@
 */
 
 // Components
-import { AddInstructorForm } from '@/components/Forms/Instructor/AddInstructor';
+import { InstructorForm } from '@/components/Forms/Instructor/';
 import { FilterOptionForm } from '@/components/Forms/Instructor/FilterOption';
 
 import { AddStudentAttendanceForm } from '@/components/Forms/Attendance/AddStudent';
@@ -14,9 +14,14 @@ import { ManageAttendanceForm } from '@/components/Forms/Attendance/ManageAttend
 export const modalData = {
   instructors: {
     add: {
-      component: AddInstructorForm,
+      component: InstructorForm,
       title: 'Add Instructor',
       subtitle: 'Complete the form to add a new instructor.',
+    },
+    edit: {
+      component: InstructorForm, // change to InstructorForm
+      title: 'Edit Instructor',
+      subtitle: 'Complete the form to edit the instructor details.',
     },
     filter: {
       component: FilterOptionForm, 

@@ -89,16 +89,16 @@ const viewComponents = {
 
 export const DataVisualization = ({ children, slug, columns, data, setter, pagination }) => {
 
-  // state
+  // State
   const [ view, setView ] = useState('table');
-  const [ selectedRow, setSelectedRow ] = useState(null);
+  //const [ selectedRow, setSelectedRow ] = useState(null);
   const [ page, setPage ] = useState(2);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
 
-  // hooks
+  // Hooks
   const { modal, openModal, closeModal } = useModal();
 
-  // variables
+  // Variables
   const CurrentView = viewComponents[view];
   const ModalData = modalData[slug.name];
 
@@ -113,14 +113,16 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
   };
 
   const handleRowClick = (rowData) => {
-    setSelectedRow(rowData);
 
     openModal(
       <ProfileCard 
-        rowData={ selectedRow } 
+        rowData={ rowData } 
         elevation={ 0 } 
         backgroundColor="transparent" 
         border="none" 
+        handleEdit={() => 
+          openModal(<ModalData.edit.component data={ rowData } setter={ setter } method='PUT' />, ModalData.edit.title, ModalData.edit.subtitle)
+        }
       />, 'Instructor', 'this is a subtitle'
     );
   };

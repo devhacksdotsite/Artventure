@@ -22,6 +22,18 @@ class AdminController {
     });   
   }
 
+  async addInstructor(req, res) {
+
+    const payload = req.body;
+
+    const instructors = await this.instructorModel.addInstructor(payload);
+
+    return res.json({
+      status: 'success',
+      instructors,
+    });   
+  }
+
   // Other methods...
 }
 

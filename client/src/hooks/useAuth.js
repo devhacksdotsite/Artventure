@@ -105,6 +105,7 @@ export const useAuth = () => {
 
   return {
 	authenticated,
+    token,
 	login,
 	logout,
     loading
