@@ -11,7 +11,8 @@ import {
   Typography,
   Button,
   Grid,
-  Chip
+  Chip,
+  Link as MUILink
 } from '@mui/material';
 
 // MUI Hooks
@@ -41,7 +42,7 @@ const formatPhoneNumber = (phoneNumber) => {
   return phoneNumber; // Return the original number if it doesn't match the expected format
 };
 
-export const ProfileCard = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit }) => {
+export const ProfileCard = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete }) => {
 
   console.log('rowData is: ', rowData);
 
@@ -53,6 +54,7 @@ export const ProfileCard = ({ rowData, elevation = 0, backgroundColor = 'transpa
 
   // Handlers
   const editCard = () => handleEdit();
+  const deleteCard = () => handleDelete();
 
   return (
     <Paper
@@ -102,6 +104,7 @@ export const ProfileCard = ({ rowData, elevation = 0, backgroundColor = 'transpa
               color="error" 
               startIcon={ <Delete /> }
               style={ buttonStyle }
+              onClick={ () => deleteCard() }
             >Delete</Button>
           </Grid>
         </Grid>
@@ -181,10 +184,10 @@ export const ProfileCard = ({ rowData, elevation = 0, backgroundColor = 'transpa
               Address: {rowData.address}
             </Typography>
             <Typography>
-              Phone: {rowData.phone}
+              Phone: <MUILink href={`tel:${ rowData.phone }`}>{ formatPhoneNumber(rowData.phone) }</MUILink>;
             </Typography>
             <Typography>
-              Email: {rowData.email}
+              Email: <MUILink href={`mailto:${ rowData.email }`}>{ rowData.email }</MUILink>;
             </Typography>
             {/* Add more fields as needed */}
           </Grid>

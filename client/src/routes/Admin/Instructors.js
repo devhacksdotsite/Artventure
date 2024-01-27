@@ -41,8 +41,13 @@ const columns = [
     sort: true,
     filter: true
   }, {
-    id: 'address',
-    label: 'Location',
+    id: 'phone',
+    label: 'Phone',
+    sort: true,
+    filter: true
+  },  {
+    id: 'email',
+    label: 'Email',
     sort: true,
     filter: true
   }, {

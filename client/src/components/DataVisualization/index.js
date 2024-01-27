@@ -104,7 +104,6 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
 
   // handlers
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -122,6 +121,9 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
         border="none" 
         handleEdit={() => 
           openModal(<ModalData.edit.component data={ rowData } setter={ setter } method='PUT' />, ModalData.edit.title, ModalData.edit.subtitle)
+        }
+        handleDelete={() => 
+          openModal(<ModalData.delete.component data={ rowData } setter={ setter } method='PUT' closeModal={ closeModal } />, ModalData.delete.title, ModalData.delete.subtitle)
         }
       />, 'Instructor', 'this is a subtitle'
     );
@@ -196,7 +198,9 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
             <CurrentView 
               columns={ columns } 
               data={ data } 
+              setter={ setter }
               handleRowClick={ handleRowClick } 
+              slug={ slug }
             />
           ) }
 

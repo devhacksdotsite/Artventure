@@ -6,6 +6,7 @@
 
 // Components
 import { InstructorForm } from '@/components/Forms/Instructor/';
+import { DeleteEntry as InstructorDelete } from '@/components/Forms/DeleteEntry';
 import { FilterOptionForm } from '@/components/Forms/Instructor/FilterOption';
 
 import { AddStudentAttendanceForm } from '@/components/Forms/Attendance/AddStudent';
@@ -19,9 +20,14 @@ export const modalData = {
       subtitle: 'Complete the form to add a new instructor.',
     },
     edit: {
-      component: InstructorForm, // change to InstructorForm
+      component: InstructorForm,
       title: 'Edit Instructor',
       subtitle: 'Complete the form to edit the instructor details.',
+    },
+    delete: {
+      component: InstructorDelete, 
+      title: 'Delete Instructor',
+      subtitle: null,
     },
     filter: {
       component: FilterOptionForm, 
