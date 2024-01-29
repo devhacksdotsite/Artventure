@@ -30,7 +30,8 @@ import {
 // MUI Icons
 import {
   TableChart,
-  GridView
+  GridView,
+  SearchOff
 } from '@mui/icons-material';
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -120,7 +121,7 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
         backgroundColor="transparent" 
         border="none" 
         handleEdit={() => 
-          openModal(<ModalData.edit.component data={ rowData } setter={ setter } method='PUT' />, ModalData.edit.title, ModalData.edit.subtitle)
+          openModal(<ModalData.edit.component data={ rowData } setter={ setter } method='PUT' closeModal={ closeModal } />, ModalData.edit.title, ModalData.edit.subtitle)
         }
         handleDelete={() => 
           openModal(<ModalData.delete.component data={ rowData } setter={ setter } method='PUT' closeModal={ closeModal } />, ModalData.delete.title, ModalData.delete.subtitle)
@@ -160,16 +161,30 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
           action={
             <>
               { !!ModalData.filter && (
-                <Tooltip title="Filter options">
-                  <IconButton 
-                    aria-label="filter"
-                    onClick={() =>
-                      openModal(<ModalData.filter.component />, ModalData.filter.title, ModalData.filter.subtitle)
-                    }
-                  >
-                    <TuneIcon />
-                  </IconButton>
-                </Tooltip>
+                <>
+                  <Tooltip title="Clear Filter Options">
+                    <IconButton 
+                      aria-label="clear"
+                      onClick={() =>
+                        console.log('clear filters')
+                      }
+                      disabled
+                    >
+                      <SearchOff />
+                    </IconButton>
+                  </Tooltip>
+
+                  <Tooltip title="Filter Options">
+                    <IconButton 
+                      aria-label="filter"
+                      onClick={() =>
+                        openModal(<ModalData.filter.component />, ModalData.filter.title, ModalData.filter.subtitle)
+                      }
+                    >
+                      <TuneIcon />
+                    </IconButton>
+                  </Tooltip>
+                </>
               ) }
 
               { !!ModalData.add && (
@@ -177,7 +192,7 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
                   <IconButton
                     aria-label="add"
                     onClick={() =>
-                      openModal(<ModalData.add.component data={ data } setter={ setter } />, ModalData.add.title, ModalData.add.subtitle)
+                      openModal(<ModalData.add.component data={ data } setter={ setter } closeModal={ closeModal } />, ModalData.add.title, ModalData.add.subtitle)
                     }
                   >
                     <AddCircleIcon />

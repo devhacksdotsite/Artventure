@@ -7,13 +7,10 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-// Form Validation
-import { useForm, Controller } from 'react-hook-form';
-
 // MUI
 import {
   Container,
-  Box,
+  Paper,
   Avatar,
   Typography, 
   TextField,
@@ -36,14 +33,16 @@ import {
   LockOutlined,
   Visibility,
   VisibilityOff,
+  Search,
+  SearchOff,
 } from '@mui/icons-material';
 
+// Styles
+const buttonStyle = {
+  padding: '10px',
+};
+
 export const FilterOptionForm = () => {
-  const { 
-	control, 
-	handleSubmit, 
-	formState: { errors } 
-  }  = useForm();
   
   // Handlers
   const onSubmit = () => {
@@ -51,7 +50,12 @@ export const FilterOptionForm = () => {
   }
 
   return (
-    <Box component="form" onSubmit={ handleSubmit(onSubmit) } noValidate sx={{ mt: 1 }}>
+    <Paper
+      elevation={ 0 }
+      sx={{
+        backgroundColor: 'transparent',
+      }}
+    >
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -90,6 +94,30 @@ export const FilterOptionForm = () => {
         
       </Grid>
 
-    </Box>
+      <Grid container spacing={2} my={2}>
+        <Grid item xs={6}>
+          <Button 
+            fullWidth 
+            variant="contained" 
+            color="primary" 
+            startIcon={ <Search /> }
+            style={ buttonStyle }
+            onClick={ () => search() }
+          >Search</Button>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Button 
+            fullWidth 
+            variant="outlined" 
+            color="primary" 
+            startIcon={ <SearchOff /> }
+            style={ buttonStyle }
+            onClick={ () => clear() }
+          >Reset</Button>
+        </Grid>
+      </Grid>
+
+    </Paper>
   );
 }

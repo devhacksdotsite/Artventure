@@ -1,5 +1,6 @@
 /*
   * context\AppReducer.js
+  * Name: AppReducer
   * Author: Jesse Salinas
   * Date: 07/22/2023
 */
@@ -40,6 +41,12 @@ export default (state, action) => {
       return {
         ...state,
         slug: action.payload,
+      }
+
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filter: action.payload
       }
 
     case 'SET_INSTRUCTORS':

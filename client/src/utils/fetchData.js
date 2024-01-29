@@ -1,5 +1,6 @@
 /*
   * utils\fetchData.js
+  * Name: fetchData
   * Author: Jesse Salinas
   * Date: 12/16/2023
 */

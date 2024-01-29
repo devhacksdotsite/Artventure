@@ -45,7 +45,7 @@ import {
   VisibilityOff,
 } from '@mui/icons-material';
 
-export const InstructorForm = ({ data, setter, method = 'POST'  }) => {
+export const InstructorForm = ({ data, setter, method = 'POST', closeModal }) => {
 
   console.log('data: ', data);
   // State
@@ -66,21 +66,50 @@ export const InstructorForm = ({ data, setter, method = 'POST'  }) => {
 
     const payload = { ...formData };
 
-    if (method === 'POST') {
+    try {
+      let response;
 
-      const url = `http://localhost:3050/api/private/admin/instructors`; 
-      const response = await postData(url, payload, token, logout);
-    } else if (method === 'PUT') {
+      if (method === 'POST') {
 
-      const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
-      const response = await putData(url, payload, token, logout);
-    } else if (method === 'DELETE') {
+        const url = `http://localhost:3050/api/private/admin/instructors`; 
+        response = await postData(url, payload, token, logout);
 
-      const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
-      const response = await deleteData(url, token, logout);
+
+      } else if (method === 'PUT') {
+
+        const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
+        response = await putData(url, payload, token, logout);
+
+        // Check if data is returned
+        if (response) {
+  
+        }
+
+      } else if (method === 'DELETE') {
+
+        const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
+        response = await deleteData(url, token, logout);
+      }
+
+      // Set instructor data
+      if (response.instructors && response.instructors.length > 0) {
+       
+        setter(response.instructors);
+      } else {
+
+        alert('Oops, something went wrong.');
+      }
+
+    } catch (error) {
+
+      // throw error
+      console.log(error);
+
+      // handle error here. 
+    } finally {
+
+      closeModal();
     }
-
-    console.log(response);
 
   }
 
@@ -153,10 +182,10 @@ export const InstructorForm = ({ data, setter, method = 'POST'  }) => {
             render={({ field }) => (
               <LocalizationProvider dateAdapter={AdapterMoment}>
                 <TextField
-                  id="date2"
+                  id="dateStarted"
                   label="Start Date"
                   type="date"
-                  defaultValue="2017-05-24"
+                  defaultValue=""
                   sx={{ width: '100%', mt: 2 }}
                   InputLabelProps={{
                     shrink: true,

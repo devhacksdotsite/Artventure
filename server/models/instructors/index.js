@@ -34,7 +34,8 @@ class InstructorModelBase extends BaseModel {
       INNER JOIN artventure.location loc
         ON ins.location_id = loc.location_id
       INNER JOIN artventure.school sch
-        ON loc.school_id = sch.school_id;
+        ON loc.school_id = sch.school_id
+      WHERE ins.active = 1;
     `;
 
     try {

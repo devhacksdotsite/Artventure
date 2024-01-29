@@ -49,7 +49,7 @@ export const DeleteEntry = ({ data, setter, method = 'DELETE', closeModal  }) =>
   const handleCloseConfirmationDialog = () => closeModal();
 
   const handleConfirm = async () => {
-    //await onSubmit(data);
+    await onSubmit(data);
 
     // Close the confirmation dialog
     handleCloseConfirmationDialog();
@@ -59,21 +59,33 @@ export const DeleteEntry = ({ data, setter, method = 'DELETE', closeModal  }) =>
 
     const payload = { ...formData };
 
-    if (method === 'POST') {
-
-      const url = `http://localhost:3050/api/private/admin/instructors`; 
-      const response = await postData(url, payload, token, logout);
-    } else if (method === 'PUT') {
+    try {
+      let response;
 
       const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
-      const response = await putData(url, payload, token, logout);
-    } else if (method === 'DELETE') {
+      response = await deleteData(url, token, logout);
 
-      const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
-      const response = await deleteData(url, token, logout);
+      // Set instructor data
+      if (response.instructors && response.instructors.length > 0) {
+       
+        setter(response.instructors);
+      } else {
+
+        alert('Oops, something went wrong.');
+      }
+
+    } catch (error) {
+
+      // throw error
+      console.log(error);
+
+      // handle error here. 
+    } finally {
+
+      closeModal();
     }
 
-    console.log(response);
+
 
   }
 

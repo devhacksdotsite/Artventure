@@ -50,27 +50,35 @@ export const TableView = ({ columns, data, handleRowClick }) => {
       <Table style={{ overflowX: 'auto' }}>
         <TableHead>
           <TableRow>
-            { columns && columns.map((column) => (
-              <TableCell key={ column.id }>{ column.label }</TableCell>
+            { columns && columns.map((column, index) => (
+              <TableCell key={ index }>{ column.label }</TableCell>
             )) }
           </TableRow>
         </TableHead>
 
         <TableBody>
-          { data && data.map((item) => (
-            <TableRow 
-              key={ item.id } 
-              onClick={ () => handleRowClick(item)}
-              style={{ cursor: 'pointer' }}
-            >
-              { columns.map((column) => (
-                <TableCell key={ column.id }>
-                  { renderTableCellContent(column.id, item[column.id]) }
-                </TableCell>
-              )) }
+          {data && data.length > 0 ? (
+            data.map((item, index) => (
+              <TableRow
+                key={ index }
+                onClick={() => handleRowClick(item)}
+                style={{ cursor: 'pointer' }}
+              >
+                {columns && columns.map((column, colIndex) => (
+                  <TableCell key={ colIndex }>
+                    { renderTableCellContent(column.id, item[column.id]) }
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={ columns.length } style={{ textAlign: 'center' }}>
+                No data available
+              </TableCell>
             </TableRow>
-          )) }
-        </TableBody>
+          )}
+        </TableBody> 
       </Table>
     </TableContainer>
   );

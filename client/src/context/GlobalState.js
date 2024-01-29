@@ -27,6 +27,13 @@ const initialState = {
 
   // instructors
   instructors: [],
+
+  filter: {
+    instructors: {
+      search: '',
+      status: '',
+    },
+  },
 }
 
 // Create application Context
@@ -80,6 +87,15 @@ export const GlobalProvider = ({ children }) => {
     });
   } 
 
+  // Filters
+  const setFilter = (filter) => {
+  
+    dispatch({
+      type: 'SET_FILTER',
+      payload: filter
+    });
+  }
+
   return (
 	<GlobalCtx.Provider value={{
 	  portal: state.portal,
@@ -89,18 +105,18 @@ export const GlobalProvider = ({ children }) => {
       slug: state.slug,
       school: state.school,
       instructors: state.instructors,
+      filter: state.filter,
 
       setToken,
 	  setAuthenticated,
 	  setPortal,
 	  setDarkMode,
       setSlug,
-      setInstructors
+      setInstructors,
+      setFilter,
 	}}>
 	  { children }
 	</GlobalCtx.Provider>
   );
 }
-
-
 

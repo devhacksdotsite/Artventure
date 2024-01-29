@@ -23,10 +23,13 @@ class AdminController {
   }
 
   async addInstructor(req, res) {
-
+    console.log('ADD...');
     const payload = req.body;
 
-    const instructors = await this.instructorModel.addInstructor(payload);
+    const response = await this.instructorModel.addInstructor(payload);
+
+    // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
+    const instructors = await this.instructorModel.getInstructors();
 
     return res.json({
       status: 'success',
@@ -34,7 +37,39 @@ class AdminController {
     });   
   }
 
-  // Other methods...
+  async updateInstructor(req, res) {
+
+    console.log('UPDATE...');
+    const instructorId = req.params.id;
+    const payload = req.body;
+
+    const response = await this.instructorModel.updateInstructor(instructorId, payload);
+
+    // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
+    const instructors = await this.instructorModel.getInstructors();
+
+    return res.json({
+      status: 'success',
+      instructors,
+    });   
+  }
+
+  async deleteInstructor(req, res) {
+
+    console.log('DELETE...');
+    const instructorId = req.params.id;
+
+    const response = await this.instructorModel.deleteInstructor(instructorId);
+
+    // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
+    const instructors = await this.instructorModel.getInstructors();
+
+    return res.json({
+      status: 'success',
+      instructors,
+    }); 
+  }
+
 }
 
 module.exports = AdminController;
