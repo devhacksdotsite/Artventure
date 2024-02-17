@@ -16,12 +16,6 @@ const authenticateToken = require('../../middleware/Auth');
 const apiAdminRoutes = require('./Admin/');
 const apiStudentRoutes = require('./Student/');
 
-// Controller
-const PrivateController = require('../../controllers/private/GlobalController');
-
-// Models
-const PrivateModel = require('../../models/private/');
-
 // JWT Authenticate
 router.use('/', authenticateToken);
 
@@ -30,8 +24,6 @@ router.use('/student/', apiStudentRoutes);
 
 // Use private student routes
 router.use('/admin/', apiAdminRoutes);
-
-const privateController = new PrivateController(PrivateModel);
 
 // Global private routes
 router.get('/', (req, res) => {
