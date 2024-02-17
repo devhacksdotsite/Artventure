@@ -32,7 +32,7 @@ import {
 // Hooks
 import { useAuth } from '@/hooks/useAuth';
 
-export const AccountMenu = () => {
+export const AccountMenu = ({ user }) => {
 
   // State
   const [ anchorEl, setAnchorEl ] = useState(null);
@@ -135,7 +135,7 @@ export const AccountMenu = () => {
         </MenuItem>
 
         <MenuItem onClick={ handleClose }>
-          <Avatar /> My account
+          <Avatar /> { user.username }
         </MenuItem>
         <Divider />
         <MenuItem onClick={ handleClose }>

@@ -5,6 +5,17 @@
   * Date: 12/16/2023
 */
 
+const serializeParams = (url, params) => {
+
+  // Create a query string from the params object
+  const queryString = Object.keys(params)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .join('&');
+
+  // Append the query string to the URL
+  return `${url}?${queryString}`;
+}
+
 const fetchData = async (url, options, logout) => {
 
   try {
@@ -29,9 +40,15 @@ const fetchData = async (url, options, logout) => {
   }
 };
 
-export const getData = async (url, token, logout) => {
+export const getData = async (url, token, logout, params) => {
 
-  return fetchData(url, {
+  let apiURL = url;
+
+  if (params) {
+    apiURL = serializeParams(url, params);
+  }
+
+  return fetchData(apiURL, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -40,9 +57,15 @@ export const getData = async (url, token, logout) => {
   }, logout);
 };
 
-export const postData = async (url, body, token, logout) => {
+export const postData = async (url, body, token, logout, params) => {
 
-  return fetchData(url, {
+  let apiURL = url;
+
+  if (params) {
+    apiURL = serializeParams(url, params);
+  }
+
+  return fetchData(apiURL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -52,9 +75,15 @@ export const postData = async (url, body, token, logout) => {
   }, logout);
 };
 
-export const putData = async (url, body, token, logout) => {
+export const putData = async (url, body, token, logout, params) => {
 
-  return fetchData(url, {
+  let apiURL = url;
+
+  if (params) {
+    apiURL = serializeParams(url, params);
+  }
+
+  return fetchData(apiURL, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -64,9 +93,15 @@ export const putData = async (url, body, token, logout) => {
   }, logout);
 };
 
-export const deleteData = async (url, token, logout) => {
+export const deleteData = async (url, token, logout, params) => {
 
-  return fetchData(url, {
+  let apiURL = url;
+
+  if (params) {
+    apiURL = serializeParams(url, params);
+  }
+
+  return fetchData(apiURL, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

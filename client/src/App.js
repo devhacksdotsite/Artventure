@@ -1,5 +1,6 @@
 /*
   * App.js
+  * Name: App
   * Author: Jesse Salinas
   * Date: 07/20/2023
 */
@@ -13,8 +14,8 @@ import {
 } from 'react-router-dom';
 
 // Route Components
-import { AdminPortal } from './routes/Admin/';
-import { StudentPortal } from './routes/Student/'
+import { AdminPortal } from '@/routes/Admin/';
+import { StudentPortal } from '@/routes/Student/'
 
 export default function App() {
 

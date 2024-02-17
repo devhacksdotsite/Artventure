@@ -16,12 +16,31 @@ const authenticateToken = require('../../middleware/Auth');
 const apiAdminRoutes = require('./Admin/');
 const apiStudentRoutes = require('./Student/');
 
+// Controller
+const PrivateController = require('../../controllers/private/GlobalController');
+
+// Models
+const PrivateModel = require('../../models/private/');
+
+// JWT Authenticate
 router.use('/', authenticateToken);
 
+// Use private student routes
 router.use('/student/', apiStudentRoutes);
+
+// Use private student routes
 router.use('/admin/', apiAdminRoutes);
 
+const privateController = new PrivateController(PrivateModel);
+
+// Global private routes
 router.get('/', (req, res) => {
+
+  // Provide Details
+  res.send('Artventure API Private Routes.');
+});
+
+router.get('/curriculum', (req, res) => {
   res.send('Artventure API Private routes...');
 });
 

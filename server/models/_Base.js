@@ -20,6 +20,42 @@ class BaseModel {
     this.connection = this.setupConnection(config);
   }
 
+  _cleanParamValues(values) {
+
+    if (!Array.isArray(values)) {
+
+      return (values && typeof values === 'string') ? values.trim() : values;
+    }
+
+    return values.map(value => (value && typeof value === 'string') ? value.trim() : value);
+  }
+
+  _formatQueryParams(params) {
+  
+    // General Query formatter override at lower classes for more control
+    return 'Coming soon';
+  }
+
+  _buildWhereClause(params) {
+
+    // Build Where Clause
+    const conditions = params.map(param => {
+      return param.value !== null && param.value !== undefined
+        ? `${param.prefix}${param.name} = ?`
+        : null;
+    }).filter(Boolean);
+
+    const whereClause = conditions.length > 0 
+      ? `WHERE ${conditions.join(' AND ')}` : '';
+
+    // Bind param values
+    const bindValues = params.filter(param => param.value !== null && param.value !== undefined)
+      .map(param => this._cleanParamValues(param.value));
+
+    return { whereClause, bindValues };
+
+  }
+
   async setupConnection(config) {
     try {
 
@@ -40,6 +76,7 @@ class BaseModel {
   }
 
   async query(sql, params) {
+    console.log('params', params);
     try {
 
       // DB Connection
@@ -59,7 +96,6 @@ class BaseModel {
       throw error;
     }
   }
-
 }
 
 module.exports = BaseModel;

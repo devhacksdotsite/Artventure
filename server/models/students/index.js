@@ -8,54 +8,79 @@
 const BaseModel = require('../_Base');
 
 class StudentModelBase extends BaseModel {
-  /*constructor() {
-    // super base ...
-  }*/
 
-  async getAllStudents() {
-    /*try {
-      const query = 'SELECT * FROM instructors';
-      const instructors = await this.queryAsync(query);
-      return instructors;
-    } catch (error) {
-      throw error;
-    }*/
+  constructor() {
+    super(); // call the constructor parent class
+  }
 
+  _formatQueryParams({ studentId, clientId, firstname, lastname, status }) {
+
+    // Build the filter params array
     return [
-      {
-        id: '2353JD343',
-        fullname: 'Mindy Shafer',
-        location: 'Artventure - Laguna Niguel',
-        address: '30902 Clubhouse Dr, Laguna Niguel CA 92677',
-        phone: '(949) 859-7984'
-      }, {
-        id: '3431F343D',
-        fullname: 'Cindy Trevor',
-        location: 'Artventure - Laguna Niguel',
-        address: '67 Bentwood Ln, Aliso Viejo CA 92656',
-        phone: '(714) 393-7984'
-      },
-      {
-        id: '5631F843K',
-        fullname: 'Monika Rivera',
-        location: 'Artventure - Laguna Beach',
-        address: '27975 Mazagon, Mission Viejo Ca, 92659',
-        phone: '(714) 345-2234'
-      },
-    ];
+      ...[ (firstname && { name: 'firstname', prefix: 'stu.', value: firstname }) ],
+      ...[ (lastname && { name: 'lastname', prefix: 'stu.', value: lastname }) ],
+      ...[ (studentId && { name: 'client_id', prefix: 'stu.', value: clientId }) ],
+      ...[ (studentId && { name: 'student_id', prefix: 'stu.', value: studentId }) ],
+      ...[ (status !== null && status !== undefined && status !== 'all' && { name: 'active', prefix: 'stu.', value: status === 'active' ? 1 : 0 }) ],
+    ].filter(Boolean);
+
   }
 
-  async getInstructorById(instructorId) {
-    /*try {
-      const query = 'SELECT * FROM instructors WHERE id = ?';
-      const instructor = await this.queryAsync(query, [instructorId]);
-      return instructor[0];
+  async getStudents(req) {
+
+    const { search, status } = req.query;
+
+    // Split the search parameter into firstname and lastname
+    const [firstname, lastname] = search ? search.split(' ') : [null, null];
+
+    // Format query params
+    const queryParams = this._formatQueryParams({ firstname, lastname, status });
+    console.log({ firstname, lastname, status }, queryParams);
+
+    // Build WHERE clause
+    const { whereClause, bindValues } = this._buildWhereClause(queryParams);
+
+    const baseSql = `
+      SELECT 
+        stu.student_id, 
+        stu.client_id, 
+        stu.firstname,
+        stu.lastname, 
+        CONCAT(stu.firstname, ' ', stu.lastname) AS fullname, 
+        DATE_FORMAT(stu.date_started, '%Y-%m-%d') AS date_started, 
+        DATE_FORMAT(stu.birthdate, '%Y-%m-%d') AS birthdate, 
+        stu.active,
+        loc.location_id, 
+        loc.address AS loc_address, 
+        sch.school_id, 
+        sch.school_code, 
+        sch.school_name 
+      FROM artventure.student stu 
+      INNER JOIN artventure.location loc
+        ON stu.location_id = loc.location_id
+      INNER JOIN artventure.school sch
+        ON loc.school_id = sch.school_id
+    `;
+
+    const sql = `${baseSql} ${whereClause}`;
+    console.log(sql);
+
+    try {
+      const { results } = await this.query(sql, bindValues);
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
     } catch (error) {
+  
       throw error;
-    }*/
+    }
+
   }
 
-  // Other methods...
 }
 
 module.exports = StudentModelBase;

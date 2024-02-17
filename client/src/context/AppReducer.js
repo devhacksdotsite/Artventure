@@ -19,6 +19,12 @@ export default (state, action) => {
         school: action.payload,
       }
 
+	case 'SET_USER':
+	  return {
+		...state,
+	    user: action.payload,
+	  }
+
 	case 'SET_TOKEN':
 	  return {
 		...state,
@@ -49,10 +55,28 @@ export default (state, action) => {
         filter: action.payload
       }
 
+    case 'SET_VIEW':
+      return {
+        ...state,
+        view: action.payload
+      }
+
     case 'SET_INSTRUCTORS':
       return {
         ...state,
         instructors: action.payload,
+      }
+
+    case 'SET_CLIENTS':
+      return {
+        ...state,
+        clients: action.payload,
+      }
+
+    case 'SET_STUDENTS':
+      return {
+        ...state,
+        students: action.payload,
       }
 
 	default: 

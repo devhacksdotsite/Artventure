@@ -18,6 +18,9 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import RuleIcon from '@mui/icons-material/Rule';
 import SchoolIcon from '@mui/icons-material/School';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import PaletteIcon from '@mui/icons-material/Palette';
 
 // Admin main links
 export const mainListItems = [
@@ -31,26 +34,26 @@ export const mainListItems = [
 	name: 'Calendar',
 	url: '/admin/calendar',
 	icon: <CalendarMonthIcon />
-  }, {
+  }, /*{
     id: uuidv4(),
 	name: 'Schools',
 	url: '/admin/schools',
 	icon: <SchoolIcon />
-  }, {
+  }, */ {
     id: uuidv4(),
-	name: 'Instructors',
-	url: '/admin/instructors',
-	icon: <PeopleIcon />
+	name: 'Clients',
+	url: '/admin/clients',
+	icon: <GroupsIcon />
   }, {
     id: uuidv4(),
 	name: 'Students',
 	url: '/admin/students',
-	icon: <PeopleIcon />
+	icon: <PaletteIcon />
   }, {
     id: uuidv4(),
-	name: 'Patrons',
-	url: '/admin/patrons',
-	icon: <GroupsIcon />
+	name: 'Instructors',
+	url: '/admin/instructors',
+	icon: <SchoolIcon />
   }, {
     id: uuidv4(),
 	name: 'Attendance',
@@ -68,14 +71,14 @@ export const mainListItems = [
 export const secondaryListItems = [
   {
     id: uuidv4(),
-	name: 'Report 1',
-	url: '/admin/dashboard',
-	icon: <DashboardIcon />
+	name: 'Students Report',
+	url: '/admin/reports/students',
+	icon: <SummarizeIcon />
   }, {
     id: uuidv4(),
-	name: 'Report 2',
-	url: '/admin/calendar',
-	icon: <CalendarMonthIcon />
+	name: 'Clients Report',
+	url: '/admin/reports/clients',
+	icon: <SummarizeIcon />
   }
 ];
 

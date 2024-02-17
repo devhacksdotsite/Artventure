@@ -24,20 +24,25 @@ const userModel = new UserModel();
 // Instantiate Controller, use dependency injection
 const userController = new UserController(userModel);
 
-router.post('/signin', (req, res) => userController.signIn(req, res));
+// Unauthenticated Routes
 
-// create account
+// Create account
 router.get('/signup', (req, res) => {
   res.send('account create');
 });
 
-// logout - auth route
+// User signin
+router.post('/signin', (req, res) => userController.signIn(req, res));
+
+// logout - this will need to be part of auth routes
 router.get('/signout', (req, res) => {
   res.send('logout');
 });
 
 router.get('/', (req, res) => {
-  res.send('Artventure Auth API routes...');
+
+  // Provide details...
+  res.send('Welcome to the Artventure Portal API.');
 });
 
 module.exports = router;

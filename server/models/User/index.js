@@ -59,6 +59,7 @@ class UserModelBase extends BaseModel {
     }
 
     const claims = {
+      fullname: user.full_name,
       username: user.username,
       user_id: user.user_id
     };

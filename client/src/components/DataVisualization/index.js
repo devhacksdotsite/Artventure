@@ -4,7 +4,7 @@
   * Date: 07/22/2023
 */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 // Data
 import { modalData } from '@/data/admin/modalData';
@@ -23,6 +23,7 @@ import {
   ButtonGroup,
   Button,
   IconButton,
+  Badge,
   Tooltip,
   styled
 } from '@mui/material';
@@ -36,6 +37,9 @@ import {
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import TuneIcon from '@mui/icons-material/Tune';
+
+// CTX
+import { GlobalCtx } from '@/context/GlobalState';
 
 // Components
 import { MasonryView } from '@/components/DataVisualization/Masonry';
@@ -88,13 +92,15 @@ const viewComponents = {
   table: TableView,
 };
 
-export const DataVisualization = ({ children, slug, columns, data, setter, pagination }) => {
+export const DataVisualization = ({ children, slug, columns, data, setter, pagination, filter, setFilter, resetFilter, activeFilter }) => {
 
   // State
-  const [ view, setView ] = useState('table');
   //const [ selectedRow, setSelectedRow ] = useState(null);
   const [ page, setPage ] = useState(2);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
+
+  // CTX
+  const { view, setView } = useContext(GlobalCtx);
 
   // Hooks
   const { modal, openModal, closeModal } = useModal();
@@ -102,6 +108,7 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
   // Variables
   const CurrentView = viewComponents[view];
   const ModalData = modalData[slug.name];
+  console.log(ModalData);
 
   // handlers
   const handleChangePage = (event, newPage) => {
@@ -112,21 +119,45 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
     setPage(0);
   };
 
+  const handleFilterReset = () => resetFilter();
+
   const handleRowClick = (rowData) => {
 
     openModal(
-      <ProfileCard 
+      <ModalData.tag.component 
         rowData={ rowData } 
         elevation={ 0 } 
         backgroundColor="transparent" 
         border="none" 
         handleEdit={() => 
-          openModal(<ModalData.edit.component data={ rowData } setter={ setter } method='PUT' closeModal={ closeModal } />, ModalData.edit.title, ModalData.edit.subtitle)
+          openModal(
+            <ModalData.edit.component 
+              data={ rowData } 
+              setter={ setter } 
+              method='PUT' 
+              filter={ filter }
+              closeModal={ closeModal } 
+            />, 
+            ModalData.edit.title, 
+            ModalData.edit.subtitle
+          )
         }
         handleDelete={() => 
-          openModal(<ModalData.delete.component data={ rowData } setter={ setter } method='PUT' closeModal={ closeModal } />, ModalData.delete.title, ModalData.delete.subtitle)
+          openModal(
+            <ModalData.delete.component 
+              data={ rowData } 
+              setter={ setter } 
+              method='PUT' 
+              filter={ filter }
+              closeModal={ closeModal } 
+            />, 
+            ModalData.delete.title, 
+            ModalData.delete.subtitle
+          )
         }
-      />, 'Instructor', 'this is a subtitle'
+      />, 
+      ModalData.tag.title, 
+      ModalData.tag.subtitle
     );
   };
 
@@ -139,18 +170,24 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
             variant="contained"
             aria-label="Disabled elevation buttons"
           >
-            <Button 
-              variant={ view === 'table' ? 'contained' : 'outlined' }
-              onClick={ () => setView('table') }
-            >
-              <TableChart />
-            </Button>
-            <Button 
-              variant={ view === 'masonry' ? 'contained' : 'outlined' }
-              onClick={ () => setView('masonry') }
-            >
-              <GridView />
-            </Button>
+
+            <Tooltip title="Quick View">
+              <Button 
+                variant={ view === 'table' ? 'contained' : 'outlined' }
+                onClick={ () => setView('table') }
+              >
+                <TableChart />
+              </Button>
+            </Tooltip>
+
+            <Tooltip title="Detailed View">
+              <Button 
+                variant={ view === 'masonry' ? 'contained' : 'outlined' }
+                onClick={ () => setView('masonry') }
+              >
+                <GridView />
+              </Button>
+            </Tooltip>
             
           </ButtonGroup>
         ) }
@@ -162,27 +199,41 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
             <>
               { !!ModalData.filter && (
                 <>
-                  <Tooltip title="Clear Filter Options">
-                    <IconButton 
-                      aria-label="clear"
-                      onClick={() =>
-                        console.log('clear filters')
-                      }
-                      disabled
-                    >
-                      <SearchOff />
-                    </IconButton>
+                  <Tooltip title="Reset Filter Options">
+                    <span>
+
+                        <IconButton 
+                          aria-label="reset"
+                          disabled={ !activeFilter() }
+                          onClick={ handleFilterReset }
+                        >
+                          <SearchOff />
+                        </IconButton>
+                    
+                    </span>
                   </Tooltip>
 
                   <Tooltip title="Filter Options">
-                    <IconButton 
-                      aria-label="filter"
-                      onClick={() =>
-                        openModal(<ModalData.filter.component />, ModalData.filter.title, ModalData.filter.subtitle)
-                      }
-                    >
-                      <TuneIcon />
-                    </IconButton>
+
+			        <Badge variant={ !activeFilter() ? null : 'dot'  } color="warning">
+                      <IconButton 
+                        aria-label="filter"
+                        onClick={() =>
+                          openModal(
+                            <ModalData.filter.component 
+                              filter={ filter } 
+                              setFilter={ setFilter } 
+                              resetFilter={ resetFilter } 
+                              closeModal={ closeModal } 
+                            />, 
+                            ModalData.filter.title, 
+                            ModalData.filter.subtitle
+                          )
+                        }
+                      >
+                        <TuneIcon />
+                      </IconButton>
+                    </Badge>
                   </Tooltip>
                 </>
               ) }
@@ -192,7 +243,16 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
                   <IconButton
                     aria-label="add"
                     onClick={() =>
-                      openModal(<ModalData.add.component data={ data } setter={ setter } closeModal={ closeModal } />, ModalData.add.title, ModalData.add.subtitle)
+                      openModal(
+                        <ModalData.add.component 
+                          data={ data } 
+                          setter={ setter } 
+                          filter={ filter }
+                          closeModal={ closeModal } 
+                        />, 
+                        ModalData.add.title, 
+                        ModalData.add.subtitle
+                      )
                     }
                   >
                     <AddCircleIcon />
@@ -216,6 +276,7 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
               setter={ setter }
               handleRowClick={ handleRowClick } 
               slug={ slug }
+              ModalData={ ModalData }
             />
           ) }
 

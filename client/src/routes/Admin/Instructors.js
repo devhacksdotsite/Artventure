@@ -1,15 +1,11 @@
  /*
   * routes\Admin\Instructors.js
+  * Name: Instructors
   * Author: Jesse Salinas
   * Date: 08/06/2023
 */
 
 import { useState, useEffect, useContext } from 'react';
-
-// MUI
-import {
-
-} from '@mui/material';
 
 // Components
 import { DataVisualization } from '@/components/DataVisualization/';
@@ -17,6 +13,7 @@ import { DataVisualization } from '@/components/DataVisualization/';
 // Hooks
 import { useSlug } from '@/hooks/useSlug';
 import { useAuth } from '@/hooks/useAuth';
+import { useFilter } from '@/hooks/useFilter';
 
 // Utils
 import { getData, postData, putData, deleteData } from '@/utils/fetchData';
@@ -59,18 +56,25 @@ const columns = [
 ];
 
 export const Instructors = () => {
+  // CTX
   const { 
     instructors,
     setInstructors
   } = useContext(GlobalCtx);
 
-  // state
+  // State
   const [ loading, setLoading ] = useState(true);
   const [ error, setError ] = useState(null);
 
   // Hooks
   const { slug } = useSlug();
   const { token, logout } = useAuth();
+  const { 
+    filter, 
+    setFilter, 
+    resetFilter, 
+    activeFilter 
+  } = useFilter();
 
   const handlers = {
     addInstructor: () => {
@@ -81,9 +85,14 @@ export const Instructors = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+
+      setLoading(true);
+      console.log('Filtered? Refetching the data...', filter);
+
       try {
 
-        const response = await getData('http://localhost:3050/api/private/admin/instructors', token, logout);
+        const response = await getData('http://localhost:3050/api/private/admin/instructors', token, logout, filter);
+
         console.log(response.instructors);
 
         setInstructors(response.instructors);
@@ -98,7 +107,7 @@ export const Instructors = () => {
     }
 
     fetchData();
-  }, []);
+  }, [ filter ]); 
 
   if (loading) {
     return <div>Loading...</div>;
@@ -115,6 +124,10 @@ export const Instructors = () => {
         data={ instructors }
         slug={ slug }
         setter={ setInstructors }
+        filter={ filter }
+        setFilter={ setFilter }
+        resetFilter={ resetFilter }
+        activeFilter={ activeFilter }
       />
     </>
   );

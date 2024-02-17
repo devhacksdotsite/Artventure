@@ -1,7 +1,7 @@
 /*
-  * hooks\useAuth.js
-  * Author: Jesse Salinas
-  * Date: 07/22/2023
+* @\hooks\useAuth.js
+* Author: Jesse Salinas
+* Date: 07/22/2023
 */
 
 import { useState, useContext, useEffect } from 'react';
@@ -24,6 +24,8 @@ export const useAuth = () => {
     setAuthenticated, 
     portal, 
     setPortal, 
+    user,
+    setUser,
     token, 
     setToken 
   } = useContext(GlobalCtx);
@@ -37,6 +39,15 @@ export const useAuth = () => {
     const tokenAuth = () => {
 
       const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+
+      if (user) {
+
+        setUser(JSON.parse(user));
+      } else {
+
+        setUser({});
+      }
 
       if (token) {
 
@@ -59,13 +70,15 @@ export const useAuth = () => {
      
     // TODO: We will need to blacklist the token, POST request here...
 
-    // Clear the token from localStorage
+    // Clear the user information from localStorage
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
 
-    // Clear the token and setAuthenticated in the CTX
+    // Clear CTX
+    setUser({});
     setToken(null);
     setAuthenticated(false);
-  
+
     // Redirect to login page
     // TODO: Fix me, I need to redirct to either student or admin depending on the portal I am in...
     navigate('/admin');
@@ -81,13 +94,22 @@ export const useAuth = () => {
 
       const response = await postData(url, payload);
 
-      const { token, user_id } = response.user;
+      console.log(response.user);
+      const { token, user_id, username, fullname } = response.user;
 
-      // Set token CTX
+      // Set CTX
       setToken(token);
+      setUser({
+        user_id,
+        username,
+        fullname,
+      });
 
       // Store token in local storage
       localStorage.setItem('token', token);
+
+      // This is a security risk update to pull on every request.
+      localStorage.setItem('user', JSON.stringify({ user_id, username, fullname }));
 
       // Set authenticated CTX
       setAuthenticated(true);

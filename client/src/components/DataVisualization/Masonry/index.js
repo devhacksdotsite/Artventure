@@ -10,19 +10,13 @@ import {
   Grid 
 } from '@mui/material';
 
-// Data
-import { modalData } from '@/data/admin/modalData';
-
 // Components
-import { ProfileCard } from '@/components/DataVisualization/Masonry/ProfileCard';
 import { Modal } from '@/components/Modal/';
 
 // Hooks
 import { useModal } from '@/hooks/useModal';
 
-export const MasonryView = ({ columns, data, slug, setter }) => {
-
-  const ModalData = modalData[slug.name];
+export const MasonryView = ({ columns, data, slug, setter, ModalData }) => {
 
   // Hooks
   const { modal, openModal, closeModal } = useModal();
@@ -31,9 +25,9 @@ export const MasonryView = ({ columns, data, slug, setter }) => {
     <>
       {data && data.length > 0 ? (
         <Grid container spacing={2}>
-          {data.map((item) => (
-            <Grid item xs={12} md={6} lg={4} key={item.id}>
-              <ProfileCard 
+          { data.map((item, idx) => (
+            <Grid item xs={12} md={6} lg={4} key={ idx }>
+              <ModalData.tag.component
                 rowData={ item } 
                 elevation={3} 
                 border="1px solid gray" 
@@ -45,7 +39,7 @@ export const MasonryView = ({ columns, data, slug, setter }) => {
                 }
               />
             </Grid>
-          ))}
+          )) }
         </Grid>
       ) : (
         <Grid container justifyContent="center">

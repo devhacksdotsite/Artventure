@@ -1,8 +1,8 @@
 /*
-  * component\Forms\Instructor\FilterOption.jsx
+  * component\Forms\Student\FilterOption.jsx
   * Name: FilterOption
   * Author: Jesse Salinas
-  * Date: 08/13/2023
+  * Date: 02/05/2024
 */
 
 import { useState } from 'react';
@@ -46,7 +46,7 @@ const buttonStyle = {
   padding: '10px',
 };
 
-export const FilterOptionForm = ({ filter, setFilter, resetFilter, closeModal }) => {
+export const FilterStudentForm = ({ filter, setFilter, resetFilter, closeModal }) => {
 
   // Hooks
   const { 
@@ -105,7 +105,7 @@ export const FilterOptionForm = ({ filter, setFilter, resetFilter, closeModal })
                 <TextField
                   margin="normal"
                   fullWidth
-                  label="Search Instructor Name"
+                  label="Search Student Name"
                   autoComplete="search"
                   autoFocus
                   value={ field.value }
@@ -121,7 +121,7 @@ export const FilterOptionForm = ({ filter, setFilter, resetFilter, closeModal })
 
           <Grid item xs={12} sm={6}>
             <FormControl>
-              <FormLabel id="demo-row-radio-buttons-group-label">Instructor Status</FormLabel>
+              <FormLabel id="demo-row-radio-buttons-group-label">Student Status</FormLabel>
               <Controller
                 name="status"
                 control={control}

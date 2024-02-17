@@ -1,5 +1,6 @@
 /*
   * routes\Admin\index.js
+  * Name: AdminPortal
   * Author: Jesse Salinas
   * Date: 07/22/2023
 */
@@ -27,7 +28,7 @@ import { Dashboard } from '@/routes/Admin/Dashboard';
 import { Calendar } from '@/routes/Admin/Calendar';
 import { Instructors } from '@/routes/Admin/Instructors';
 import { Students } from '@/routes/Admin/Students';
-import { Patrons } from '@/routes/Admin/Patrons';
+import { Clients } from '@/routes/Admin/Clients';
 import { Attendance } from '@/routes/Admin/Attendance';
 
 export const AdminPortal = () => {
@@ -97,7 +98,8 @@ export const AdminPortal = () => {
 		element={ 
 		  <RequireAuth>
             <PortalLayout>
-			  <Dashboard /> 
+              {/* <Dashboard /> */}
+              Coming Soon...
             </PortalLayout>
 		  </RequireAuth>
 		} 
@@ -137,11 +139,11 @@ export const AdminPortal = () => {
       />
 
 	  <Route 
-		path="patrons" 
+		path="clients" 
 		element={ 
 		  <RequireAuth>
             <PortalLayout>
-			  <Patrons /> 
+			  <Clients /> 
             </PortalLayout>
 		  </RequireAuth>
 		} 
@@ -153,6 +155,17 @@ export const AdminPortal = () => {
 		  <RequireAuth>
             <PortalLayout>
 			  <Attendance /> 
+            </PortalLayout>
+		  </RequireAuth>
+		} 
+      />
+
+	  <Route 
+		path="reports/*" 
+		element={ 
+		  <RequireAuth>
+            <PortalLayout>
+              Coming Soon...
             </PortalLayout>
 		  </RequireAuth>
 		} 

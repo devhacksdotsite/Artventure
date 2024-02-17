@@ -1,5 +1,5 @@
 /*
-  * component\Forms\Instructor\FilterOption.jsx
+  * component\Forms\Client\FilterOption.jsx
   * Name: FilterOption
   * Author: Jesse Salinas
   * Date: 08/13/2023

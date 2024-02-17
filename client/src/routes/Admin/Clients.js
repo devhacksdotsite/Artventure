@@ -1,16 +1,11 @@
  /*
-  * routes\Admin\Students.js
-  * Name: Students
+  * routes\Admin\Clients.js
+  * Name: Clients
   * Author: Jesse Salinas
-  * Date: 09/30/2023
+  * Date: 02/08/2024
 */
 
 import { useState, useEffect, useContext } from 'react';
-
-// MUI
-import {
-
-} from '@mui/material';
 
 // Components
 import { DataVisualization } from '@/components/DataVisualization/';
@@ -28,7 +23,7 @@ import { GlobalCtx } from '@/context/GlobalState';
 
 const columns = [
   {
-    id: 'student_id',
+    id: 'client_id',
     label: 'ID',
     sort: true,
     filter: true
@@ -43,6 +38,16 @@ const columns = [
     sort: true,
     filter: true
   }, {
+    id: 'phone',
+    label: 'Phone',
+    sort: true,
+    filter: true
+  },  {
+    id: 'email',
+    label: 'Email',
+    sort: true,
+    filter: true
+  }, {
     id: 'date_started',
     label: 'Date Started',
     sort: true,
@@ -50,11 +55,11 @@ const columns = [
   }
 ];
 
-export const Students = () => {
+export const Clients = () => {
   // CTX
   const { 
-    students,
-    setStudents
+    clients,
+    setClients
   } = useContext(GlobalCtx);
 
   // State
@@ -79,11 +84,9 @@ export const Students = () => {
 
       try {
 
-        const response = await getData('http://localhost:3050/api/private/admin/students', token, logout, filter);
+        const response = await getData('http://localhost:3050/api/private/admin/clients', token, logout, filter);
 
-        console.log(response.students);
-
-        setStudents(response.students);
+        setClients(response.clients);
 
         setLoading(false);
 
@@ -109,9 +112,9 @@ export const Students = () => {
     <>
       <DataVisualization
         columns={ columns } 
-        data={ students }
+        data={ clients }
         slug={ slug }
-        setter={ setStudents }
+        setter={ setClients }
         filter={ filter }
         setFilter={ setFilter }
         resetFilter={ resetFilter }
@@ -119,5 +122,6 @@ export const Students = () => {
       />
     </>
   );
+  
 }
 

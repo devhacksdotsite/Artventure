@@ -13,6 +13,10 @@ import AppReducer from '@/context/AppReducer';
 const initialState = {
   //portal: 'student',
   portal: 'admin',
+  user: {
+    id: '',
+    fullname: '',
+  },
   token: null,
   authenticated: false,
   darkMode: false,
@@ -25,14 +29,14 @@ const initialState = {
     code: 'AOC'
   },
 
-  // instructors
   instructors: [],
+  clients: [],
+  students: [],
 
+  view: 'table',
   filter: {
-    instructors: {
-      search: '',
-      status: '',
-    },
+    search: '',
+    status: 'active',
   },
 }
 
@@ -49,6 +53,13 @@ export const GlobalProvider = ({ children }) => {
 	  type: 'SET_PORTAL',
 	  payload: portal
 	});
+  }
+
+  const setUser = (user) => {
+    dispatch({
+      type: 'SET_USER',
+      payload: user
+    });
   }
 
   const setToken = (token) => {
@@ -79,11 +90,24 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
-  // Instructors
   const setInstructors = (instructors) => {
     dispatch({
       type: 'SET_INSTRUCTORS',
       payload: instructors
+    });
+  } 
+
+  const setStudents = (students) => {
+    dispatch({
+      type: 'SET_STUDENTS',
+      payload: students
+    });
+  } 
+
+  const setClients = (clients) => {
+    dispatch({
+      type: 'SET_CLIENTS',
+      payload: clients
     });
   } 
 
@@ -96,24 +120,40 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  const setView = (view) => {
+  
+    dispatch({
+      type: 'SET_VIEW',
+      payload: view
+    });
+  }
+
   return (
 	<GlobalCtx.Provider value={{
 	  portal: state.portal,
+	  user: state.user,
       token: state.token,
 	  authenticated: state.authenticated,
 	  darkMode: state.darkMode,
       slug: state.slug,
       school: state.school,
       instructors: state.instructors,
+      clients: state.clients,
+      students: state.students,
       filter: state.filter,
+      view: state.view,
 
+      setUser,
       setToken,
 	  setAuthenticated,
 	  setPortal,
 	  setDarkMode,
       setSlug,
       setInstructors,
+      setClients,
+      setStudents,
       setFilter,
+      setView,
 	}}>
 	  { children }
 	</GlobalCtx.Provider>

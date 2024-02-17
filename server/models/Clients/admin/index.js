@@ -1,38 +1,44 @@
  /*
-  * models\students\admin\index.js
-  * Name: StudentModelAdmin
+  * models\Clients\admin\index.js
+  * Name: ClientModelAdmin
   * Author: Jesse Salinas
-  * Date: 02/05/2024
+  * Date: 02/08/2024
 */
 
-const StudentModelBase = require('../');
+const ClientModelBase = require('../');
 
-class StudentModelAdmin extends StudentModelBase {
+class ClientModelAdmin extends ClientModelBase {
   constructor() {
     super(); // call the constructor parent class
   }
 
-  async addStudent(params) {
+  async addClient(params) {
 
-    // Default to ArtventureOC location for now...
+    console.log('params...', params);
+
     const locationId = 1;
 
     const sql = `
-      INSERT INTO artventure.student (
+      INSERT INTO artventure.client (
         firstname, 
         lastname, 
-        client_id,
         date_started, 
+        phone,
+        email,
+        address,
         location_id 
-      ) VALUES (?,?,?,?)
+      ) VALUES (?,?,?,?,?,?,?)
     `;
+
 
     try {
       const { results } = await this.query(sql, this._cleanParamValues([
         params.firstname, 
         params.lastname, 
-        params.clientId,
         params.dateStarted, 
+        params.phone, 
+        params.email, 
+        params.address, 
         locationId
       ]));
 
@@ -51,30 +57,34 @@ class StudentModelAdmin extends StudentModelBase {
 
   }
 
-  async updateStudent(studentId, params) {
+  async updateClient(clientId, params) {
 
     // Default the location to ArtventureOC for now.
     const locationId = 1;
 
     const sql = `
-      UPDATE artventure.student
+      UPDATE artventure.client
       SET
         firstname = ?,
         lastname = ?, 
-        client_id = ?,
         date_started = ?, 
+        phone = ?,
+        email = ?,
+        address = ?,
         location_id = ? 
-      WHERE student_id = ?
+      WHERE client_id = ?
     `;
 
     try {
       const { results } = await this.query(sql, this._cleanParamValues([
         params.firstname, 
         params.lastname, 
-        params.clientId, 
         params.dateStarted, 
+        params.phone, 
+        params.email, 
+        params.address, 
         locationId, 
-        studentId
+        clientId
       ]));
 
       console.log('res', results);
@@ -92,29 +102,20 @@ class StudentModelAdmin extends StudentModelBase {
 
   }
 
-  async deleteStudent(instructorId) {
+  async deleteClient(clientId) {
 
-    // Deactivate instructor
+    // Deactivate client
     const sql = `
-      UPDATE artventure.instructor
+      UPDATE artventure.client
       SET
         active = 0 
       WHERE instructor_id = ?
     `;
 
     try {
-      const { results } = await this.query(sql, [ instructorId ]);
+      const { results } = await this.query(sql, [ clientId ]);
 
       console.log('res', results);
-      /*ResultSetHeader {
-        fieldCount: 0,
-        affectedRows: 1,
-        insertId: 0,
-        info: 'Rows matched: 1  Changed: 1  Warnings: 0',
-        serverStatus: 2,
-        warningStatus: 0,
-        changedRows: 1
-      }*/
 
       if (!results.length) {
         return;
@@ -132,7 +133,6 @@ class StudentModelAdmin extends StudentModelBase {
 
 }
 
-module.exports = StudentModelAdmin;
+module.exports = ClientModelAdmin;
 
 
- 

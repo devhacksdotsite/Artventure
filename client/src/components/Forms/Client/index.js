@@ -1,6 +1,6 @@
 /*
-  * component\Forms\Instructor\index.js
-  * Name: InstructorForm
+  * component\Forms\Client\index.js
+  * Name: ClientForm
   * Author: Jesse Salinas
   * Date: 08/13/2023
 */
@@ -45,7 +45,7 @@ import {
   VisibilityOff,
 } from '@mui/icons-material';
 
-export const InstructorForm = ({ data, setter, method = 'POST', filter, closeModal }) => {
+export const ClientForm = ({ data, setter, method = 'POST', filter, closeModal }) => {
 
   // State
   const [ selectedBirthdate, setSelectedBirthdate ] = useState(null);
@@ -70,13 +70,13 @@ export const InstructorForm = ({ data, setter, method = 'POST', filter, closeMod
 
       if (method === 'POST') {
 
-        const url = `http://localhost:3050/api/private/admin/instructors`; 
+        const url = `http://localhost:3050/api/private/admin/clients`; 
         response = await postData(url, payload, token, logout, filter);
 
 
       } else if (method === 'PUT') {
 
-        const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
+        const url = `http://localhost:3050/api/private/admin/clients/${data.client_id}`; 
         response = await putData(url, payload, token, logout, filter);
 
         // Check if data is returned
@@ -86,14 +86,14 @@ export const InstructorForm = ({ data, setter, method = 'POST', filter, closeMod
 
       } else if (method === 'DELETE') {
 
-        const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
+        const url = `http://localhost:3050/api/private/admin/clients/${data.client_id}`; 
         response = await deleteData(url, token, logout, filter);
       }
 
-      // Set instructor data
-      if (response.instructors && response.instructors.length > 0) {
+      // Set client data
+      if (response.clients && response.clients.length > 0) {
        
-        setter(response.instructors);
+        setter(response.clients);
       } else {
 
         alert('Oops, something went wrong.');
@@ -196,36 +196,6 @@ export const InstructorForm = ({ data, setter, method = 'POST', filter, closeMod
             )}
           />
         </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <Controller
-            name="dln"
-            control={ control }
-            defaultValue={ data?.drivers_license_number }
-            rules={{ 
-              required: 'DL# is required', 
-              minLength: {
-                value: 8, 
-                message: 'DL# must be atleast 8 characters'
-              }
-            }}
-            render={ ({ field}) => (
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                label="DL#"
-                autoComplete="DL#"
-                autoFocus
-                value={ field.value }
-                error={ !!errors.dln }
-                onChange={ (e) => field.onChange(e.target.value) }
-                helperText={ errors.dln?.message }
-              /> 
-            ) }
-          />
-        </Grid>
-        
       </Grid>
 
       <Controller

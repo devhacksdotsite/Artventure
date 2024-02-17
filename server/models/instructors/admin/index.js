@@ -33,7 +33,16 @@ class InstructorModelAdmin extends InstructorModelBase {
 
 
     try {
-      const { results } = await this.query(sql, [params.firstname, params.lastname, params.dateStarted, params.dln, params.phone, params.email, params.address, locationId]);
+      const { results } = await this.query(sql, this._cleanParamValues([
+        params.firstname, 
+        params.lastname, 
+        params.dateStarted, 
+        params.dln, 
+        params.phone, 
+        params.email, 
+        params.address, 
+        locationId
+      ]));
 
       console.log('res', results);
       /*
@@ -80,7 +89,7 @@ class InstructorModelAdmin extends InstructorModelBase {
     `;
 
     try {
-      const { results } = await this.query(sql, [params.firstname, params.lastname, params.dateStarted, params.dln, params.phone, params.email, params.address, locationId, instructorId]);
+      const { results } = await this.query(sql, this._cleanParamValues([params.firstname, params.lastname, params.dateStarted, params.dln, params.phone, params.email, params.address, locationId, instructorId]));
 
       console.log('res', results);
       /*ResultSetHeader {

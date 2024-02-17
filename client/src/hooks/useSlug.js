@@ -12,8 +12,9 @@ const determineSlug = (pathname) => {
   const slugMap = {
     'instructors': 'instructor',
     'students': 'student',
-    'patrons': 'patron',
+    'clients': 'client',
     'attendance': 'attendance',
+    'roster': 'roster',
   };
 
   const name = Object.keys(slugMap).find((key) => pathname.includes(key));

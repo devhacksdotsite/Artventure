@@ -1,7 +1,8 @@
 /*
-  * component\Navbar\index.js
-  * Author: Jesse Salinas
-  * Date: 07/25/2023
+* @\component\Navbar\index.js
+* Name: Nav
+* Author: Jesse Salinas
+* Date: 07/25/2023
 */
 
 import { useState } from 'react';
@@ -10,6 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 // Hooks
 import { useThemeMode } from '@/hooks/useThemeMode';
 import { useNavLinks } from '@/hooks/useNavLinks';
+import { useGreeting } from '@/hooks/useGreeting';
 
 // Components
 import { AccountMenu } from '@/components/Navbar/AccountMenu';
@@ -93,12 +95,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export const Nav = () => {
 
+  // State
   const navigate = useNavigate();
   const [ open, setOpen ] = useState(true);
 
   // Hooks
   const { darkMode, handleDarkMode } = useThemeMode();
   const { mainListItems, secondaryListItems } = useNavLinks();
+  const { timeOfDay, user } = useGreeting();
 
   // handlers
   const toggleDrawer = () => {
@@ -133,7 +137,7 @@ export const Nav = () => {
 			noWrap
 			sx={{ flexGrow: 1 }}
 		  >
-            Dashboard
+            { timeOfDay }, { user.fullname }!
 		  </Typography>
 
 		  <IconButton color="inherit">
@@ -153,7 +157,7 @@ export const Nav = () => {
             </IconButton>
           </Tooltip>
 
-          <AccountMenu />
+          <AccountMenu user={ user }/>
 		</Toolbar>
 	  </AppBar>
 
@@ -178,6 +182,15 @@ export const Nav = () => {
 				px: [1],
 			  }}
 			>
+              <Box
+                component="img"
+                sx={{
+                  m: 1,
+                  height: 44,
+                }}
+                alt="Artventure Logo."
+                src="https://www.artventureoc.com/uploads/3/1/0/6/31060537/published/artventurelogo-horz-rgb.png?1602521733"
+              />
 			  <IconButton onClick={ toggleDrawer }>
 				<ChevronLeftIcon />
 			  </IconButton>
@@ -218,6 +231,15 @@ export const Nav = () => {
 			  px: [1],
 			}}
 		  >
+            <Box
+              component="img"
+              sx={{
+                m: 1,
+                height: 44,
+              }}
+              alt="Artventure Logo."
+              src="https://www.artventureoc.com/uploads/3/1/0/6/31060537/published/artventurelogo-horz-rgb.png?1602521733"
+            />
 			<IconButton onClick={ toggleDrawer }>
 			  <ChevronLeftIcon />
 			</IconButton>
