@@ -44,7 +44,6 @@ import { GlobalCtx } from '@/context/GlobalState';
 // Components
 import { MasonryView } from '@/components/DataVisualization/Masonry';
 import { TableView } from '@/components/DataVisualization/Table';
-import { ProfileCard } from '@/components/DataVisualization/Masonry/ProfileCard';
 import { Modal } from '@/components/Modal/';
 
 // Hooks
