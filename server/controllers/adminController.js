@@ -178,6 +178,19 @@ class AdminController {
     }); 
   }
 
+  async getStudentsByClient(req, res) {
+    const clientId = req.params.clientId;
+
+    const students = await this.studentModel.getStudentsByClient(req, clientId);
+
+    console.log(students);
+
+    return res.json({
+      status: 'success',
+      students,
+    });   
+  }
+
 }
 
 module.exports = AdminController;

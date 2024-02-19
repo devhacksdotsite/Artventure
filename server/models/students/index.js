@@ -19,22 +19,22 @@ class StudentModelBase extends BaseModel {
     return [
       ...[ (firstname && { name: 'firstname', prefix: 'stu.', value: firstname }) ],
       ...[ (lastname && { name: 'lastname', prefix: 'stu.', value: lastname }) ],
-      ...[ (studentId && { name: 'client_id', prefix: 'stu.', value: clientId }) ],
+      ...[ (clientId && { name: 'client_id', prefix: 'stu.', value: clientId }) ],
       ...[ (studentId && { name: 'student_id', prefix: 'stu.', value: studentId }) ],
       ...[ (status !== null && status !== undefined && status !== 'all' && { name: 'active', prefix: 'stu.', value: status === 'active' ? 1 : 0 }) ],
     ].filter(Boolean);
 
   }
 
-  async getStudents(req) {
+  async getStudents(req, clientId = null) {
 
-    const { search, status } = req.query;
+    const { search, status } = req.query || {};
 
     // Split the search parameter into firstname and lastname
-    const [firstname, lastname] = search ? search.split(' ') : [null, null];
+    const [ firstname, lastname ] = search ? search.split(' ') : [ null, null ];
 
     // Format query params
-    const queryParams = this._formatQueryParams({ firstname, lastname, status });
+    const queryParams = this._formatQueryParams({ firstname, lastname, status, clientId });
     console.log({ firstname, lastname, status }, queryParams);
 
     // Build WHERE clause
@@ -81,6 +81,10 @@ class StudentModelBase extends BaseModel {
 
   }
 
+  async getStudentsByClient(req, clientId) {
+
+    return await this.getStudents(req, clientId);
+  }
 }
 
 module.exports = StudentModelBase;

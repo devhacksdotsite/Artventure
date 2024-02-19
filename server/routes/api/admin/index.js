@@ -46,5 +46,7 @@ router.post('/students', (req, res) => adminController.addStudent(req, res));
 router.put('/students/:id', (req, res) => adminController.updateStudent(req, res));
 router.delete('/students/:id', (req, res) => adminController.deleteStudent(req, res));
 
+router.get('/students/client/:clientId', (req, res) => adminController.getStudentsByClient(req, res));
+
 module.exports = router;
 
