@@ -1,12 +1,24 @@
 /*
-  * data\student\navData.js
+  * @\data\student\navData.js
+  * Name: navData
   * Author: Jesse Salinas
   * Date: 07/25/2023
 */
 
 import { v4 as uuidv4 } from 'uuid'; // Import the UUID generator
 
+// MUI
+import {
+  Avatar,
+} from '@mui/material';
+
 // MUI Icons
+import {
+  PersonAdd,
+  Settings,
+  Logout,
+} from '@mui/icons-material';
+
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -21,6 +33,10 @@ import SchoolIcon from '@mui/icons-material/School';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import PaletteIcon from '@mui/icons-material/Palette';
+
+// Components
+import { Account } from '@/components/Forms/Account/'
+import { Settings as AccountSettings } from '@/components/Forms/Account/Settings';
 
 // Admin main links
 export const mainListItems = [
@@ -81,5 +97,37 @@ export const secondaryListItems = [
 	icon: <SummarizeIcon />
   }
 ];
+
+export const accountMenuMainListItems = [
+  {
+    id: uuidv4(),
+	name: 'My Account',
+	icon: <Avatar />,
+    component: Account, 
+    title: 'My Account',
+    subtitle: 'Account details'
+  }, 
+]
+
+export const accountMenuSecondaryListItems = [
+  /*{
+    id: uuidv4(),
+	name: 'Add another account',
+	icon: <PersonAdd fontSize="small" />
+
+  },*/ 
+  {
+    id: uuidv4(),
+	name: 'Settings',
+	icon: <Settings />,
+    component: AccountSettings, 
+    title: 'Settings',
+  }, {
+    id: uuidv4(),
+	name: 'Logout',
+	url: '/admin/reports/clients',
+	icon: <Logout />
+  }
+]
 
 

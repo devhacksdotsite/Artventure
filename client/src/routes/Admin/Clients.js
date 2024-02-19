@@ -1,8 +1,8 @@
- /*
-  * routes\Admin\Clients.js
-  * Name: Clients
-  * Author: Jesse Salinas
-  * Date: 02/08/2024
+/*
+* @\routes\Admin\Clients.js
+* Name: Clients
+* Author: Jesse Salinas
+* Date: 02/08/2024
 */
 
 import { useState, useEffect, useContext } from 'react';

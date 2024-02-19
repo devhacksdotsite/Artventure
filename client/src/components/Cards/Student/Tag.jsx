@@ -1,8 +1,8 @@
 /*
-  * component\Cards\Client\Tag.jsx
+  * @\component\Cards\Student\Tag.jsx
   * Name: Tag
   * Author: Jesse Salinas
-  * Date: 02/10/2024
+  * Date: 02/18/2024
 */
 
 import { useState, useEffect } from 'react';
@@ -61,6 +61,8 @@ const formatPhoneNumber = (phoneNumber) => {
 export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete }) => {
 
   // Variables
+  const courses = rowData?.courses || ['Drawing Level 1', 'Drawing Level 3', 'Pastels Level 1', 'Acrylic Level 1', 'Water Color Level 1', 'Water Color Level 2'];
+
   const ModalData = modalData.students;
 
   // State
@@ -182,7 +184,7 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
           </Grid>
 
           {/* Skill set section with header and darkened background */}
-          {/* <Grid 
+          <Grid 
             container 
             spacing={1} 
             mt={2} 
@@ -194,16 +196,16 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
           >
             <Grid item xs={12}>
               <Typography variant="h6" color="primary">
-                Qualifications
+                Courses
               </Typography>
             </Grid>
 
-            { qualifications.map((qualification, index) => (
+            { courses.map((course, index) => (
               <Grid item key={ index }>
-                <Chip label={ qualification } variant="outlined" color="primary" />
+                <Chip label={ course } variant="outlined" color="primary" />
               </Grid>
             )) }
-          </Grid> */}
+          </Grid> 
 
           {/* Course history set section with header and darkened background */}
           <Grid 
@@ -249,7 +251,7 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
           >
             <Grid item xs={12}>
               <Typography variant="h6" color="primary">
-                Client Information
+                Student Information
               </Typography>
             </Grid>
             <Grid item xs={12}>

@@ -1,7 +1,8 @@
 /*
-  * component\DataVisualization\Masonry\ProfileCard.jsx
+  * @\component\Cards\Instructor\Tag
+  * Name: Tag
   * Author: Jesse Salinas
-  * Date: 08/12/2023
+  * Date: 02/18/2024
 */
 
 // MUI
@@ -42,7 +43,7 @@ const formatPhoneNumber = (phoneNumber) => {
   return phoneNumber; // Return the original number if it doesn't match the expected format
 };
 
-export const ProfileCard = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete }) => {
+export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete }) => {
 
   console.log('rowData is: ', rowData);
 
@@ -184,10 +185,10 @@ export const ProfileCard = ({ rowData, elevation = 0, backgroundColor = 'transpa
               Address: {rowData.address}
             </Typography>
             <Typography>
-              Phone: <MUILink href={`tel:${ rowData.phone }`}>{ formatPhoneNumber(rowData.phone) }</MUILink>;
+              Phone: <MUILink href={`tel:${ rowData.phone }`}>{ formatPhoneNumber(rowData.phone) }</MUILink>
             </Typography>
             <Typography>
-              Email: <MUILink href={`mailto:${ rowData.email }`}>{ rowData.email }</MUILink>;
+              Email: <MUILink href={`mailto:${ rowData.email }`}>{ rowData.email }</MUILink>
             </Typography>
             {/* Add more fields as needed */}
           </Grid>

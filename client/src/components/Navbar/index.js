@@ -9,12 +9,12 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Hooks
-import { useThemeMode } from '@/hooks/useThemeMode';
 import { useNavLinks } from '@/hooks/useNavLinks';
 import { useGreeting } from '@/hooks/useGreeting';
 
 // Components
 import { AccountMenu } from '@/components/Navbar/AccountMenu';
+import { Notifications } from '@/components/Navbar/Notifications';
 import { NavItem } from '@/components/Navbar/NavItem';
 
 // MUI
@@ -29,7 +29,6 @@ import {
   Typography,
   Tooltip, 
   IconButton,
-  Badge,
   Hidden,
   ListItemButton, 
   ListItemIcon,
@@ -40,15 +39,11 @@ import {
 // MUI Icons
 import {
   Menu as MenuIcon,
-  Notifications as NotificationsIcon,
-  Brightness7,
-  Brightness4,
   ChevronLeft as ChevronLeftIcon,
 } from '@mui/icons-material';
 
-// handlers
+// Handlers
 const drawerWidth = 240;
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -100,7 +95,6 @@ export const Nav = () => {
   const [ open, setOpen ] = useState(true);
 
   // Hooks
-  const { darkMode, handleDarkMode } = useThemeMode();
   const { mainListItems, secondaryListItems } = useNavLinks();
   const { timeOfDay, user } = useGreeting();
 
@@ -121,7 +115,7 @@ export const Nav = () => {
 			edge="start"
 			color="inherit"
 			aria-label="open drawer"
-			onClick={toggleDrawer}
+			onClick={ toggleDrawer }
 			sx={{
 			  marginRight: '36px',
 			  ...(open && { display: 'none' })
@@ -132,31 +126,18 @@ export const Nav = () => {
 
 		  <Typography
 			component="h1"
-			variant="h6"
+			variant="subtitle1"
 			color="inherit"
 			noWrap
 			sx={{ flexGrow: 1 }}
 		  >
-            { timeOfDay }, { user.fullname }!
+            { timeOfDay }, { user.fullname }! {/* Greeting... Update this to a breadcrumb... Eventually */}
 		  </Typography>
 
-		  <IconButton color="inherit">
-			<Badge badgeContent={4} color="secondary">
-			  <NotificationsIcon />
-			</Badge>
-		  </IconButton>
-
-          {/* Toggle dark theme component */}
-          <Tooltip title="Toggle dark mode">
-            <IconButton color="inherit" onClick={() => handleDarkMode()}>
-              {darkMode ? (
-                <Brightness7 fontSize="small" />
-              ) : (
-                <Brightness4 fontSize="small" />
-              )}
-            </IconButton>
-          </Tooltip>
-
+          {/* System notifications */}
+          <Notifications />
+    
+          {/* Account dropdown menu component */}
           <AccountMenu user={ user }/>
 		</Toolbar>
 	  </AppBar>

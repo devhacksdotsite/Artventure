@@ -37,6 +37,7 @@ export const useThemeMode = () => {
 
   // handlers 
   const handleDarkMode = () => {
+
     if (darkMode) {
       localStorage.setItem('theme', "light");
       setDarkMode(false);

@@ -7,6 +7,7 @@
 
 // Components
 import { InstructorForm } from '@/components/Forms/Instructor/';
+import { Tag as InstructorTag } from '@/components/Cards/Instructor/Tag';
 import { DeleteEntry as InstructorDelete } from '@/components/Forms/DeleteEntry';
 import { FilterOptionForm } from '@/components/Forms/Instructor/FilterOption';
 
@@ -15,6 +16,7 @@ import { Tag as ClientTag } from '@/components/Cards/Client/Tag';
 import { FilterOptionForm as FilterClientForm } from '@/components/Forms/Client/FilterOption';
 
 import { StudentForm } from '@/components/Forms/Student/';
+import { Tag as StudentTag } from '@/components/Cards/Student/Tag';
 import { FilterOptionForm as FilterStudentForm } from '@/components/Forms/Client/FilterOption';
 
 import { AddStudentAttendanceForm } from '@/components/Forms/Attendance/AddStudent';
@@ -43,9 +45,9 @@ export const modalData = {
       subtitle: 'Complete the form to filter instructors.',
     },
     tag: {
-      component: ClientTag, 
-      title: 'Client Details',
-      subtitle: 'Additional client details',
+      component: InstructorTag, 
+      title: 'Instructor Details',
+      subtitle: 'Additional instructor details',
     }
   },
 
@@ -99,9 +101,9 @@ export const modalData = {
       subtitle: 'Complete the form to filter students.',
     },
     tag: {
-      component: ClientTag, 
-      title: 'Client Details',
-      subtitle: 'Additional client details',
+      component: StudentTag, 
+      title: 'Student Details',
+      subtitle: 'Additional student details',
     }
   },
   patrons: {
