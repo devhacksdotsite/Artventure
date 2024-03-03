@@ -1,8 +1,8 @@
- /*
-  * models\_Base.js
-  * Name: BaseModel
-  * Author: Jesse Salinas
-  * Date: 11/11/2023
+/*
+* models\_Base.js
+* Name: BaseModel
+* Author: Jesse Salinas
+* Date: 11/11/2023
 */
 
 const mysql = require('mysql2/promise');
@@ -24,10 +24,17 @@ class BaseModel {
 
     if (!Array.isArray(values)) {
 
-      return (values && typeof values === 'string') ? values.trim() : values;
+        return (values && typeof values === 'string') ? values.trim() : values;
     }
 
-    return values.map(value => (value && typeof value === 'string') ? value.trim() : value);
+    return values.map(value => {
+
+        if (value === undefined) {
+            return null;
+        }
+
+        return (value && typeof value === 'string') ? value.trim() : value;
+    });
   }
 
   _formatQueryParams(params) {

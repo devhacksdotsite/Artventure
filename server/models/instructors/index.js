@@ -1,8 +1,8 @@
- /*
-  * models\instructors\index.js
-  * Name: InstructorModelBase
-  * Author: Jesse Salinas
-  * Date: 08/27/2023
+/*
+* models\instructors\index.js
+* Name: InstructorModelBase
+* Author: Jesse Salinas
+* Date: 08/27/2023
 */
 
 const BaseModel = require('../_Base');
@@ -11,6 +11,33 @@ class InstructorModelBase extends BaseModel {
 
   constructor() {
     super(); // call the constructor parent class
+  }
+
+  _clearanceEntries(instructorId, params) {
+
+    const clearanceEntries = [];
+
+    // Check if the instructor is finger printed
+    if (params.fingerPrinted) {
+      // Add a clearance entry for finger printing
+      clearanceEntries.push({
+          instructor_id: instructorId,
+          clearance_type: 'fingerprint',
+          document_path: null // Set the document path to null initially
+      });
+    }
+
+    // Check if the instructor has passed a background check
+    if (params.backgroundChecked) {
+      // Add a clearance entry for background check
+      clearanceEntries.push({
+          instructor_id: instructorId,
+          clearance_type: 'background_check',
+          document_path: null // Set the document path to null initially
+        });
+    }
+
+    return clearanceEntries;
   }
 
   _formatQueryParams({ instructorId, firstname, lastname, status }) {
@@ -34,7 +61,7 @@ class InstructorModelBase extends BaseModel {
 
     // Format query params
     const queryParams = this._formatQueryParams({ firstname, lastname, status });
-    console.log({ firstname, lastname, status }, queryParams);
+    //console.log({ firstname, lastname, status }, queryParams);
 
     // Build WHERE clause
     const { whereClause, bindValues } = this._buildWhereClause(queryParams);
@@ -65,7 +92,7 @@ class InstructorModelBase extends BaseModel {
     `;
 
     const sql = `${baseSql} ${whereClause}`;
-    console.log(sql);
+    //console.log(sql);
 
     try {
       const { results } = await this.query(sql, bindValues);

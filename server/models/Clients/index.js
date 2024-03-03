@@ -1,8 +1,8 @@
- /*
-  * models\Clients\index.js
-  * Name: ClientModelBase
-  * Author: Jesse Salinas
-  * Date: 02/08/2024
+/*
+* models\Clients\index.js
+* Name: ClientModelBase
+* Author: Jesse Salinas
+* Date: 02/08/2024
 */
 
 const BaseModel = require('../_Base');
@@ -25,27 +25,9 @@ class ClientModelBase extends BaseModel {
 
   }
 
-  async getClients(req) {
-    console.log('clients...');
+  _getClientsBaseQuery() {
 
-    const { search, status } = req.query;
-
-    // Split the search parameter into firstname and lastname
-    const [ firstname, lastname ] = search ? search.split(' ') : [ null, null ];
-
-    // Format query params
-    const queryParams = this._formatQueryParams({ 
-      firstname, 
-      lastname, 
-      status 
-    });
-
-    console.log({ firstname, lastname, status }, queryParams);
-
-    // Build WHERE clause
-    const { whereClause, bindValues } = this._buildWhereClause(queryParams);
-
-    const baseSql = `
+    return `
       SELECT 
         cli.client_id, 
         cli.firstname,
@@ -69,8 +51,31 @@ class ClientModelBase extends BaseModel {
         ON loc.school_id = sch.school_id
     `;
 
+  }
+
+  async getClients(req) {
+
+    const { search, status } = req.query;
+
+    // Split the search parameter into firstname and lastname
+    const [ firstname, lastname ] = search ? search.split(' ') : [ null, null ];
+
+    // Format query params
+    const queryParams = this._formatQueryParams({ 
+      firstname, 
+      lastname, 
+      status 
+    });
+
+    //console.log({ firstname, lastname, status }, queryParams);
+
+    // Build WHERE clause
+    const { whereClause, bindValues } = this._buildWhereClause(queryParams);
+
+    const baseSql = this._getClientsBaseQuery();
+
     const sql = `${baseSql} ${whereClause}`;
-    console.log(sql);
+    //console.log(sql);
 
     try {
       const { results } = await this.query(sql, bindValues);
@@ -117,17 +122,29 @@ class ClientModelBase extends BaseModel {
   }
 
 
-  /* async getClientById(instructorId) {
+  async getClientByClientId({ clientId }) {
+
+    const baseSql = this._getClientsBaseQuery();
+    const whereClause = `WHERE cli.active = 1 AND cli.client_id = ?`;
+
+    const sql = `${baseSql} ${whereClause}`;
+
     try {
-      const query = 'SELECT * FROM instructors WHERE id = ?';
-      const instructor = await this.queryAsync(query, [instructorId]);
-      return instructor[0];
+      const { results } = await this.query(sql, this._cleanParamValues([ clientId ]));
+      console.log(results);
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
     } catch (error) {
+  
       throw error;
     }
-  }*/
+  }
 
-  // Other methods...
 }
 
 module.exports = ClientModelBase;

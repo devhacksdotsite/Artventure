@@ -1,8 +1,8 @@
- /*
-  * controllers\adminController.js
-  * Name: AdminController
-  * Author: Jesse Salinas
-  * Date: 08/27/2023
+/*
+* controllers\adminController.js
+* Name: AdminController
+* Author: Jesse Salinas
+* Date: 08/27/2023
 */
 
 class AdminController {
@@ -18,7 +18,7 @@ class AdminController {
   async getInstructors(req, res) {
     const instructors = await this.instructorModel.getInstructors(req);
 
-    console.log(instructors);
+    //console.log(instructors);
 
     return res.json({
       status: 'success',
@@ -30,6 +30,13 @@ class AdminController {
     const payload = req.body;
 
     const response = await this.instructorModel.addInstructor(payload);
+
+    // Add Instructor Clearance
+    const instructorId = response.insertId;
+    if (instructorId) {
+
+      await this.instructorModel.addInstructorClearance(instructorId, payload);
+    }
 
     // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
     const instructors = await this.instructorModel.getInstructors(req);
@@ -45,6 +52,12 @@ class AdminController {
     const payload = req.body;
 
     const response = await this.instructorModel.updateInstructor(instructorId, payload);
+
+    // Update Instructor Clearance
+    if (instructorId) {
+
+      await this.instructorModel.updateInstructorClearance(instructorId, payload);
+    }
 
     // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
     const instructors = await this.instructorModel.getInstructors(req);
@@ -69,6 +82,20 @@ class AdminController {
     }); 
   }
 
+  async getInstructorClearance(req, res) {
+
+    const instructorId = req.params.instructorId;
+
+    const clearance = await this.instructorModel.getInstructorClearance(instructorId);
+
+    //console.log(clearance);
+
+    return res.json({
+      status: 'success',
+      clearance,
+    });   
+  }
+
   /*************************************
                   Clients
   *************************************/
@@ -87,6 +114,18 @@ class AdminController {
     return res.json({
       status: 'success',
       clients,
+    });   
+  }
+
+  async getClientByClientId(req, res) {
+
+    const clientId = req.params.clientId;
+
+    const client = await this.clientModel.getClientByClientId({ clientId });
+
+    return res.json({
+      status: 'success',
+      client,
     });   
   }
 
@@ -124,9 +163,9 @@ class AdminController {
                 Students
   *************************************/
   async getStudents(req, res) {
-    const students = await this.studentModel.getStudents(req);
+    const students = await this.studentModel.getStudents({ req });
 
-    console.log(students);
+    //console.log(students);
 
     return res.json({
       status: 'success',
@@ -140,7 +179,7 @@ class AdminController {
     const response = await this.studentModel.addStudent(payload);
 
     // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
-    const students = await this.studentModel.getStudents(req);
+    const students = await this.studentModel.getStudents({ req });
 
     return res.json({
       status: 'success',
@@ -155,7 +194,7 @@ class AdminController {
     const response = await this.studentModel.updateStudent(studentId, payload);
 
     // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
-    const students = await this.studentModel.getStudents(req);
+    const students = await this.studentModel.getStudents({ req });
 
     return res.json({
       status: 'success',
@@ -178,17 +217,26 @@ class AdminController {
     }); 
   }
 
-  async getStudentsByClient(req, res) {
+  async getStudentsByClientId(req, res) {
     const clientId = req.params.clientId;
 
-    const students = await this.studentModel.getStudentsByClient(req, clientId);
-
-    console.log(students);
+    const students = await this.studentModel.getStudentsByClientId({ req, clientId });
 
     return res.json({
       status: 'success',
       students,
     });   
+  }
+
+ async getStudentsRelatedByStudentId(req, res) {
+    const studentId = req.params.studentId;
+
+    const students = await this.studentModel.getStudentsRelatedByStudentId({ req, studentId });
+   
+    return res.json({
+      status: 'success',
+      students,
+    });
   }
 
 }

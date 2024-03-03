@@ -26,26 +26,15 @@ class StudentModelBase extends BaseModel {
 
   }
 
-  async getStudents(req, clientId = null) {
+  _getStudentsBaseQuery() {
 
-    const { search, status } = req.query || {};
-
-    // Split the search parameter into firstname and lastname
-    const [ firstname, lastname ] = search ? search.split(' ') : [ null, null ];
-
-    // Format query params
-    const queryParams = this._formatQueryParams({ firstname, lastname, status, clientId });
-    console.log({ firstname, lastname, status }, queryParams);
-
-    // Build WHERE clause
-    const { whereClause, bindValues } = this._buildWhereClause(queryParams);
-
-    const baseSql = `
+    return `
       SELECT 
         stu.student_id, 
         stu.client_id, 
         stu.firstname,
         stu.lastname, 
+        stu.notes, 
         CONCAT(stu.firstname, ' ', stu.lastname) AS fullname, 
         DATE_FORMAT(stu.date_started, '%Y-%m-%d') AS date_started, 
         DATE_FORMAT(stu.birthdate, '%Y-%m-%d') AS birthdate, 
@@ -61,6 +50,23 @@ class StudentModelBase extends BaseModel {
       INNER JOIN artventure.school sch
         ON loc.school_id = sch.school_id
     `;
+  }
+
+  async getStudents({ req }) {
+
+    const { search, status } = req.query || {};
+
+    // Split the search parameter into firstname and lastname
+    const [ firstname, lastname ] = search ? search.split(' ') : [ null, null ];
+
+    // Format query params
+    const queryParams = this._formatQueryParams({ firstname, lastname, status });
+    console.log({ firstname, lastname, status }, queryParams);
+
+    // Build WHERE clause
+    const { whereClause, bindValues } = this._buildWhereClause(queryParams);
+
+    const baseSql = this._getStudentsBaseQuery();
 
     const sql = `${baseSql} ${whereClause}`;
     console.log(sql);
@@ -81,9 +87,54 @@ class StudentModelBase extends BaseModel {
 
   }
 
-  async getStudentsByClient(req, clientId) {
+  async getStudentsByClientId({ req, clientId }) {
 
-    return await this.getStudents(req, clientId);
+    const baseSql = this._getStudentsBaseQuery();
+    const whereClause = `WHERE stu.active = 1 AND stu.client_id = ?`;
+
+    const sql = `${baseSql} ${whereClause}`;
+
+    try {
+      const { results } = await this.query(sql, this._cleanParamValues([ clientId ]));
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
+    } catch (error) {
+  
+      throw error;
+    }
+
+  }
+
+  async getStudentsRelatedByStudentId({ req, studentId }) {
+
+    const { clientId } = req.query || {};
+    
+    const baseSql = this._getStudentsBaseQuery();
+    const whereClause = `WHERE stu.active = 1 AND stu.client_id = ? AND stu.student_id <> ?`;
+
+    const sql = `${baseSql} ${whereClause}`;
+
+    try {
+      const { results } = await this.query(sql, this._cleanParamValues([
+        clientId, 
+        studentId
+      ]));
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
+    } catch (error) {
+  
+      throw error;
+    }
   }
 }
 

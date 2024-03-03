@@ -23,8 +23,9 @@ class StudentModelAdmin extends StudentModelBase {
         lastname, 
         client_id,
         date_started, 
-        location_id 
-      ) VALUES (?,?,?,?)
+        location_id,
+        notes
+      ) VALUES (?,?,?,?,?,?)
     `;
 
     try {
@@ -33,7 +34,8 @@ class StudentModelAdmin extends StudentModelBase {
         params.lastname, 
         params.clientId,
         params.dateStarted, 
-        locationId
+        locationId,
+        params.notes
       ]));
 
       console.log('res', results);
@@ -63,7 +65,8 @@ class StudentModelAdmin extends StudentModelBase {
         lastname = ?, 
         client_id = ?,
         date_started = ?, 
-        location_id = ? 
+        location_id = ?,
+        notes = ?
       WHERE student_id = ?
     `;
 
@@ -74,6 +77,7 @@ class StudentModelAdmin extends StudentModelBase {
         params.clientId, 
         params.dateStarted, 
         locationId, 
+        params.notes,
         studentId
       ]));
 
