@@ -5,6 +5,8 @@
   * Date: 02/18/2024
 */
 
+import { useState, useEffect } from 'react';
+
 // MUI
 import {
   Paper,
@@ -18,6 +20,7 @@ import {
 
 // MUI Hooks
 import { useTheme } from '@mui/material';
+import { useAuth } from '@/hooks/useAuth';
 
 // MUI Icons
 import { 
@@ -25,6 +28,9 @@ import {
   Delete,
   CalendarMonth,
 } from '@mui/icons-material';
+
+// Utils
+import { getData, postData, putData, deleteData } from '@/utils/fetchData';
 
 // Styles
 const buttonStyle = {
@@ -43,6 +49,11 @@ const formatPhoneNumber = (phoneNumber) => {
   return phoneNumber; // Return the original number if it doesn't match the expected format
 };
 
+const clearanceMap = {
+  fingerprint: 'Finger Printed',
+  background_check: 'Background Checked'
+}
+
 export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete }) => {
 
   console.log('rowData is: ', rowData);
@@ -50,12 +61,56 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
   const qualifications = rowData?.qualifications || ['Studio Kids', 'Studio Teens', 'Studio Adults', 'LBASP Drawing', 'LBASP Felting', 'LBSAP Water Color'];
   const courses = rowData?.courses || ['Drawing Level 1', 'Drawing Level 3', 'Pastels Level 1', 'Acrylic Level 1', 'Water Color Level 1', 'Water Color Level 2'];
 
-  // Hooks
-  const theme = useTheme();
+  // State
+  const [ clearance, setClearance ] = useState([]);
+  const [ loading, setLoading ] = useState(true);
+  const [ error, setError ] = useState(null);
 
   // Handlers
   const editCard = () => handleEdit();
   const deleteCard = () => handleDelete();
+
+  // Hooks
+  const theme = useTheme();
+  const { token, logout } = useAuth();
+
+  useEffect(() => {
+
+    console.log('rowData should be: ', rowData);
+
+    const fetchData = async () => {
+
+      setLoading(true);
+
+      try {
+
+        const response = await getData(`http://localhost:3050/api/private/admin/instructors/${ rowData.instructor_id }/clearance`, token, logout);
+
+        setClearance(response.clearance);
+
+        rowData['clearance'] = response.clearance;
+
+        setLoading(false);
+
+      } catch (error) {
+
+        setLoading(false);
+        setError(error.message);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+
 
   return (
     <Paper
@@ -109,6 +164,32 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
             >Delete</Button>
           </Grid>
         </Grid>
+
+        {/* Skill set section with header and darkened background */}
+        <Grid 
+          container 
+          spacing={1} 
+          mt={2} 
+          p={2} 
+          sx={{
+            backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
+            borderRadius: 4,
+          }}
+        >
+          <Grid item xs={12}>
+            <Typography variant="h6" color="primary">
+              Clearance
+            </Typography>
+          </Grid>
+
+          { clearance && clearance.map((item, index) => (
+            <Grid item key={ index }>
+              <Chip label={ clearanceMap[item.clearance_type] } variant="outlined" color="primary" />
+            </Grid>
+          )) || (
+            <Grid item>No records found.</Grid> 
+          ) }
+        </Grid> 
 
         {/* Skill set section with header and darkened background */}
         <Grid 

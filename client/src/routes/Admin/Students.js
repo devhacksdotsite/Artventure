@@ -1,8 +1,8 @@
- /*
-  * routes\Admin\Students.js
-  * Name: Students
-  * Author: Jesse Salinas
-  * Date: 09/30/2023
+/*
+* @\routes\Admin\Students.js
+* Name: Students
+* Author: Jesse Salinas
+* Date: 09/30/2023
 */
 
 import { useState, useEffect, useContext } from 'react';

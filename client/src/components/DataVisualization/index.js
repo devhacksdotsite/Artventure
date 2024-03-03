@@ -1,7 +1,7 @@
 /*
-  * component\DataVisualization\index.js
-  * Author: Jesse Salinas
-  * Date: 07/22/2023
+* @\component\DataVisualization\index.js
+* Author: Jesse Salinas
+* Date: 07/22/2023
 */
 
 import { useState, useEffect, useContext } from 'react';

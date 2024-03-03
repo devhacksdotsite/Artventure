@@ -1,8 +1,8 @@
 /*
-  * component\Forms\Instructor\index.js
-  * Name: InstructorForm
-  * Author: Jesse Salinas
-  * Date: 08/13/2023
+* @\component\Forms\Instructor\index.js
+* Name: InstructorForm
+* Author: Jesse Salinas
+* Date: 08/13/2023
 */
 
 import { useState, useEffect } from 'react';
@@ -47,8 +47,11 @@ import {
 
 export const InstructorForm = ({ data, setter, method = 'POST', filter, closeModal }) => {
 
+
+  console.log('data:', data);
+  console.log(data?.clearance?.some(clearance => clearance.clearance_type === 'fingerprint'))
+
   // State
-  const [ selectedBirthdate, setSelectedBirthdate ] = useState(null);
   const [ selectedDateStarted, setSelectedDateStarted ] = useState(null);
 
   // Hooks
@@ -64,6 +67,8 @@ export const InstructorForm = ({ data, setter, method = 'POST', filter, closeMod
   const onSubmit = async (formData) => {
 
     const payload = { ...formData };
+
+    console.log(payload);
 
     try {
       let response;
@@ -307,6 +312,32 @@ export const InstructorForm = ({ data, setter, method = 'POST', filter, closeMod
             helperText={ errors.phone?.message }
           /> 
         ) }
+      />
+
+      {/* Checkbox for Finger Printed */}
+      <Controller
+        name="fingerPrinted"
+        control={ control }
+        defaultValue={ data?.clearance?.some(clearance => clearance.clearance_type === 'fingerprint') }
+        render={({ field }) => (
+          <FormControlLabel
+            control={ <Checkbox defaultChecked={ field.value } onChange={ e => field.onChange(e.target.checked) } { ...field } /> }
+            label="Finger Printed"
+          />
+        )}
+      />
+
+      {/* Checkbox for Background Check */}
+      <Controller
+        name="backgroundChecked"
+        control={ control }
+        defaultValue={ data?.clearance?.some(clearance => clearance.clearance_type === 'background_check') }
+        render={({ field }) => (
+          <FormControlLabel
+            control={ <Checkbox defaultChecked={ field.value } onChange={ e => field.onChange(e.target.checked) } { ...field } /> }
+            label="Background Check"
+          />
+        )}
       />
 
       <Button 

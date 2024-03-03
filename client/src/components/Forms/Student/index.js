@@ -1,8 +1,8 @@
 /*
-  * component\Forms\Student\index.js
-  * Name: StudentForm
-  * Author: Jesse Salinas
-  * Date: 02/05/2024
+* @\component\Forms\Student\index.js
+* Name: StudentForm
+* Author: Jesse Salinas
+* Date: 02/05/2024
 */
 
 import { useState, useEffect } from 'react';
@@ -35,6 +35,9 @@ import {
   Button,
   Grid,
   Link, 
+  RadioGroup, 
+  FormControlLabel, 
+  Radio 
 } from '@mui/material';
 
 // MUI Date Pickers
@@ -264,6 +267,38 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
             ) }
           />
         </Grid> 
+
+        <Grid item xs={12} sm={6}>
+          <Typography variant="body1" gutterBottom>
+            What is the student&apos;s age group?
+          </Typography>
+
+          {/* Radio buttons for Age Group */}
+          <Controller
+            name="ageGroup"
+            control={ control }
+            defaultValue={ data?.age_group}
+            rules={{ 
+              required: 'Please select the student\'s age group' 
+            }}
+            render={({ field }) => (
+              <RadioGroup
+                value={ field.value }
+                onChange={ (e) => field.onChange(e.target.value) }
+              >
+                <FormControlLabel value="preK" control={<Radio required />} label="Pre-K" />
+                <FormControlLabel value="kids" control={<Radio required />} label="Kids" />
+                <FormControlLabel value="teens" control={<Radio required />} label="Teens" />
+                <FormControlLabel value="adults" control={<Radio required />} label="Adults" />
+              </RadioGroup>
+            )}
+          />
+          { errors.ageGroup && (
+            <Typography variant="body2" color="error">
+              { errors.ageGroup.message }
+            </Typography>
+          ) }
+        </Grid>
 
         <Grid item xs={12}>
           <Controller

@@ -1,8 +1,8 @@
 /*
-  * utils\fetchData.js
-  * Name: fetchData
-  * Author: Jesse Salinas
-  * Date: 12/16/2023
+* @\utils\fetchData.js
+* Name: fetchData
+* Author: Jesse Salinas
+* Date: 12/16/2023
 */
 
 const serializeParams = (url, params) => {

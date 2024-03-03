@@ -1,8 +1,8 @@
 /*
-  * @\component\Cards\Student\Tag.jsx
-  * Name: Tag
-  * Author: Jesse Salinas
-  * Date: 02/18/2024
+* @\component\Cards\Student\Tag.jsx
+* Name: Tag
+* Author: Jesse Salinas
+* Date: 02/18/2024
 */
 
 import { useState, useEffect } from 'react';
@@ -67,6 +67,7 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
 
   // State
   const [ students, setStudents ] = useState([]);
+  const [ client, setClient ] = useState([]);
   const [ loading, setLoading ] = useState(true);
   const [ error, setError ] = useState(null);
 
@@ -104,9 +105,18 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
 
       try {
 
-        const response = await getData(`http://localhost:3050/api/private/admin/students/client/${ rowData.client_id }`, token, logout);
+        // Request related students data
+        const studentsResponse = await getData(`http://localhost:3050/api/private/admin/students/${ rowData.student_id }/related`, token, logout, { clientId: rowData.client_id });
 
-        setStudents(response.students);
+        // Request client data
+        const clientResponse = await getData(`http://localhost:3050/api/private/admin/clients/${ rowData.client_id }`, token, logout);
+
+        // Use Promise.all to wait for both requests to complete
+        await Promise.all([ studentsResponse, clientResponse ]);
+ 
+        // Set data
+        setStudents(studentsResponse.students);
+        setClient(clientResponse.client);
 
         setLoading(false);
 
@@ -183,31 +193,34 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
             </Grid>
           </Grid>
 
-          {/* Skill set section with header and darkened background */}
-          <Grid 
-            container 
-            spacing={1} 
-            mt={2} 
-            p={2} 
-            sx={{
-              backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
-              borderRadius: 4,
-            }}
-          >
+        {/* Student Information */}
+        <Grid 
+          container 
+          spacing={1} 
+          mt={2} 
+          p={2} 
+          sx={{
+            backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
+            borderRadius: 4,
+          }}
+        >
             <Grid item xs={12}>
               <Typography variant="h6" color="primary">
-                Courses
+                Student Information
               </Typography>
             </Grid>
 
-            { courses.map((course, index) => (
-              <Grid item key={ index }>
-                <Chip label={ course } variant="outlined" color="primary" />
-              </Grid>
-            )) }
-          </Grid> 
+            <Grid item xs={12}>
+              <Typography>
+                Full Name: { rowData.fullname }
+              </Typography>
+              <Typography>
+                Date Started: { rowData.date_started }
+              </Typography>
+            </Grid>
+          </Grid>
 
-          {/* Course history set section with header and darkened background */}
+          {/* Student Notes */}
           <Grid 
             container 
             spacing={1} 
@@ -220,7 +233,61 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
           >
             <Grid item xs={12}>
               <Typography variant="h6" color="primary">
-                Students
+                Notes
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography>
+                { rowData.notes }
+              </Typography>
+            </Grid>
+          </Grid>
+
+          {/* Client Account */}
+          <Grid 
+            container 
+            spacing={1} 
+            mt={2} 
+            p={2} 
+            sx={{
+              backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
+              borderRadius: 4,
+            }}
+          >
+            <Grid item xs={12}>
+              <Typography variant="h6" color="primary">
+                Sponsor
+              </Typography>
+            </Grid>
+
+            { client && client.map((cli, index) => (
+              <Grid item key={ index }>
+                <Chip 
+                  label={ cli.fullname } 
+                  variant="outlined" 
+                  color="primary" 
+                  onClick={ () => handleStudentClick(cli) }
+                />
+              </Grid>
+            )) || (
+              <Grid item>No students records found.</Grid> 
+          ) }
+        </Grid>
+
+        <Grid 
+            container 
+            spacing={1} 
+            mt={2} 
+            p={2} 
+            sx={{
+              backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
+              borderRadius: 4,
+            }}
+          >
+            <Grid item xs={12}>
+              <Typography variant="h6" color="primary">
+                Related
               </Typography>
             </Grid>
 
@@ -235,44 +302,8 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
               </Grid>
             )) || (
               <Grid item>No students records found.</Grid> 
-            )}
-          </Grid> 
-
-        {/* Instructor Information */}
-        <Grid 
-            container 
-            spacing={1} 
-            mt={2} 
-            p={2} 
-            sx={{
-              backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
-              borderRadius: 4,
-            }}
-          >
-            <Grid item xs={12}>
-              <Typography variant="h6" color="primary">
-                Student Information
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>
-                Full Name: {rowData.fullname}
-              </Typography>
-              <Typography>
-                Date Started: {rowData.date_started}
-              </Typography>
-              <Typography>
-                Address: {rowData.address}
-              </Typography>
-              <Typography>
-                Phone: <MUILink href={`tel:${ rowData.phone }`}>{ formatPhoneNumber(rowData.phone) }</MUILink>
-              </Typography>
-              <Typography>
-                Email: <MUILink href={`mailto:${ rowData.email }`}>{ rowData.email }</MUILink>
-              </Typography>
-              {/* Add more fields as needed */}
-            </Grid>
-          </Grid>
+          ) }
+        </Grid>
        
           <Typography variant="body2" color="text.secondary" mt={2}>
             Fun Fact:

@@ -1,7 +1,7 @@
- /*
-  * routes\Admin\Attendance.js
-  * Author: Jesse Salinas
-  * Date: 08/06/2023
+/*
+* @\routes\Admin\Attendance.js
+* Author: Jesse Salinas
+* Date: 08/06/2023
 */
 
 import { useState, useEffect } from 'react';
@@ -12,11 +12,11 @@ import {
 } from '@mui/material';
 
 // Components
-import { DataVisualization } from '../../components/DataVisualization/';
-import { ManageAttendanceForm } from '../../components/Forms/Attendance/ManageAttendance';
+import { DataVisualization } from '@/components/DataVisualization/';
+import { ManageAttendanceForm } from '@/components/Forms/Attendance/ManageAttendance';
 
 // Hooks
-import { useSlug } from '../../hooks/useSlug';
+import { useSlug } from '@/hooks/useSlug';
 
 const columns = [
   {
@@ -50,9 +50,9 @@ const columns = [
 export const Attendance = () => {
 
   // state
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [ data, setData ] = useState(null);
+  const [ loading, setLoading ] = useState(true);
+  const [ error, setError ] = useState(null);
 
   // hooks
   const { slug } = useSlug();
@@ -83,7 +83,8 @@ export const Attendance = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    console.log('fetching data...');
+    /*const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:3050/api/admin/instructors');
         if (!response.ok) {
@@ -102,7 +103,13 @@ export const Attendance = () => {
       }
     }
 
-    fetchData();
+    fetchData();*/
+
+    setTimeout(() => {
+  
+      setLoading(false);
+    }, 1000);
+
   }, []);
 
   if (loading) {

@@ -1,8 +1,8 @@
- /*
-  * routes\Admin\Instructors.js
-  * Name: Instructors
-  * Author: Jesse Salinas
-  * Date: 08/06/2023
+/*
+* @\routes\Admin\Instructors.js
+* Name: Instructors
+* Author: Jesse Salinas
+* Date: 08/06/2023
 */
 
 import { useState, useEffect, useContext } from 'react';
@@ -76,18 +76,11 @@ export const Instructors = () => {
     activeFilter 
   } = useFilter();
 
-  const handlers = {
-    addInstructor: () => {
-
-      console.log('add instructor logic here');
-    }, 
-  };
-
   useEffect(() => {
     const fetchData = async () => {
 
       setLoading(true);
-      console.log('Filtered? Refetching the data...', filter);
+      console.log('Refetching the data...', filter);
 
       try {
 
