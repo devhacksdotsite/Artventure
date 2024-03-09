@@ -238,8 +238,8 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
             </Grid>
 
             <Grid item xs={12}>
-              <Typography>
-                { rowData.notes }
+              <Typography sx={{ whiteSpace: 'pre-line' }}>
+                { rowData.notes || 'No notes found.' }
               </Typography>
             </Grid>
           </Grid>

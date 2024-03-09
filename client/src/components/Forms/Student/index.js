@@ -175,7 +175,7 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
                   error={ !!errors.clientId }
                   helperText={ errors.clientId?.message }
                 >
-                  { clients.map((client) => (
+                  { clients?.map((client) => (
                     <MenuItem key={ client.client_id } value={ client.client_id }>
                       ({ client.client_id }) { client.fullname }
                     </MenuItem>

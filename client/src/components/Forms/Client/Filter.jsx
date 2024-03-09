@@ -1,8 +1,8 @@
 /*
-  * component\Forms\Client\FilterOption.jsx
-  * Name: FilterOption
-  * Author: Jesse Salinas
-  * Date: 08/13/2023
+* @\component\Forms\Client\Filter.jsx
+* Name: FilterForm
+* Author: Jesse Salinas
+* Date: 08/13/2023
 */
 
 import { useState } from 'react';
@@ -46,7 +46,7 @@ const buttonStyle = {
   padding: '10px',
 };
 
-export const FilterOptionForm = ({ filter, setFilter, resetFilter, closeModal }) => {
+export const FilterForm = ({ filter, setFilter, resetFilter, closeModal }) => {
 
   // Hooks
   const { 

@@ -1,8 +1,8 @@
 /*
-  * component\Forms\Client\index.js
-  * Name: ClientForm
-  * Author: Jesse Salinas
-  * Date: 08/13/2023
+* @\component\Forms\Client\index.js
+* Name: ClientForm
+* Author: Jesse Salinas
+* Date: 08/13/2023
 */
 
 import { useState, useEffect } from 'react';
@@ -278,6 +278,27 @@ export const ClientForm = ({ data, setter, method = 'POST', filter, closeModal }
           /> 
         ) }
       />
+
+      <Grid item xs={12}>
+        <Controller
+          name="notes"
+          control={ control }
+          defaultValue={ data?.notes }
+          render={({ field }) => (
+            <TextField
+              { ...field }
+              margin="normal"
+              fullWidth
+              label="Notes"
+              multiline
+              rows={ 4 }
+              autoComplete="notes"
+              error={ !!errors.notes }
+              helperText={ errors.notes?.message }
+            />
+          )}
+        />
+      </Grid>
 
       <Button 
 	    type="submit"

@@ -93,6 +93,24 @@ export const putData = async (url, body, token, logout, params) => {
   }, logout);
 };
 
+export const patchData = async (url, body, token, logout, params) => {
+
+  let apiURL = url;
+
+  if (params) {
+    apiURL = serializeParams(url, params);
+  }
+
+  return fetchData(apiURL, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(body),
+  }, logout);
+};
+
 export const deleteData = async (url, token, logout, params) => {
 
   let apiURL = url;

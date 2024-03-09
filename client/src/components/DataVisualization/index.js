@@ -146,12 +146,25 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
             <ModalData.delete.component 
               data={ rowData } 
               setter={ setter } 
-              method='PUT' 
+              method='DELETE' 
               filter={ filter }
               closeModal={ closeModal } 
             />, 
             ModalData.delete.title, 
             ModalData.delete.subtitle
+          )
+        }
+        handleReactivate={() => 
+          openModal(
+            <ModalData.reactivate.component 
+              data={ rowData } 
+              setter={ setter } 
+              method='PATCH' 
+              filter={ filter }
+              closeModal={ closeModal } 
+            />, 
+            ModalData.reactivate.title, 
+            ModalData.reactivate.subtitle
           )
         }
       />, 

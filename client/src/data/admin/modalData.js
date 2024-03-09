@@ -12,8 +12,10 @@ import { DeleteEntry as InstructorDelete } from '@/components/Forms/DeleteEntry'
 import { FilterOptionForm } from '@/components/Forms/Instructor/FilterOption';
 
 import { ClientForm } from '@/components/Forms/Client/';
+import { ClientDelete } from '@/components/Forms/Client/Delete';
+import { ClientReactivate } from '@/components/Forms/Client/Reactivate';
+import { FilterForm as FilterClientForm } from '@/components/Forms/Client/Filter';
 import { Tag as ClientTag } from '@/components/Cards/Client/Tag';
-import { FilterOptionForm as FilterClientForm } from '@/components/Forms/Client/FilterOption';
 
 import { StudentForm } from '@/components/Forms/Student/';
 import { Tag as StudentTag } from '@/components/Cards/Student/Tag';
@@ -63,8 +65,13 @@ export const modalData = {
       subtitle: 'Complete the form to edit the client details.',
     },
     delete: {
-      component: InstructorDelete, 
-      title: 'Delete Instructor',
+      component: ClientDelete, 
+      title: 'Delete Client',
+      subtitle: null,
+    },
+    reactivate: {
+      component: ClientReactivate, 
+      title: 'Reactivate Client',
       subtitle: null,
     },
     filter: {

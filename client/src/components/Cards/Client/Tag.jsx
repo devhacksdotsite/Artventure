@@ -1,8 +1,8 @@
 /*
-  * component\Cards\Client\Tag.jsx
-  * Name: Tag
-  * Author: Jesse Salinas
-  * Date: 02/10/2024
+* @\components\Cards\Client\Tag.jsx
+* Name: Tag
+* Author: Jesse Salinas
+* Date: 02/10/2024
 */
 
 import { useState, useEffect } from 'react';
@@ -29,6 +29,7 @@ import {
   Edit, 
   Delete,
   CalendarMonth,
+  AutoAwesome,
 } from '@mui/icons-material';
 
 // Styles
@@ -58,7 +59,7 @@ const formatPhoneNumber = (phoneNumber) => {
   return phoneNumber; // Return the original number if it doesn't match the expected format
 };
 
-export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete }) => {
+export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete, handleReactivate }) => {
 
   // Variables
   const ModalData = modalData.students;
@@ -71,6 +72,7 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
   // Handlers
   const editCard = () => handleEdit();
   const deleteCard = () => handleDelete();
+  const reactivateCard = () => handleReactivate();
 
   const handleStudentClick = (rowData) => {
     console.log({ rowData });
@@ -149,6 +151,12 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
             sx={{ width: 150, height: 150, mb: 2 }}
           />
 
+          { !rowData.active && (
+            <Typography color="error" component="div">
+              Inactive
+            </Typography>
+          ) }
+
           <Typography gutterBottom variant="h5" component="div">
             { rowData?.fullname }
           </Typography>
@@ -157,29 +165,45 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
 
           <Typography component="div" mt={1}>{ formatPhoneNumber(rowData?.phone) }</Typography>
 
-          <Grid container spacing={2} my={2}>
-            <Grid item xs={6}>
-              <Button 
-                fullWidth 
-                variant="contained" 
-                color="primary" 
-                startIcon={ <Edit /> }
-                style={ buttonStyle }
-                onClick={ () => editCard() }
-              >Edit</Button>
-            </Grid>
+            <Grid container spacing={2} my={2}>
 
-            <Grid item xs={6}>
-              <Button 
-                fullWidth 
-                variant="outlined" 
-                color="error" 
-                startIcon={ <Delete /> }
-                style={ buttonStyle }
-                onClick={ () => deleteCard() }
-              >Delete</Button>
+              { !!rowData.active ? (
+                <>
+                  <Grid item xs={6}>
+                    <Button 
+                      fullWidth 
+                      variant="contained" 
+                      color="primary" 
+                      startIcon={ <Edit /> }
+                      style={ buttonStyle }
+                      onClick={ () => editCard() }
+                    >Edit</Button>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Button 
+                      fullWidth 
+                      variant="outlined" 
+                      color="error" 
+                      startIcon={ <Delete /> }
+                      style={ buttonStyle }
+                      onClick={ () => deleteCard() }
+                    >Delete</Button>
+                  </Grid>
+                </>
+              ) : (
+                <Grid item xs={12}>
+                  <Button 
+                    fullWidth 
+                    variant="contained" 
+                    color="success" 
+                    startIcon={ <AutoAwesome /> }
+                    style={ buttonStyle }
+                    onClick={ () => reactivateCard() }
+                  >Reactivate</Button>
+                </Grid>
+              ) }
             </Grid>
-          </Grid>
 
           {/* Skill set section with header and darkened background */}
           {/* <Grid 
@@ -271,7 +295,31 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
               {/* Add more fields as needed */}
             </Grid>
           </Grid>
-       
+
+          {/* Client Notes */}
+          <Grid 
+            container 
+            spacing={1} 
+            mt={2} 
+            p={2} 
+            sx={{
+              backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
+              borderRadius: 4,
+            }}
+          >
+            <Grid item xs={12}>
+              <Typography variant="h6" color="primary">
+                Notes
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography sx={{ whiteSpace: 'pre-line' }}>
+                { rowData.notes || 'No notes found.' }
+              </Typography>
+            </Grid>
+          </Grid>
+
           <Typography variant="body2" color="text.secondary" mt={2}>
             Fun Fact:
             Lizards are a widespread group of squamate reptiles, with over 6,000
