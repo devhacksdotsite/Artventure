@@ -1,8 +1,8 @@
- /*
-  * models\Clients\admin\index.js
-  * Name: ClientModelAdmin
-  * Author: Jesse Salinas
-  * Date: 02/08/2024
+/*
+* models\Clients\admin\index.js
+* Name: ClientModelAdmin
+* Author: Jesse Salinas
+* Date: 02/08/2024
 */
 
 const ClientModelBase = require('../');
@@ -26,8 +26,9 @@ class ClientModelAdmin extends ClientModelBase {
         phone,
         email,
         address,
-        location_id 
-      ) VALUES (?,?,?,?,?,?,?)
+        location_id,
+        notes
+      ) VALUES (?,?,?,?,?,?,?,?)
     `;
 
 
@@ -39,7 +40,8 @@ class ClientModelAdmin extends ClientModelBase {
         params.phone, 
         params.email, 
         params.address, 
-        locationId
+        locationId,
+        params.notes
       ]));
 
       console.log('res', results);
@@ -71,7 +73,8 @@ class ClientModelAdmin extends ClientModelBase {
         phone = ?,
         email = ?,
         address = ?,
-        location_id = ? 
+        location_id = ?,
+        notes = ?
       WHERE client_id = ?
     `;
 
@@ -84,6 +87,7 @@ class ClientModelAdmin extends ClientModelBase {
         params.email, 
         params.address, 
         locationId, 
+        params.notes,
         clientId
       ]));
 
@@ -109,7 +113,7 @@ class ClientModelAdmin extends ClientModelBase {
       UPDATE artventure.client
       SET
         active = 0 
-      WHERE instructor_id = ?
+      WHERE client_id = ?
     `;
 
     try {
@@ -130,6 +134,33 @@ class ClientModelAdmin extends ClientModelBase {
 
   }
 
+  async updateClientActiveStatus(clientId) {
+
+    // Deactivate client
+    const sql = `
+      UPDATE artventure.client
+      SET
+        active = 1 
+      WHERE client_id = ?
+    `;
+
+    try {
+      const { results } = await this.query(sql, [ clientId ]);
+
+      console.log('res', results);
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
+    } catch (error) {
+  
+      throw error;
+    }
+
+  }
 
 }
 

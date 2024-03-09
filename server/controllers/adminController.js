@@ -18,8 +18,6 @@ class AdminController {
   async getInstructors(req, res) {
     const instructors = await this.instructorModel.getInstructors(req);
 
-    //console.log(instructors);
-
     return res.json({
       status: 'success',
       instructors,
@@ -88,8 +86,6 @@ class AdminController {
 
     const clearance = await this.instructorModel.getInstructorClearance(instructorId);
 
-    //console.log(clearance);
-
     return res.json({
       status: 'success',
       clearance,
@@ -109,6 +105,7 @@ class AdminController {
   }
 
   async getActiveClients(req, res) {
+
     const clients = await this.clientModel.getActiveClients(req);
 
     return res.json({
@@ -159,13 +156,42 @@ class AdminController {
     });   
   }
 
+  async deleteClient(req, res) {
+
+    const clientId = req.params.clientId;
+
+    const response = await this.clientModel.deleteClient(clientId);
+
+    // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
+    const clients = await this.clientModel.getClients(req) || [];
+
+    return res.json({
+      status: 'success',
+      clients,
+    }); 
+  }
+
+  async updateClientActiveStatus(req, res) {
+
+    const clientId = req.params.clientId;
+
+    const response = await this.clientModel.updateClientActiveStatus(clientId);
+
+    // NOTE: If multiple DB instances (reader, writer) will need to read from the writer instance since reader may take a few seconds to update; hence, data might not be available.
+    const clients = await this.clientModel.getClients(req) || [];
+
+    return res.json({
+      status: 'success',
+      clients,
+    });   
+  }
+
+
   /*************************************
                 Students
   *************************************/
   async getStudents(req, res) {
     const students = await this.studentModel.getStudents({ req });
-
-    //console.log(students);
 
     return res.json({
       status: 'success',

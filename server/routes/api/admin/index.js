@@ -30,6 +30,10 @@ router.get('/', (req, res) => {
 });
 
 //router.get('/dashboard', adminController.getAdminDashboard);
+
+/*************************************
+             Instructors
+*************************************/
 router.get('/instructors', (req, res) => adminController.getInstructors(req, res));
 router.post('/instructors', (req, res) => adminController.addInstructor(req, res));
 router.put('/instructors/:id', (req, res) => adminController.updateInstructor(req, res));
@@ -37,15 +41,38 @@ router.delete('/instructors/:id', (req, res) => adminController.deleteInstructor
 
 router.get('/instructors/:instructorId/clearance', (req, res) => adminController.getInstructorClearance(req, res));
 
-router.get('/clients', (req, res) => adminController.getClients(req, res));
-router.get('/clients/active', (req, res) => adminController.getActiveClients(req, res));
-router.get('/clients/:clientId', (req, res) => adminController.getClientByClientId(req, res));
-router.post('/clients', (req, res) => adminController.addClient(req, res));
-router.put('/clients/:id', (req, res) => adminController.updateClient(req, res));
-router.delete('/clients/:id', (req, res) => adminController.deleteClient(req, res));
+/*************************************
+              Clients
+*************************************/
 
-router.get('/clients/students/:studentId', (req, res) => adminController.getClientByStudent(req, res));
+// GET all clients
+router.get('/clients', (req, res) => { adminController.getClients(req, res) });
 
+// GET all active clients
+router.get('/clients/active', (req, res) => { adminController.getActiveClients(req, res) });
+
+// PATCH to update active status of a client by clientId
+router.patch('/clients/active/:clientId', (req, res) => { adminController.updateClientActiveStatus(req, res) });
+
+// GET a client by clientId
+router.get('/clients/:clientId', (req, res) => { adminController.getClientByClientId(req, res) });
+
+// POST to add a new client
+router.post('/clients', (req, res) => { adminController.addClient(req, res) });
+
+// PUT to update a client by id
+router.put('/clients/:id', (req, res) => { adminController.updateClient(req, res) });
+
+// DELETE a client by clientId
+router.delete('/clients/:clientId', (req, res) => { adminController.deleteClient(req, res) });
+
+// GET a client by studentId
+router.get('/clients/students/:studentId', (req, res) => { adminController.getClientByStudent(req, res) });
+
+
+/*************************************
+                Students
+*************************************/
 router.get('/students', (req, res) => adminController.getStudents(req, res));
 router.get('/students/:studentId/related', (req, res) => adminController.getStudentsRelatedByStudentId(req, res));
 router.post('/students', (req, res) => adminController.addStudent(req, res));

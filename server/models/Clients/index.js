@@ -39,6 +39,7 @@ class ClientModelBase extends BaseModel {
         cli.phone,
         cli.email,
         cli.active,
+        cli.notes,
         loc.location_id, 
         loc.address AS loc_address, 
         sch.school_id, 
@@ -95,6 +96,7 @@ class ClientModelBase extends BaseModel {
 
   async getActiveClients(req) {
 
+    console.log('get active clients...');
     const sql = `
       SELECT 
         client_id, 
@@ -102,11 +104,11 @@ class ClientModelBase extends BaseModel {
         lastname, 
         CONCAT(firstname, ' ', lastname) AS fullname
       FROM artventure.client
-      WHERE active=?
+      WHERE active = 1;
     `;
 
     try {
-      const { results } = await this.query(sql, [ 1 ]);
+      const { results } = await this.query(sql);
 
       if (!results.length) {
         return;
