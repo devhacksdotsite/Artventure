@@ -30,7 +30,7 @@ const initialState = {
   },
 
   instructors: [],
-  clients: [],
+  patrons: [],
   students: [],
 
   view: 'table',
@@ -104,10 +104,10 @@ export const GlobalProvider = ({ children }) => {
     });
   } 
 
-  const setClients = (clients) => {
+  const setPatrons = (patrons) => {
     dispatch({
-      type: 'SET_CLIENTS',
-      payload: clients
+      type: 'SET_PATRONS',
+      payload: patrons
     });
   } 
 
@@ -138,7 +138,7 @@ export const GlobalProvider = ({ children }) => {
       slug: state.slug,
       school: state.school,
       instructors: state.instructors,
-      clients: state.clients,
+      patrons: state.patrons,
       students: state.students,
       filter: state.filter,
       view: state.view,
@@ -150,7 +150,7 @@ export const GlobalProvider = ({ children }) => {
 	  setDarkMode,
       setSlug,
       setInstructors,
-      setClients,
+      setPatrons,
       setStudents,
       setFilter,
       setView,

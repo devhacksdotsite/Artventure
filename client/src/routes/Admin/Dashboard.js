@@ -1,7 +1,8 @@
 /*
-  * routes\Admin\Dashboard.js
-  * Author: Jesse Salinas
-  * Date: 07/25/2023
+* @\routes\Admin\Dashboard.js
+* Name: Dashboard
+* Author: Jesse Salinas
+* Date: 07/25/2023
 */
 
 export const Dashboard = () => {

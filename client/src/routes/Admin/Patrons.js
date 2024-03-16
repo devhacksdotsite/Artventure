@@ -1,6 +1,6 @@
 /*
-* @\routes\Admin\Clients.js
-* Name: Clients
+* @\routes\Admin\Patrons.js
+* Name: Patrons
 * Author: Jesse Salinas
 * Date: 02/08/2024
 */
@@ -55,11 +55,11 @@ const columns = [
   }
 ];
 
-export const Clients = () => {
+export const Patrons = () => {
   // CTX
   const { 
-    clients,
-    setClients
+    patrons,
+    setPatrons
   } = useContext(GlobalCtx);
 
   // State
@@ -86,7 +86,7 @@ export const Clients = () => {
 
         const response = await getData('http://localhost:3050/api/private/admin/clients', token, logout, filter);
 
-        setClients(response.clients);
+        setPatrons(response.clients);
 
         setLoading(false);
 
@@ -112,9 +112,9 @@ export const Clients = () => {
     <>
       <DataVisualization
         columns={ columns } 
-        data={ clients }
+        data={ patrons }
         slug={ slug }
-        setter={ setClients }
+        setter={ setPatrons }
         filter={ filter }
         setFilter={ setFilter }
         resetFilter={ resetFilter }

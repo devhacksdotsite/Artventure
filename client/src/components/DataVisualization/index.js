@@ -1,5 +1,6 @@
 /*
 * @\component\DataVisualization\index.js
+* Name: DataVisualization
 * Author: Jesse Salinas
 * Date: 07/22/2023
 */

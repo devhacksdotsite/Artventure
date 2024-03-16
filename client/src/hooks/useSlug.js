@@ -1,18 +1,23 @@
 /*
-  * hooks\useSlug.js
-  * Author: Jesse Salinas
-  * Date: 08/19/2023
+* @\hooks\useSlug.js
+* Name: useSlug
+* Author: Jesse Salinas
+* Date: 08/19/2023
 */
 
 import { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+// Context
+import { GlobalCtx } from '@/context/GlobalState';
+
+// Helpers
 const determineSlug = (pathname) => {
 
   const slugMap = {
     'instructors': 'instructor',
     'students': 'student',
-    'clients': 'client',
+    'patrons': 'patron',
     'attendance': 'attendance',
     'roster': 'roster',
   };
@@ -25,9 +30,6 @@ const determineSlug = (pathname) => {
     singularName
   };
 };
-
-// Context
-import { GlobalCtx } from '../context/GlobalState';
 
 export const useSlug = () => {
   const { slug, setSlug } = useContext(GlobalCtx);

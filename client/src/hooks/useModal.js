@@ -1,7 +1,8 @@
 /*
-  * hooks\useModal.js
-  * Author: Jesse Salinas
-  * Date: 08/18/2023
+* @\hooks\useModal.js
+* Name: useModal
+* Author: Jesse Salinas
+* Date: 08/18/2023
 */
 
 import { useState } from 'react';

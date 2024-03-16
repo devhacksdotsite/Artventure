@@ -67,10 +67,10 @@ export default (state, action) => {
         instructors: action.payload,
       }
 
-    case 'SET_CLIENTS':
+    case 'SET_PATRONS':
       return {
         ...state,
-        clients: action.payload,
+        patrons: action.payload,
       }
 
     case 'SET_STUDENTS':

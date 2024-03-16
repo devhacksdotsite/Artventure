@@ -5,8 +5,6 @@
 * Date: 08/18/2023
 */
 
-// Components
-
 /***********************************
               Instructors
 /***********************************/
@@ -87,7 +85,7 @@ export const modalData = {
     }
   },
 
-  clients: {
+  patrons: {
     add: {
       component: ClientForm,
       title: 'Add Patron',

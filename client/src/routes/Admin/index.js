@@ -1,8 +1,8 @@
 /*
-  * routes\Admin\index.js
-  * Name: AdminPortal
-  * Author: Jesse Salinas
-  * Date: 07/22/2023
+* @\routes\Admin\index.js
+* Name: AdminPortal
+* Author: Jesse Salinas
+* Date: 07/22/2023
 */
 
 import { useContext, useEffect } from 'react';
@@ -28,7 +28,7 @@ import { Dashboard } from '@/routes/Admin/Dashboard';
 import { Calendar } from '@/routes/Admin/Calendar';
 import { Instructors } from '@/routes/Admin/Instructors';
 import { Students } from '@/routes/Admin/Students';
-import { Clients } from '@/routes/Admin/Clients';
+import { Patrons } from '@/routes/Admin/Patrons';
 import { Attendance } from '@/routes/Admin/Attendance';
 
 export const AdminPortal = () => {
@@ -139,11 +139,11 @@ export const AdminPortal = () => {
       />
 
 	  <Route 
-		path="clients" 
+		path="patrons" 
 		element={ 
 		  <RequireAuth>
             <PortalLayout>
-			  <Clients /> 
+			  <Patrons /> 
             </PortalLayout>
 		  </RequireAuth>
 		} 

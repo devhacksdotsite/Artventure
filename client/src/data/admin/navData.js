@@ -58,7 +58,7 @@ export const mainListItems = [
   }, */ {
     id: uuidv4(),
 	name: 'Patrons',
-	url: '/admin/clients',
+	url: '/admin/patrons',
 	icon: <GroupsIcon />
   }, {
     id: uuidv4(),
@@ -85,12 +85,7 @@ export const secondaryListItems = [
 	name: 'Students Report',
 	url: '/admin/reports/students',
 	icon: <SummarizeIcon />
-  }, {
-    id: uuidv4(),
-	name: 'Clients Report',
-	url: '/admin/reports/clients',
-	icon: <SummarizeIcon />
-  }
+  },
 ];
 
 export const accountMenuMainListItems = [
