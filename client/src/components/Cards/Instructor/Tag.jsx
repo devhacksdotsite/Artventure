@@ -1,8 +1,8 @@
 /*
-  * @\component\Cards\Instructor\Tag
-  * Name: Tag
-  * Author: Jesse Salinas
-  * Date: 02/18/2024
+* @\component\Cards\Instructor\Tag
+* Name: Tag
+* Author: Jesse Salinas
+* Date: 02/18/2024
 */
 
 import { useState, useEffect } from 'react';
@@ -27,6 +27,7 @@ import {
   Edit, 
   Delete,
   CalendarMonth,
+  AutoAwesome
 } from '@mui/icons-material';
 
 // Utils
@@ -54,7 +55,15 @@ const clearanceMap = {
   background_check: 'Background Checked'
 }
 
-export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete }) => {
+export const Tag = ({ 
+  rowData, 
+  elevation = 0, 
+  backgroundColor = 'transparent', 
+  border = 'none', 
+  handleEdit, 
+  handleDelete,
+  handleReactivate 
+}) => {
 
   console.log('rowData is: ', rowData);
 
@@ -69,6 +78,7 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
   // Handlers
   const editCard = () => handleEdit();
   const deleteCard = () => handleDelete();
+  const reactivateCard = () => handleReactivate();
 
   // Hooks
   const theme = useTheme();
@@ -142,27 +152,43 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
         <Typography component="div" mt={1}>{ formatPhoneNumber(rowData?.phone) }</Typography>
 
         <Grid container spacing={2} my={2}>
-          <Grid item xs={6}>
-            <Button 
-              fullWidth 
-              variant="contained" 
-              color="primary" 
-              startIcon={ <Edit /> }
-              style={ buttonStyle }
-              onClick={ () => editCard() }
-            >Edit</Button>
-          </Grid>
 
-          <Grid item xs={6}>
-            <Button 
-              fullWidth 
-              variant="outlined" 
-              color="error" 
-              startIcon={ <Delete /> }
-              style={ buttonStyle }
-              onClick={ () => deleteCard() }
-            >Delete</Button>
-          </Grid>
+          { !!rowData.active ? (
+            <>
+              <Grid item xs={6}>
+                <Button 
+                  fullWidth 
+                  variant="contained" 
+                  color="primary" 
+                  startIcon={ <Edit /> }
+                  style={ buttonStyle }
+                  onClick={ () => editCard() }
+                >Edit</Button>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Button 
+                  fullWidth 
+                  variant="outlined" 
+                  color="error" 
+                  startIcon={ <Delete /> }
+                  style={ buttonStyle }
+                  onClick={ () => deleteCard() }
+                >Delete</Button>
+              </Grid>
+            </>
+          ) : (
+            <Grid item xs={12}>
+              <Button 
+                fullWidth 
+                variant="contained" 
+                color="success" 
+                startIcon={ <AutoAwesome /> }
+                style={ buttonStyle }
+                onClick={ () => reactivateCard() }
+              >Reactivate</Button>
+            </Grid>
+          ) }
         </Grid>
 
         {/* Skill set section with header and darkened background */}

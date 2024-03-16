@@ -38,6 +38,11 @@ const columns = [
     sort: true,
     filter: true
   }, {
+    id: 'age',
+    label: 'Age (yrs.)',
+    sort: true,
+    filter: true
+  }, {
     id: 'school_name',
     label: 'School',
     sort: true,

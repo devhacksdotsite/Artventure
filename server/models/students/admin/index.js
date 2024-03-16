@@ -1,8 +1,8 @@
- /*
-  * models\students\admin\index.js
-  * Name: StudentModelAdmin
-  * Author: Jesse Salinas
-  * Date: 02/05/2024
+/*
+* @\models\students\admin\index.js
+* Name: StudentModelAdmin
+* Author: Jesse Salinas
+* Date: 02/05/2024
 */
 
 const StudentModelBase = require('../');
@@ -65,6 +65,7 @@ class StudentModelAdmin extends StudentModelBase {
         lastname = ?, 
         client_id = ?,
         date_started = ?, 
+        birthdate = ?, 
         location_id = ?,
         notes = ?
       WHERE student_id = ?
@@ -76,13 +77,12 @@ class StudentModelAdmin extends StudentModelBase {
         params.lastname, 
         params.clientId, 
         params.dateStarted, 
+        params.birthdate, 
         locationId, 
         params.notes,
         studentId
       ]));
 
-      console.log('res', results);
-
       if (!results.length) {
         return;
       }
@@ -96,29 +96,18 @@ class StudentModelAdmin extends StudentModelBase {
 
   }
 
-  async deleteStudent(instructorId) {
+  async deleteStudent(studentId) {
 
-    // Deactivate instructor
+    // Deactivate student
     const sql = `
-      UPDATE artventure.instructor
+      UPDATE artventure.student
       SET
         active = 0 
-      WHERE instructor_id = ?
+      WHERE student_id = ?
     `;
 
     try {
-      const { results } = await this.query(sql, [ instructorId ]);
-
-      console.log('res', results);
-      /*ResultSetHeader {
-        fieldCount: 0,
-        affectedRows: 1,
-        insertId: 0,
-        info: 'Rows matched: 1  Changed: 1  Warnings: 0',
-        serverStatus: 2,
-        warningStatus: 0,
-        changedRows: 1
-      }*/
+      const { results } = await this.query(sql, [ studentId ]);
 
       if (!results.length) {
         return;
@@ -133,10 +122,34 @@ class StudentModelAdmin extends StudentModelBase {
 
   }
 
+  async updateStudentActiveStatus(studentId) {
+
+    // Reactivate student
+    const sql = `
+      UPDATE artventure.student
+      SET
+        active = 1 
+      WHERE student_id = ?
+    `;
+
+    try {
+      const { results } = await this.query(sql, [ studentId ]);
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
+    } catch (error) {
+  
+      throw error;
+    }
+
+  }
 
 }
 
 module.exports = StudentModelAdmin;
 
 
- 

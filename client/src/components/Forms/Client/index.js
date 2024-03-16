@@ -35,7 +35,7 @@ import {
 } from '@mui/material';
 
 // MUI Date Pickers
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 // MUI Icons
@@ -179,20 +179,18 @@ export const ClientForm = ({ data, setter, method = 'POST', filter, closeModal }
             control={control}
             defaultValue={ data?.date_started }
             render={({ field }) => (
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-                <TextField
-                  id="dateStarted"
-                  label="Start Date"
-                  type="date"
-                  defaultValue=""
-                  sx={{ width: '100%', mt: 2 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={ field.value }
-                  onChange={ (e) => field.onChange(e.target.value) }
-                />
-              </LocalizationProvider>
+              <TextField
+                id="dateStarted"
+                label="Start Date"
+                type="date"
+                defaultValue=""
+                sx={{ width: '100%', mt: 2 }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={ field.value }
+                onChange={ (e) => field.onChange(e.target.value) }
+              />
             )}
           />
         </Grid>

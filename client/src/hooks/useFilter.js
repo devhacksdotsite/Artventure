@@ -1,8 +1,8 @@
 /*
-  * hooks\useFilter.js
-  * Name: useFilter
-  * Author: Jesse Salinas
-  * Date: 08/19/2023
+* @\hooks\useFilter.js
+* Name: useFilter
+* Author: Jesse Salinas
+* Date: 08/19/2023
 */
 
 import { useContext, useEffect } from 'react';
@@ -53,6 +53,15 @@ export const useFilter = () => {
 
     return !isEqual(filter, defaultFilter);    
   }
+
+  useEffect(() => {
+
+    // Return a cleanup function on unmount
+    return () => {
+
+      resetFilter();
+    };
+  }, []);
 
   return {
     filter,

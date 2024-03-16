@@ -1,8 +1,8 @@
 /*
-  * component\Forms\Instructor\FilterOption.jsx
-  * Name: FilterOption
-  * Author: Jesse Salinas
-  * Date: 08/13/2023
+* @\component\Forms\Instructor\Filter.jsx
+* Name: FilterForm
+* Author: Jesse Salinas
+* Date: 08/13/2023
 */
 
 import { useState } from 'react';
@@ -46,7 +46,12 @@ const buttonStyle = {
   padding: '10px',
 };
 
-export const FilterOptionForm = ({ filter, setFilter, resetFilter, closeModal }) => {
+export const FilterForm = ({ 
+  filter, 
+  setFilter, 
+  resetFilter, 
+  closeModal 
+}) => {
 
   // Hooks
   const { 
@@ -58,7 +63,6 @@ export const FilterOptionForm = ({ filter, setFilter, resetFilter, closeModal })
   const onSubmit = async (formData) => {
 
     const payload = { ...formData };
-    console.log('formData', payload);
 
     setFilter(payload);
     closeModal();

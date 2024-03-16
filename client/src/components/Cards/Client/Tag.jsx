@@ -59,7 +59,15 @@ const formatPhoneNumber = (phoneNumber) => {
   return phoneNumber; // Return the original number if it doesn't match the expected format
 };
 
-export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete, handleReactivate }) => {
+export const Tag = ({ 
+  rowData, 
+  elevation = 0, 
+  backgroundColor = 'transparent', 
+  border = 'none', 
+  handleEdit, 
+  handleDelete, 
+  handleReactivate 
+}) => {
 
   // Variables
   const ModalData = modalData.students;

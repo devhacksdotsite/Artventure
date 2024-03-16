@@ -1,8 +1,8 @@
- /*
-  * models\students\index.js
-  * Name: StudentModelBase
-  * Author: Jesse Salinas
-  * Date: 08/27/2023
+/*
+* @\models\students\index.js
+* Name: StudentModelBase
+* Author: Jesse Salinas
+* Date: 08/27/2023
 */
 
 const BaseModel = require('../_Base');
@@ -38,6 +38,7 @@ class StudentModelBase extends BaseModel {
         CONCAT(stu.firstname, ' ', stu.lastname) AS fullname, 
         DATE_FORMAT(stu.date_started, '%Y-%m-%d') AS date_started, 
         DATE_FORMAT(stu.birthdate, '%Y-%m-%d') AS birthdate, 
+        TIMESTAMPDIFF(YEAR, stu.birthdate, CURDATE()) AS age,
         stu.active,
         loc.location_id, 
         loc.address AS loc_address, 
@@ -52,7 +53,7 @@ class StudentModelBase extends BaseModel {
     `;
   }
 
-  async getStudents({ req }) {
+  async getStudents(req) {
 
     const { search, status } = req.query || {};
 
@@ -136,6 +137,35 @@ class StudentModelBase extends BaseModel {
       throw error;
     }
   }
+
+  async getActiveStudents(req) {
+
+    const sql = `
+      SELECT 
+        student_id, 
+        firstname,
+        lastname, 
+        CONCAT(firstname, ' ', lastname) AS fullname
+      FROM artventure.student
+      WHERE active = 1;
+    `;
+
+    try {
+      const { results } = await this.query(sql);
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
+    } catch (error) {
+  
+      throw error;
+    }
+
+  }
+
 }
 
 module.exports = StudentModelBase;

@@ -1,5 +1,5 @@
 /*
- * routes\api\admin\index.js
+ * @\routes\api\admin\index.js
  * Author: Jesse Salinas
  * Date: 08/22/2023
  * Name: AdminRouter
@@ -34,12 +34,27 @@ router.get('/', (req, res) => {
 /*************************************
              Instructors
 *************************************/
-router.get('/instructors', (req, res) => adminController.getInstructors(req, res));
-router.post('/instructors', (req, res) => adminController.addInstructor(req, res));
-router.put('/instructors/:id', (req, res) => adminController.updateInstructor(req, res));
-router.delete('/instructors/:id', (req, res) => adminController.deleteInstructor(req, res));
 
-router.get('/instructors/:instructorId/clearance', (req, res) => adminController.getInstructorClearance(req, res));
+// GET all instructors
+router.get('/instructors', (req, res) => { adminController.getInstructors(req, res) });
+
+// GET all active instructors
+router.get('/instructors/active', (req, res) => { adminController.getActiveInstructors(req, res) });
+
+// PATCH to update active status of an instructor by instructorId
+router.patch('/instructors/active/:instructorId', (req, res) => { adminController.updateInstructorActiveStatus(req, res) });
+
+// POST to add a new instructor
+router.post('/instructors', (req, res) => { adminController.addInstructor(req, res) });
+
+// PUT to update an instructor by id
+router.put('/instructors/:id', (req, res) => { adminController.updateInstructor(req, res) });
+
+// DELETE an instructor by id
+router.delete('/instructors/:id', (req, res) => { adminController.deleteInstructor(req, res) });
+
+// GET instructor clearance by instructorId
+router.get('/instructors/:instructorId/clearance', (req, res) => { adminController.getInstructorClearance(req, res) });
 
 /*************************************
               Clients
@@ -69,17 +84,35 @@ router.delete('/clients/:clientId', (req, res) => { adminController.deleteClient
 // GET a client by studentId
 router.get('/clients/students/:studentId', (req, res) => { adminController.getClientByStudent(req, res) });
 
-
 /*************************************
                 Students
 *************************************/
-router.get('/students', (req, res) => adminController.getStudents(req, res));
-router.get('/students/:studentId/related', (req, res) => adminController.getStudentsRelatedByStudentId(req, res));
-router.post('/students', (req, res) => adminController.addStudent(req, res));
-router.put('/students/:id', (req, res) => adminController.updateStudent(req, res));
-router.delete('/students/:id', (req, res) => adminController.deleteStudent(req, res));
 
-router.get('/students/client/:clientId', (req, res) => adminController.getStudentsByClientId(req, res));
+// GET all students
+router.get('/students', (req, res) => { adminController.getStudents(req, res) });
+
+// GET all active students
+router.get('/students/active', (req, res) => { adminController.getActiveStudents(req, res) });
+
+// PATCH to update active status of a student by studentId
+router.patch('/students/active/:studentId', (req, res) => { adminController.updateStudentActiveStatus(req, res) });
+
+// GET related students by studentId
+router.get('/students/:studentId/related', (req, res) => { adminController.getStudentsRelatedByStudentId(req, res) });
+
+// POST to add a new student
+router.post('/students', (req, res) => { adminController.addStudent(req, res) });
+
+// PUT to update a student by id
+router.put('/students/:id', (req, res) => { adminController.updateStudent(req, res) });
+
+// DELETE a student by id
+router.delete('/students/:studentId', (req, res) => { adminController.deleteStudent(req, res) });
+
+// GET students by clientId
+router.get('/students/client/:clientId', (req, res) => { adminController.getStudentsByClientId(req, res) });
+
+
 
 module.exports = router;
 

@@ -1,5 +1,5 @@
 /*
-* models\instructors\admin\index.js
+* @\models\instructors\admin\index.js
 * Name: InstructorModelAdmin
 * Author: Jesse Salinas
 * Date: 11/11/2023
@@ -136,6 +136,32 @@ class InstructorModelAdmin extends InstructorModelBase {
         warningStatus: 0,
         changedRows: 1
       }*/
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
+    } catch (error) {
+  
+      throw error;
+    }
+
+  }
+
+  async updateInstructorActiveStatus(instructorId) {
+
+    // Reactivate student
+    const sql = `
+      UPDATE artventure.instructor
+      SET
+        active = 1 
+      WHERE instructor_id = ?
+    `;
+
+    try {
+      const { results } = await this.query(sql, [ instructorId ]);
 
       if (!results.length) {
         return;

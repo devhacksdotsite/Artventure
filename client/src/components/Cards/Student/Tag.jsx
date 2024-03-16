@@ -29,6 +29,7 @@ import {
   Edit, 
   Delete,
   CalendarMonth,
+  AutoAwesome,
 } from '@mui/icons-material';
 
 // Styles
@@ -58,7 +59,15 @@ const formatPhoneNumber = (phoneNumber) => {
   return phoneNumber; // Return the original number if it doesn't match the expected format
 };
 
-export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', border = 'none', handleEdit, handleDelete }) => {
+export const Tag = ({ 
+  rowData, 
+  elevation = 0, 
+  backgroundColor = 'transparent', 
+  border = 'none', 
+  handleEdit, 
+  handleDelete,
+  handleReactivate 
+}) => {
 
   // Variables
   const courses = rowData?.courses || ['Drawing Level 1', 'Drawing Level 3', 'Pastels Level 1', 'Acrylic Level 1', 'Water Color Level 1', 'Water Color Level 2'];
@@ -74,6 +83,7 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
   // Handlers
   const editCard = () => handleEdit();
   const deleteCard = () => handleDelete();
+  const reactivateCard = () => handleReactivate();
 
   const handleStudentClick = (rowData) => {
     console.log({ rowData });
@@ -167,30 +177,48 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
 
           <Typography component="div">Est. { rowData?.date_started }</Typography>
 
-          <Typography component="div" mt={1}>{ formatPhoneNumber(rowData?.phone) }</Typography>
+          { rowData && rowData.age && (
+            <Typography component="div" mt={1}>Age: { rowData.age } years</Typography>
+          ) }
 
           <Grid container spacing={2} my={2}>
-            <Grid item xs={6}>
-              <Button 
-                fullWidth 
-                variant="contained" 
-                color="primary" 
-                startIcon={ <Edit /> }
-                style={ buttonStyle }
-                onClick={ () => editCard() }
-              >Edit</Button>
-            </Grid>
 
-            <Grid item xs={6}>
-              <Button 
-                fullWidth 
-                variant="outlined" 
-                color="error" 
-                startIcon={ <Delete /> }
-                style={ buttonStyle }
-                onClick={ () => deleteCard() }
-              >Delete</Button>
-            </Grid>
+            { !!rowData.active ? (
+              <>
+                <Grid item xs={6}>
+                  <Button 
+                    fullWidth 
+                    variant="contained" 
+                    color="primary" 
+                    startIcon={ <Edit /> }
+                    style={ buttonStyle }
+                    onClick={ () => editCard() }
+                  >Edit</Button>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Button 
+                    fullWidth 
+                    variant="outlined" 
+                    color="error" 
+                    startIcon={ <Delete /> }
+                    style={ buttonStyle }
+                    onClick={ () => deleteCard() }
+                  >Delete</Button>
+                </Grid>
+              </>
+            ) : (
+              <Grid item xs={12}>
+                <Button 
+                  fullWidth 
+                  variant="contained" 
+                  color="success" 
+                  startIcon={ <AutoAwesome /> }
+                  style={ buttonStyle }
+                  onClick={ () => reactivateCard() }
+                >Reactivate</Button>
+              </Grid>
+            ) }
           </Grid>
 
         {/* Student Information */}
@@ -216,6 +244,11 @@ export const Tag = ({ rowData, elevation = 0, backgroundColor = 'transparent', b
               </Typography>
               <Typography>
                 Date Started: { rowData.date_started }
+              </Typography>
+              <Typography>
+                Birthdate: { rowData.date_started }
+              </Typography>
+              <Typography>
               </Typography>
             </Grid>
           </Grid>

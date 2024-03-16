@@ -18,6 +18,10 @@ import { GlobalProvider } from '@/context/GlobalState';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+// MUI X
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+
 // themes
 import { themeL, themeD } from "@/themes/";
 
@@ -35,7 +39,10 @@ const Root = () => {
   return (
     <ThemeProvider theme={ theme }>
       <CssBaseline />
-      <App />
+
+      <LocalizationProvider dateAdapter={ AdapterMoment }>
+        <App />
+      </LocalizationProvider>
     </ThemeProvider>
   );
 };

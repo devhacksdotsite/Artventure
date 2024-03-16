@@ -1,8 +1,8 @@
 /*
-  * context\AppReducer.js
-  * Name: AppReducer
-  * Author: Jesse Salinas
-  * Date: 07/22/2023
+* @\context\AppReducer.js
+* Name: AppReducer
+* Author: Jesse Salinas
+* Date: 07/22/2023
 */
 
 export default (state, action) => {

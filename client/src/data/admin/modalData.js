@@ -1,25 +1,54 @@
 /*
-  * data\admin\modalData.js
-  * Name: modalData
-  * Author: Jesse Salinas
-  * Date: 08/18/2023
+* @\data\admin\modalData.js
+* Name: modalData
+* Author: Jesse Salinas
+* Date: 08/18/2023
 */
 
 // Components
+
+/***********************************
+              Instructors
+/***********************************/
+
 import { InstructorForm } from '@/components/Forms/Instructor/';
+
+import { InstructorDelete } from '@/components/Forms/Instructor/Delete';
+
+import { InstructorReactivate } from '@/components/Forms/Instructor/Reactivate';
+
+import { FilterForm as FilterInstructorForm } from '@/components/Forms/Instructor/Filter';
+
 import { Tag as InstructorTag } from '@/components/Cards/Instructor/Tag';
-import { DeleteEntry as InstructorDelete } from '@/components/Forms/DeleteEntry';
-import { FilterOptionForm } from '@/components/Forms/Instructor/FilterOption';
+
+/***********************************
+              Patrons
+/***********************************/
 
 import { ClientForm } from '@/components/Forms/Client/';
+
 import { ClientDelete } from '@/components/Forms/Client/Delete';
+
 import { ClientReactivate } from '@/components/Forms/Client/Reactivate';
+
 import { FilterForm as FilterClientForm } from '@/components/Forms/Client/Filter';
+
 import { Tag as ClientTag } from '@/components/Cards/Client/Tag';
 
+/***********************************
+               Students
+/***********************************/
+
 import { StudentForm } from '@/components/Forms/Student/';
+
+import { StudentDelete } from '@/components/Forms/Student/Delete';
+
+import { StudentReactivate } from '@/components/Forms/Student/Reactivate';
+
+import { FilterForm as FilterStudentForm } from '@/components/Forms/Student/Filter';
+
 import { Tag as StudentTag } from '@/components/Cards/Student/Tag';
-import { FilterOptionForm as FilterStudentForm } from '@/components/Forms/Client/FilterOption';
+
 
 import { AddStudentAttendanceForm } from '@/components/Forms/Attendance/AddStudent';
 import { ManageAttendanceForm } from '@/components/Forms/Attendance/ManageAttendance';
@@ -41,8 +70,13 @@ export const modalData = {
       title: 'Delete Instructor',
       subtitle: null,
     },
+    reactivate: {
+      component: InstructorReactivate, 
+      title: 'Reactivate Instructor',
+      subtitle: null,
+    },
     filter: {
-      component: FilterOptionForm, 
+      component: FilterInstructorForm, 
       title: 'Filter Instructors',
       subtitle: 'Complete the form to filter instructors.',
     },
@@ -56,33 +90,33 @@ export const modalData = {
   clients: {
     add: {
       component: ClientForm,
-      title: 'Add Client',
-      subtitle: 'Complete the form to add a new client.',
+      title: 'Add Patron',
+      subtitle: 'Complete the form to add a new Patron.',
     },
     edit: {
       component: ClientForm,
-      title: 'Edit Client',
-      subtitle: 'Complete the form to edit the client details.',
+      title: 'Edit Patron',
+      subtitle: 'Complete the form to edit the patron&apos;s details.',
     },
     delete: {
       component: ClientDelete, 
-      title: 'Delete Client',
+      title: 'Delete Patron',
       subtitle: null,
     },
     reactivate: {
       component: ClientReactivate, 
-      title: 'Reactivate Client',
+      title: 'Reactivate Patron',
       subtitle: null,
     },
     filter: {
       component: FilterClientForm, 
-      title: 'Filter Clients',
-      subtitle: 'Complete the form to filter clients.',
+      title: 'Filter Patrons',
+      subtitle: 'Complete the form to filter patrons.',
     },
     tag: {
       component: ClientTag, 
-      title: 'Client Details',
-      subtitle: 'Additional client details',
+      title: 'Patron Details',
+      subtitle: 'Additional patron details',
     }
   },
 
@@ -98,8 +132,13 @@ export const modalData = {
       subtitle: 'Complete the form to edit the student details.',
     },
     delete: {
-      component: InstructorDelete, 
-      title: 'Delete Instructor',
+      component: StudentDelete, 
+      title: 'Delete Student',
+      subtitle: null,
+    },
+    reactivate: {
+      component: StudentReactivate, 
+      title: 'Reactivate Student',
       subtitle: null,
     },
     filter: {
@@ -113,14 +152,17 @@ export const modalData = {
       subtitle: 'Additional student details',
     }
   },
-  patrons: {
 
-  },
   attendance: {
     add: {
       component: AddStudentAttendanceForm,
       title: 'Add Student',
       subtitle: 'Add student to the attendance for this appointment',
+    },
+    filter: {
+      component: FilterStudentForm, 
+      title: 'Filter Students',
+      subtitle: 'Complete the form to filter students.',
     },
     manage: {
       component: ManageAttendanceForm, 

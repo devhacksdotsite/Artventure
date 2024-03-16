@@ -1,7 +1,8 @@
 /*
-  * component\Forms\Attendance\ManageAttendance.jsx
-  * Author: Jesse Salinas
-  * Date: 10/21/2023
+* @\component\Forms\Attendance\ManageAttendance.jsx
+* Name: ManageAttendance
+* Author: Jesse Salinas
+* Date: 10/21/2023
 */
 
 import { useState } from 'react';
@@ -16,6 +17,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import {
+  Menu,
+  MenuItem
+} from '@mui/material/';
 
 // MUI Icons
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -25,8 +30,26 @@ import EventBusyIcon from '@mui/icons-material/EventBusy';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export const ManageAttendanceForm = ({ attendingStudents, onCheckIn, onMarkAbsence, onDelete }) => {
+export const ManageAttendanceForm = ({ 
+  attendingStudents, 
+  onCheckIn, 
+  onMarkAbsence, 
+  onDelete 
+}) => {
+
+  // State
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  // Handlers
+  const handleMore = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <TableContainer>
@@ -59,7 +82,7 @@ export const ManageAttendanceForm = ({ attendingStudents, onCheckIn, onMarkAbsen
               <TableCell>
                 <Tooltip title="Check In">
                   <IconButton onClick={() => onCheckIn(student)}>
-                    <EventAvailableIcon />
+                    <EventAvailableIcon color="success" />
                   </IconButton>
                 </Tooltip>
 
@@ -69,17 +92,28 @@ export const ManageAttendanceForm = ({ attendingStudents, onCheckIn, onMarkAbsen
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Canceled">
-                  <IconButton onClick={() => onDelete(student)}>
-                    <CancelPresentationIcon />
+                <Tooltip title="Actions">
+                  <IconButton onClick={ handleMore }>
+                    <MoreVertIcon />
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Delete">
-                  <IconButton onClick={() => onDelete(student)}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                </Tooltip>
+                <Menu
+                  anchorEl={ anchorEl }
+                  open={ Boolean(anchorEl) }
+                  onClose={ handleClose }
+                >
+                  <MenuItem onClick={onCheckIn}>
+                    <EventAvailableIcon color="success" />
+                  Check In
+                  </MenuItem>
+
+                  <MenuItem onClick={onMarkAbsence}>
+                    <EventBusyIcon />
+                    Mark Absence
+                  </MenuItem>
+                </Menu>
+
               </TableCell>
             </TableRow>
           )) }

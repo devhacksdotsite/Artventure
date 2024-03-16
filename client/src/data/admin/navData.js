@@ -1,8 +1,8 @@
 /*
-  * @\data\student\navData.js
-  * Name: navData
-  * Author: Jesse Salinas
-  * Date: 07/25/2023
+* @\data\student\navData.js
+* Name: navData
+* Author: Jesse Salinas
+* Date: 07/25/2023
 */
 
 import { v4 as uuidv4 } from 'uuid'; // Import the UUID generator
@@ -57,7 +57,7 @@ export const mainListItems = [
 	icon: <SchoolIcon />
   }, */ {
     id: uuidv4(),
-	name: 'Clients',
+	name: 'Patrons',
 	url: '/admin/clients',
 	icon: <GroupsIcon />
   }, {
@@ -75,12 +75,7 @@ export const mainListItems = [
 	name: 'Attendance',
 	url: '/admin/attendance',
 	icon: <RuleIcon />
-  }, {
-    id: uuidv4(),
-	name: 'Roster',
-	url: '/admin/roster',
-	icon: <AssignmentIcon />
-  },
+  }
 ];
 
 // Admin secondary links

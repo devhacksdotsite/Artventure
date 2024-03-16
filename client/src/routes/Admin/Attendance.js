@@ -17,6 +17,8 @@ import { ManageAttendanceForm } from '@/components/Forms/Attendance/ManageAttend
 
 // Hooks
 import { useSlug } from '@/hooks/useSlug';
+import { useAuth } from '@/hooks/useAuth';
+import { useFilter } from '@/hooks/useFilter';
 
 const columns = [
   {
@@ -56,8 +58,14 @@ export const Attendance = () => {
 
   // hooks
   const { slug } = useSlug();
+  const { token, logout } = useAuth();
+  const { 
+    filter, 
+    setFilter, 
+    resetFilter, 
+    activeFilter 
+  } = useFilter();
 
-  console.log('slug', slug);
 
   /* Attendance */
   const [attendingStudents, setAttendingStudents] = useState([
@@ -127,6 +135,11 @@ export const Attendance = () => {
         columns={ columns } 
         data={ data }
         slug={ slug }
+        filter={ filter }
+        setFilter={ setFilter }
+        resetFilter={ resetFilter }
+        activeFilter={ activeFilter }
+        showDate={ true }
       >
         <>
           <p>Spots Filled: 7/8</p>

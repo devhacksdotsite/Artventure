@@ -91,7 +91,19 @@ const viewComponents = {
   table: TableView,
 };
 
-export const DataVisualization = ({ children, slug, columns, data, setter, pagination, filter, setFilter, resetFilter, activeFilter }) => {
+export const DataVisualization = ({ 
+  children, 
+  slug, 
+  columns, 
+  data, 
+  setter, 
+  pagination, 
+  filter, 
+  setFilter, 
+  resetFilter, 
+  activeFilter,
+  showDate = false
+}) => {
 
   // State
   //const [ selectedRow, setSelectedRow ] = useState(null);
@@ -274,7 +286,7 @@ export const DataVisualization = ({ children, slug, columns, data, setter, pagin
             </>
           }
           title={ capitalizeFirstLetter(slug.name) }
-          subheader={ getFormattedDate() }
+          subheader={ showDate && (getFormattedDate()) }
         />
         
         <CardContent>

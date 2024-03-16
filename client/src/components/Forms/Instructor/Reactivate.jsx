@@ -1,8 +1,8 @@
 /*
-  * component\Forms\DeleteEntry.jsx
-  * Name: DeleteEntry 
-  * Author: Jesse Salinas
-  * Date: 01/26/2024
+* @\component\Forms\Instructor\Reactivate.jsx
+* Name: InstructorReactivate
+* Author: Jesse Salinas
+* Date: 03/10/2024
 */
 
 import { useState, useEffect } from 'react';
@@ -13,7 +13,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 
 // Utils
-import { getData, postData, putData, deleteData } from '@/utils/fetchData';
+import { patchData } from '@/utils/fetchData';
 
 // MUI
 import {
@@ -34,14 +34,21 @@ import {
   VisibilityOff,
 } from '@mui/icons-material';
 
-export const DeleteEntry = ({ data, setter, method = 'DELETE', closeModal  }) => {
+export const InstructorReactivate = ({ 
+  data, 
+  setter, 
+  method = 'PATCH', 
+  filter,  
+  closeModal  
+}) => {
+
+  // State
+  const [ confirmationDialogOpen, setConfirmationDialogOpen ] = useState(false);
 
   // Hooks
   const { token, logout } = useAuth();
 
   // Handlers
-    const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
-
   const handleOpenConfirmationDialog = () => {
     setConfirmationDialogOpen(true);
   };
@@ -59,14 +66,16 @@ export const DeleteEntry = ({ data, setter, method = 'DELETE', closeModal  }) =>
 
     const payload = { ...formData };
 
+    console.log({ payload });
+
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
-      response = await deleteData(url, token, logout);
+      const url = `http://localhost:3050/api/private/admin/instructors/active/${data.instructor_id}`; 
+      response = await patchData(url, payload, token, logout, filter);
 
-      // Set instructor data
-      if (response.instructors && response.instructors.length > 0) {
+      // Set instructors data
+      if (response.instructors) {
        
         setter(response.instructors);
       } else {
@@ -85,8 +94,6 @@ export const DeleteEntry = ({ data, setter, method = 'DELETE', closeModal  }) =>
       closeModal();
     }
 
-
-
   }
 
   return (
@@ -96,9 +103,13 @@ export const DeleteEntry = ({ data, setter, method = 'DELETE', closeModal  }) =>
         backgroundColor: 'transparent',
       }}
     >
-      <Typography>
-        Are you sure you want to delete the entry?
+      <Typography variant="h6" color="error">
+        Are you sure you want to reactivate this Instructor?
       </Typography>
+
+	  <Typography>
+		By clicking <b>REACTIVATE</b>, the instructor will be re-activated.
+	  </Typography>
 
       <Grid container spacing={2} my={2}>
         <Grid item xs={3}>
@@ -116,10 +127,10 @@ export const DeleteEntry = ({ data, setter, method = 'DELETE', closeModal  }) =>
           <Button 
             fullWidth 
             variant="contained" 
-            color="error" 
+            color="success" 
             onClick={ handleConfirm }
         >
-            Delete
+            Reactivate
           </Button>
         </Grid>
 

@@ -1,5 +1,5 @@
 /*
-* models\instructors\index.js
+* @\models\instructors\index.js
 * Name: InstructorModelBase
 * Author: Jesse Salinas
 * Date: 08/27/2023
@@ -121,7 +121,34 @@ class InstructorModelBase extends BaseModel {
     }*/
   }
 
-  // Other methods...
+  async getActiveInstructors(req) {
+
+    const sql = `
+      SELECT 
+        instructor_id, 
+        firstname,
+        lastname, 
+        CONCAT(firstname, ' ', lastname) AS fullname
+      FROM artventure.instructor
+      WHERE active = 1;
+    `;
+
+    try {
+      const { results } = await this.query(sql);
+
+      if (!results.length) {
+        return;
+      }
+
+      return results;
+
+    } catch (error) {
+  
+      throw error;
+    }
+
+  }
+
 }
 
 module.exports = InstructorModelBase;

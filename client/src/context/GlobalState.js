@@ -1,7 +1,7 @@
 /*
-  * context\GlobalState.js
-  * Author: Jesse Salinas
-  * Date: 07/22/2023
+* @\context\GlobalState.js
+* Author: Jesse Salinas
+* Date: 07/22/2023
 */
 
 import { createContext, useReducer } from 'react';
