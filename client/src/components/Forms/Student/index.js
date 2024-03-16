@@ -162,10 +162,10 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
             name="clientId"
             control={ control }
             defaultValue={ data?.client_id }
-            rules={{ required: 'Client is required' }}
+            rules={{ required: 'Patron is required' }}
             render={({ field }) => (
               <FormControl fullWidth error={ !!errors.clientId } margin="normal" required>
-                <InputLabel id="clientId-label">Select Client</InputLabel>
+                <InputLabel id="clientId-label">Select Patron</InputLabel>
                 <Select
                   labelId="clientId-label"
                   required

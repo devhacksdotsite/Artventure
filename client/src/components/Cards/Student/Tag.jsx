@@ -290,7 +290,7 @@ export const Tag = ({
           >
             <Grid item xs={12}>
               <Typography variant="h6" color="primary">
-                Sponsor
+                Patron
               </Typography>
             </Grid>
 

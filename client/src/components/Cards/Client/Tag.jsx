@@ -281,7 +281,7 @@ export const Tag = ({
           >
             <Grid item xs={12}>
               <Typography variant="h6" color="primary">
-                Client Information
+                Patron Information
               </Typography>
             </Grid>
             <Grid item xs={12}>

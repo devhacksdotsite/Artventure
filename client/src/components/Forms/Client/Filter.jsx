@@ -105,7 +105,7 @@ export const FilterForm = ({ filter, setFilter, resetFilter, closeModal }) => {
                 <TextField
                   margin="normal"
                   fullWidth
-                  label="Search Instructor Name"
+                  label="Search Patron Name"
                   autoComplete="search"
                   autoFocus
                   value={ field.value }
@@ -121,7 +121,7 @@ export const FilterForm = ({ filter, setFilter, resetFilter, closeModal }) => {
 
           <Grid item xs={12} sm={6}>
             <FormControl>
-              <FormLabel id="demo-row-radio-buttons-group-label">Instructor Status</FormLabel>
+              <FormLabel id="demo-row-radio-buttons-group-label">Patron Status</FormLabel>
               <Controller
                 name="status"
                 control={control}
