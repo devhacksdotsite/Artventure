@@ -1,5 +1,5 @@
 /*
-* @\components\Cards\Client\Tag.jsx
+* @\components\Cards\Patron\Tag.jsx
 * Name: Tag
 * Author: Jesse Salinas
 * Date: 02/10/2024
@@ -59,7 +59,7 @@ const formatPhoneNumber = (phoneNumber) => {
   return phoneNumber; // Return the original number if it doesn't match the expected format
 };
 
-export const Tag = ({ 
+export const PatronTag = ({ 
   rowData, 
   elevation = 0, 
   backgroundColor = 'transparent', 

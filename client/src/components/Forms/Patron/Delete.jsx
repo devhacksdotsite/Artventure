@@ -1,6 +1,6 @@
 /*
-* @\component\Forms\Client\Delete.jsx
-* Name: ClientDelete
+* @\component\Forms\Patron\Delete.jsx
+* Name: PatronDelete
 * Author: Jesse Salinas
 * Date: 03/02/2024
 */
@@ -34,7 +34,7 @@ import {
   VisibilityOff,
 } from '@mui/icons-material';
 
-export const ClientDelete = ({ 
+export const PatronDelete = ({ 
   data, 
   setter, 
   method = 'DELETE', 

@@ -1,6 +1,6 @@
 /*
-* @\component\Forms\Client\index.js
-* Name: ClientForm
+* @\component\Forms\Patron\index.js
+* Name: PatronForm
 * Author: Jesse Salinas
 * Date: 08/13/2023
 */
@@ -45,7 +45,7 @@ import {
   VisibilityOff,
 } from '@mui/icons-material';
 
-export const ClientForm = ({ data, setter, method = 'POST', filter, closeModal }) => {
+export const PatronForm = ({ data, setter, method = 'POST', filter, closeModal }) => {
 
   // State
   const [ selectedBirthdate, setSelectedBirthdate ] = useState(null);

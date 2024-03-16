@@ -1,6 +1,6 @@
 /*
-* @\component\Forms\Client\Filter.jsx
-* Name: FilterForm
+* @\component\Forms\Patron\Filter.jsx
+* Name: PatronFilter
 * Author: Jesse Salinas
 * Date: 08/13/2023
 */
@@ -46,7 +46,12 @@ const buttonStyle = {
   padding: '10px',
 };
 
-export const FilterForm = ({ filter, setFilter, resetFilter, closeModal }) => {
+export const PatronFilter = ({ 
+  filter, 
+  setFilter, 
+  resetFilter, 
+  closeModal 
+}) => {
 
   // Hooks
   const { 

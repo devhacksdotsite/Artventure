@@ -23,15 +23,15 @@ import { Tag as InstructorTag } from '@/components/Cards/Instructor/Tag';
               Patrons
 /***********************************/
 
-import { ClientForm } from '@/components/Forms/Client/';
+import { PatronForm } from '@/components/Forms/Patron/';
 
-import { ClientDelete } from '@/components/Forms/Client/Delete';
+import { PatronDelete } from '@/components/Forms/Patron/Delete';
 
-import { ClientReactivate } from '@/components/Forms/Client/Reactivate';
+import { PatronReactivate } from '@/components/Forms/Patron/Reactivate';
 
-import { FilterForm as FilterClientForm } from '@/components/Forms/Client/Filter';
+import { PatronFilter } from '@/components/Forms/Patron/Filter';
 
-import { Tag as ClientTag } from '@/components/Cards/Client/Tag';
+import { PatronTag } from '@/components/Cards/Patron/Tag';
 
 /***********************************
                Students
@@ -87,32 +87,32 @@ export const modalData = {
 
   patrons: {
     add: {
-      component: ClientForm,
+      component: PatronForm,
       title: 'Add Patron',
       subtitle: 'Complete the form to add a new Patron.',
     },
     edit: {
-      component: ClientForm,
+      component: PatronForm,
       title: 'Edit Patron',
       subtitle: 'Complete the form to edit the patron&apos;s details.',
     },
     delete: {
-      component: ClientDelete, 
+      component: PatronDelete, 
       title: 'Delete Patron',
       subtitle: null,
     },
     reactivate: {
-      component: ClientReactivate, 
+      component: PatronReactivate, 
       title: 'Reactivate Patron',
       subtitle: null,
     },
     filter: {
-      component: FilterClientForm, 
+      component: PatronFilter, 
       title: 'Filter Patrons',
       subtitle: 'Complete the form to filter patrons.',
     },
     tag: {
-      component: ClientTag, 
+      component: PatronTag, 
       title: 'Patron Details',
       subtitle: 'Additional patron details',
     }

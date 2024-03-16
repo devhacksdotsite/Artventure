@@ -1,6 +1,6 @@
 /*
-* @\component\Forms\Client\Reactivate.jsx
-* Name: ClientReactivate
+* @\component\Forms\Patron\Reactivate.jsx
+* Name: PatronReactivate
 * Author: Jesse Salinas
 * Date: 03/03/2024
 */
@@ -34,7 +34,7 @@ import {
   VisibilityOff,
 } from '@mui/icons-material';
 
-export const ClientReactivate = ({ 
+export const PatronReactivate = ({ 
   data, 
   setter, 
   method = 'PATCH', 
