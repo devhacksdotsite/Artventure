@@ -112,7 +112,7 @@ export const PatronTag = ({
 
       try {
 
-        const response = await getData(`http://localhost:3050/api/private/admin/students/client/${ rowData.client_id }`, token, logout);
+        const response = await getData(`http://localhost:3050/api/private/admin/students/patron/${ rowData.patron_id }`, token, logout);
 
         setStudents(response.students);
 

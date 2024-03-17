@@ -1,25 +1,23 @@
 /*
-* models\Clients\admin\index.js
-* Name: ClientModelAdmin
+* @\models\Patrons\admin\index.js
+* Name: PatronModelAdmin
 * Author: Jesse Salinas
 * Date: 02/08/2024
 */
 
-const ClientModelBase = require('../');
+const PatronModelBase = require('../');
 
-class ClientModelAdmin extends ClientModelBase {
+class PatronModelAdmin extends PatronModelBase {
   constructor() {
     super(); // call the constructor parent class
   }
 
-  async addClient(params) {
-
-    console.log('params...', params);
+  async addPatron(params) {
 
     const locationId = 1;
 
     const sql = `
-      INSERT INTO artventure.client (
+      INSERT INTO artventure.patron (
         firstname, 
         lastname, 
         date_started, 
@@ -59,13 +57,13 @@ class ClientModelAdmin extends ClientModelBase {
 
   }
 
-  async updateClient(clientId, params) {
+  async updatePatron(patronId, params) {
 
     // Default the location to ArtventureOC for now.
     const locationId = 1;
 
     const sql = `
-      UPDATE artventure.client
+      UPDATE artventure.patron
       SET
         firstname = ?,
         lastname = ?, 
@@ -75,7 +73,7 @@ class ClientModelAdmin extends ClientModelBase {
         address = ?,
         location_id = ?,
         notes = ?
-      WHERE client_id = ?
+      WHERE patron_id = ?
     `;
 
     try {
@@ -88,7 +86,7 @@ class ClientModelAdmin extends ClientModelBase {
         params.address, 
         locationId, 
         params.notes,
-        clientId
+        patronId
       ]));
 
       console.log('res', results);
@@ -106,18 +104,18 @@ class ClientModelAdmin extends ClientModelBase {
 
   }
 
-  async deleteClient(clientId) {
+  async deletePatron(patronId) {
 
-    // Deactivate client
+    // Deactivate patron 
     const sql = `
-      UPDATE artventure.client
+      UPDATE artventure.patron
       SET
         active = 0 
-      WHERE client_id = ?
+      WHERE patron_id = ?
     `;
 
     try {
-      const { results } = await this.query(sql, [ clientId ]);
+      const { results } = await this.query(sql, [ patronId ]);
 
       console.log('res', results);
 
@@ -134,18 +132,18 @@ class ClientModelAdmin extends ClientModelBase {
 
   }
 
-  async updateClientActiveStatus(clientId) {
+  async updatePatronActiveStatus(patronId) {
 
-    // Deactivate client
+    // Deactivate patron 
     const sql = `
-      UPDATE artventure.client
+      UPDATE artventure.patron
       SET
         active = 1 
-      WHERE client_id = ?
+      WHERE patron_id = ?
     `;
 
     try {
-      const { results } = await this.query(sql, [ clientId ]);
+      const { results } = await this.query(sql, [ patronId ]);
 
       console.log('res', results);
 
@@ -164,6 +162,6 @@ class ClientModelAdmin extends ClientModelBase {
 
 }
 
-module.exports = ClientModelAdmin;
+module.exports = PatronModelAdmin;
 
 

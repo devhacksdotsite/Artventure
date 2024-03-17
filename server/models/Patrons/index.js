@@ -1,60 +1,60 @@
 /*
-* models\Clients\index.js
-* Name: ClientModelBase
+* @\models\Patrons\index.js
+* Name: PatronModelBase
 * Author: Jesse Salinas
 * Date: 02/08/2024
 */
 
 const BaseModel = require('../_Base');
 
-class ClientModelBase extends BaseModel {
+class PatronModelBase extends BaseModel {
 
   constructor() {
     super(); // call the constructor parent class
   }
 
-  _formatQueryParams({ clientId, firstname, lastname, status }) {
+  _formatQueryParams({ patronId, firstname, lastname, status }) {
 
     // Build the filter params array
     return [
-      ...[ (firstname && { name: 'firstname', prefix: 'cli.', value: firstname }) ],
-      ...[ (lastname && { name: 'lastname', prefix: 'cli.', value: lastname }) ],
-      ...[ (clientId && { name: 'client_id', prefix: 'cli.', value: clientId }) ],
-      ...[ (status !== null && status !== undefined && status !== 'all' && { name: 'active', prefix: 'cli.', value: status === 'active' ? 1 : 0 }) ],
+      ...[ (firstname && { name: 'firstname', prefix: 'pat.', value: firstname }) ],
+      ...[ (lastname && { name: 'lastname', prefix: 'pat.', value: lastname }) ],
+      ...[ (patronId && { name: 'patron_id', prefix: 'pat.', value: patronId }) ],
+      ...[ (status !== null && status !== undefined && status !== 'all' && { name: 'active', prefix: 'pat.', value: status === 'active' ? 1 : 0 }) ],
     ].filter(Boolean);
 
   }
 
-  _getClientsBaseQuery() {
+  _getPatronsBaseQuery() {
 
     return `
       SELECT 
-        cli.client_id, 
-        cli.firstname,
-        cli.lastname, 
-        CONCAT(cli.firstname, ' ', cli.lastname) AS fullname, 
-        DATE_FORMAT(cli.date_started, '%Y-%m-%d') AS date_started, 
-        cli.user_id, 
-        cli.address,
-        cli.phone,
-        cli.email,
-        cli.active,
-        cli.notes,
+        pat.patron_id, 
+        pat.firstname,
+        pat.lastname, 
+        CONCAT(pat.firstname, ' ', pat.lastname) AS fullname, 
+        DATE_FORMAT(pat.date_started, '%Y-%m-%d') AS date_started, 
+        pat.user_id, 
+        pat.address,
+        pat.phone,
+        pat.email,
+        pat.active,
+        pat.notes,
         loc.location_id, 
         loc.address AS loc_address, 
         sch.school_id, 
         sch.school_code, 
         sch.school_name 
-      FROM artventure.client cli
+      FROM artventure.patron pat 
       INNER JOIN artventure.location loc
-        ON cli.location_id = loc.location_id
+        ON pat.location_id = loc.location_id
       INNER JOIN artventure.school sch
         ON loc.school_id = sch.school_id
     `;
 
   }
 
-  async getClients(req) {
+  async getPatrons(req) {
 
     const { search, status } = req.query;
 
@@ -73,7 +73,7 @@ class ClientModelBase extends BaseModel {
     // Build WHERE clause
     const { whereClause, bindValues } = this._buildWhereClause(queryParams);
 
-    const baseSql = this._getClientsBaseQuery();
+    const baseSql = this._getPatronsBaseQuery();
 
     const sql = `${baseSql} ${whereClause}`;
     //console.log(sql);
@@ -94,16 +94,15 @@ class ClientModelBase extends BaseModel {
 
   }
 
-  async getActiveClients(req) {
+  async getActivePatrons(req) {
 
-    console.log('get active clients...');
     const sql = `
       SELECT 
-        client_id, 
+        patron_id, 
         firstname,
         lastname, 
         CONCAT(firstname, ' ', lastname) AS fullname
-      FROM artventure.client
+      FROM artventure.patron
       WHERE active = 1;
     `;
 
@@ -124,15 +123,15 @@ class ClientModelBase extends BaseModel {
   }
 
 
-  async getClientByClientId({ clientId }) {
+  async getPatronByPatronId({ patronId }) {
 
-    const baseSql = this._getClientsBaseQuery();
-    const whereClause = `WHERE cli.active = 1 AND cli.client_id = ?`;
+    const baseSql = this._getPatronsBaseQuery();
+    const whereClause = `WHERE pat.active = 1 AND pat.patron_id = ?`;
 
     const sql = `${baseSql} ${whereClause}`;
 
     try {
-      const { results } = await this.query(sql, this._cleanParamValues([ clientId ]));
+      const { results } = await this.query(sql, this._cleanParamValues([ patronId ]));
       console.log(results);
 
       if (!results.length) {
@@ -149,5 +148,5 @@ class ClientModelBase extends BaseModel {
 
 }
 
-module.exports = ClientModelBase;
+module.exports = PatronModelBase;
 

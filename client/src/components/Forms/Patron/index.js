@@ -70,13 +70,13 @@ export const PatronForm = ({ data, setter, method = 'POST', filter, closeModal }
 
       if (method === 'POST') {
 
-        const url = `http://localhost:3050/api/private/admin/clients`; 
+        const url = `http://localhost:3050/api/private/admin/patrons`; 
         response = await postData(url, payload, token, logout, filter);
 
 
       } else if (method === 'PUT') {
 
-        const url = `http://localhost:3050/api/private/admin/clients/${data.client_id}`; 
+        const url = `http://localhost:3050/api/private/admin/patrons/${data.patron_id}`; 
         response = await putData(url, payload, token, logout, filter);
 
         // Check if data is returned
@@ -86,14 +86,14 @@ export const PatronForm = ({ data, setter, method = 'POST', filter, closeModal }
 
       } else if (method === 'DELETE') {
 
-        const url = `http://localhost:3050/api/private/admin/clients/${data.client_id}`; 
+        const url = `http://localhost:3050/api/private/admin/patrons/${data.patron_id}`; 
         response = await deleteData(url, token, logout, filter);
       }
 
-      // Set client data
-      if (response.clients && response.clients.length > 0) {
+      // Set patron data
+      if (response.patrons && response.patrons.length > 0) {
        
-        setter(response.clients);
+        setter(response.patrons);
       } else {
 
         alert('Oops, something went wrong.');

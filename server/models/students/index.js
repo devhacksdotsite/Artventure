@@ -13,13 +13,13 @@ class StudentModelBase extends BaseModel {
     super(); // call the constructor parent class
   }
 
-  _formatQueryParams({ studentId, clientId, firstname, lastname, status }) {
+  _formatQueryParams({ studentId, patronId, firstname, lastname, status }) {
 
     // Build the filter params array
     return [
       ...[ (firstname && { name: 'firstname', prefix: 'stu.', value: firstname }) ],
       ...[ (lastname && { name: 'lastname', prefix: 'stu.', value: lastname }) ],
-      ...[ (clientId && { name: 'client_id', prefix: 'stu.', value: clientId }) ],
+      ...[ (patronId && { name: 'patron_id', prefix: 'stu.', value: patronId }) ],
       ...[ (studentId && { name: 'student_id', prefix: 'stu.', value: studentId }) ],
       ...[ (status !== null && status !== undefined && status !== 'all' && { name: 'active', prefix: 'stu.', value: status === 'active' ? 1 : 0 }) ],
     ].filter(Boolean);
@@ -31,7 +31,7 @@ class StudentModelBase extends BaseModel {
     return `
       SELECT 
         stu.student_id, 
-        stu.client_id, 
+        stu.patron_id, 
         stu.firstname,
         stu.lastname, 
         stu.notes, 
@@ -88,15 +88,15 @@ class StudentModelBase extends BaseModel {
 
   }
 
-  async getStudentsByClientId({ req, clientId }) {
+  async getStudentsByPatronId({ req, patronId }) {
 
     const baseSql = this._getStudentsBaseQuery();
-    const whereClause = `WHERE stu.active = 1 AND stu.client_id = ?`;
+    const whereClause = `WHERE stu.active = 1 AND stu.patron_id = ?`;
 
     const sql = `${baseSql} ${whereClause}`;
 
     try {
-      const { results } = await this.query(sql, this._cleanParamValues([ clientId ]));
+      const { results } = await this.query(sql, this._cleanParamValues([ patronId ]));
 
       if (!results.length) {
         return;
@@ -113,16 +113,16 @@ class StudentModelBase extends BaseModel {
 
   async getStudentsRelatedByStudentId({ req, studentId }) {
 
-    const { clientId } = req.query || {};
+    const { patronId } = req.query || {};
     
     const baseSql = this._getStudentsBaseQuery();
-    const whereClause = `WHERE stu.active = 1 AND stu.client_id = ? AND stu.student_id <> ?`;
+    const whereClause = `WHERE stu.active = 1 AND stu.patron_id = ? AND stu.student_id <> ?`;
 
     const sql = `${baseSql} ${whereClause}`;
 
     try {
       const { results } = await this.query(sql, this._cleanParamValues([
-        clientId, 
+        patronId, 
         studentId
       ]));
 

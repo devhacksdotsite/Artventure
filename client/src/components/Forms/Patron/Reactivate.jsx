@@ -72,14 +72,14 @@ export const PatronReactivate = ({
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/clients/active/${data.client_id}`; 
+      const url = `http://localhost:3050/api/private/admin/patrons/active/${data.patron_id}`; 
       response = await patchData(url, payload, token, logout, filter);
 
       console.log(response);
-      // Set client data
-      if (response.clients) {
+      // Set patron data
+      if (response.patrons) {
        
-        setter(response.clients);
+        setter(response.patrons);
       } else {
 
         alert('Oops, something went wrong.');

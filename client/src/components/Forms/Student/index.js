@@ -56,7 +56,7 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
   const [ loading, setLoading ] = useState(true);
   const [ error, setError ] = useState(null);
   const [ selectedDateStarted, setSelectedDateStarted ] = useState(null);
-  const [ clients, setClients ] = useState([]);
+  const [ patrons, setPatrons ] = useState([]);
 
   // Hooks
   const { 
@@ -121,17 +121,17 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
 
   useEffect(() => {
 
-    // Get the active client list
+    // Get the active patron list
     const fetchData = async () => {
 
       setLoading(true);
 
       try {
 
-        const response = await getData('http://localhost:3050/api/private/admin/clients/active', token, logout);
+        const response = await getData('http://localhost:3050/api/private/admin/patrons/active', token, logout);
 
         // Set local state
-        setClients(response.clients);
+        setPatrons(response.patrons);
 
         setLoading(false);
 
@@ -159,24 +159,24 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
 
         <Grid item xs={12} sm={6}>
           <Controller
-            name="clientId"
+            name="patronId"
             control={ control }
-            defaultValue={ data?.client_id }
+            defaultValue={ data?.patron_id }
             rules={{ required: 'Patron is required' }}
             render={({ field }) => (
-              <FormControl fullWidth error={ !!errors.clientId } margin="normal" required>
-                <InputLabel id="clientId-label">Select Patron</InputLabel>
+              <FormControl fullWidth error={ !!errors.patronId } margin="normal" required>
+                <InputLabel id="patronId-label">Select Patron</InputLabel>
                 <Select
-                  labelId="clientId-label"
+                  labelId="patronId-label"
                   required
                   value={field.value}
                   onChange={(e) => field.onChange(e.target.value)}
-                  error={ !!errors.clientId }
-                  helperText={ errors.clientId?.message }
+                  error={ !!errors.patronId }
+                  helperText={ errors.patronId?.message }
                 >
-                  { clients?.map((client) => (
-                    <MenuItem key={ client.client_id } value={ client.client_id }>
-                      ({ client.client_id }) { client.fullname }
+                  { patrons?.map((patron) => (
+                    <MenuItem key={ patron.patron_id } value={ patron.patron_id }>
+                      ({ patron.patron_id }) { patron.fullname }
                     </MenuItem>
                   )) }
                 </Select>

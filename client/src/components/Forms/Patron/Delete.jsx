@@ -71,13 +71,13 @@ export const PatronDelete = ({
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/clients/${data.client_id}`; 
+      const url = `http://localhost:3050/api/private/admin/patrons/${data.patron_id}`; 
       response = await deleteData(url, token, logout, filter);
 
-      // Set clients data
-      if (response.clients) {
+      // Set patrons data
+      if (response.patrons) {
        
-        setter(response.clients);
+        setter(response.patrons);
       } else {
 
         alert('Oops, something went wrong.');

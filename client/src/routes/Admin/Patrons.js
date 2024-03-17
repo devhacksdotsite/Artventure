@@ -23,7 +23,7 @@ import { GlobalCtx } from '@/context/GlobalState';
 
 const columns = [
   {
-    id: 'client_id',
+    id: 'patron_id',
     label: 'ID',
     sort: true,
     filter: true
@@ -84,9 +84,9 @@ export const Patrons = () => {
 
       try {
 
-        const response = await getData('http://localhost:3050/api/private/admin/clients', token, logout, filter);
+        const response = await getData('http://localhost:3050/api/private/admin/patrons', token, logout, filter);
 
-        setPatrons(response.clients);
+        setPatrons(response.patrons);
 
         setLoading(false);
 

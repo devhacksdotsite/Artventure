@@ -21,19 +21,21 @@ class StudentModelAdmin extends StudentModelBase {
       INSERT INTO artventure.student (
         firstname, 
         lastname, 
-        client_id,
+        patron_id,
         date_started, 
+        birthdate, 
         location_id,
         notes
-      ) VALUES (?,?,?,?,?,?)
+      ) VALUES (?,?,?,?,?,?,?)
     `;
 
     try {
       const { results } = await this.query(sql, this._cleanParamValues([
         params.firstname, 
         params.lastname, 
-        params.clientId,
+        params.patronId,
         params.dateStarted, 
+        params.birthdate, 
         locationId,
         params.notes
       ]));
@@ -63,7 +65,7 @@ class StudentModelAdmin extends StudentModelBase {
       SET
         firstname = ?,
         lastname = ?, 
-        client_id = ?,
+        patron_id = ?,
         date_started = ?, 
         birthdate = ?, 
         location_id = ?,
@@ -75,7 +77,7 @@ class StudentModelAdmin extends StudentModelBase {
       const { results } = await this.query(sql, this._cleanParamValues([
         params.firstname, 
         params.lastname, 
-        params.clientId, 
+        params.patronId, 
         params.dateStarted, 
         params.birthdate, 
         locationId, 
