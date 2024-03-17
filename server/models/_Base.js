@@ -1,5 +1,5 @@
 /*
-* models\_Base.js
+* @\models\_Base.js
 * Name: BaseModel
 * Author: Jesse Salinas
 * Date: 11/11/2023
@@ -8,11 +8,12 @@
 const mysql = require('mysql2/promise');
 
 // MySQL connection configuration, switch me to use an .env
+// NOTE: hostname needs to be set to what the service is named in docker.
 const conf = {
-  host: 'mysql', // NOTE: hostname needs to be set to what the service is named in docker.
-  user: 'root',
-  password: 'mysql_password',
-  database: 'artventure',
+  host: process.env.MYSQL_HOST,  
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 }
 
 class BaseModel {
