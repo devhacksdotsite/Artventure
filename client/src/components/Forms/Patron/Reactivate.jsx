@@ -72,7 +72,7 @@ export const PatronReactivate = ({
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/patrons/active/${data.patron_id}`; 
+      const url = `/api/private/admin/patrons/active/${data.patron_id}`; 
       response = await patchData(url, payload, token, logout, filter);
 
       console.log(response);

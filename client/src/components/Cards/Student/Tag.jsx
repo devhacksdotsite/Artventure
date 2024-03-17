@@ -116,10 +116,10 @@ export const Tag = ({
       try {
 
         // Request related students data
-        const studentsResponse = await getData(`http://localhost:3050/api/private/admin/students/${ rowData.student_id }/related`, token, logout, { patronId: rowData.patron_id });
+        const studentsResponse = await getData(`/api/private/admin/students/${ rowData.student_id }/related`, token, logout, { patronId: rowData.patron_id });
 
         // Request patron data
-        const patronResponse = await getData(`http://localhost:3050/api/private/admin/patrons/${ rowData.patron_id }`, token, logout);
+        const patronResponse = await getData(`/api/private/admin/patrons/${ rowData.patron_id }`, token, logout);
 
         // Use Promise.all to wait for both requests to complete
         await Promise.all([ studentsResponse, patronResponse ]);

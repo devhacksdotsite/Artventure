@@ -84,7 +84,7 @@ export const Patrons = () => {
 
       try {
 
-        const response = await getData('http://localhost:3050/api/private/admin/patrons', token, logout, filter);
+        const response = await getData('/api/private/admin/patrons', token, logout, filter);
 
         setPatrons(response.patrons);
 

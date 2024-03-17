@@ -89,7 +89,7 @@ export const useAuth = () => {
   const login = async ({ email, password }) => {
 
     try {
-      const url = `http://localhost:3050/api/auth/signin`; 
+      const url = `/api/auth/signin`; 
       const payload = { email, password };
 
       const response = await postData(url, payload);

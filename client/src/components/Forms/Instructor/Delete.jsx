@@ -69,7 +69,7 @@ export const InstructorDelete = ({
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
+      const url = `/api/private/admin/instructors/${data.instructor_id}`; 
       response = await deleteData(url, token, logout, filter);
 
       // Set instructors data

@@ -69,7 +69,7 @@ export const StudentDelete = ({
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/students/${data.student_id}`; 
+      const url = `/api/private/admin/students/${data.student_id}`; 
       response = await deleteData(url, token, logout, filter);
 
       // Set students data

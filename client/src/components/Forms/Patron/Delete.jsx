@@ -71,7 +71,7 @@ export const PatronDelete = ({
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/patrons/${data.patron_id}`; 
+      const url = `/api/private/admin/patrons/${data.patron_id}`; 
       response = await deleteData(url, token, logout, filter);
 
       // Set patrons data

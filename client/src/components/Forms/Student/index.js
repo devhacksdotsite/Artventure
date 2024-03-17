@@ -77,13 +77,13 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
 
       if (method === 'POST') {
 
-        const url = `http://localhost:3050/api/private/admin/students`; 
+        const url = `/api/private/admin/students`; 
         response = await postData(url, payload, token, logout, filter);
 
 
       } else if (method === 'PUT') {
 
-        const url = `http://localhost:3050/api/private/admin/students/${data.student_id}`; 
+        const url = `/api/private/admin/students/${data.student_id}`; 
         response = await putData(url, payload, token, logout, filter);
 
         // Check if data is returned
@@ -93,7 +93,7 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
 
       } else if (method === 'DELETE') {
 
-        const url = `http://localhost:3050/api/private/admin/students/${data.student_id}`; 
+        const url = `/api/private/admin/students/${data.student_id}`; 
         response = await deleteData(url, token, logout, filter);
       }
 
@@ -128,7 +128,7 @@ export const StudentForm = ({ data, setter, method = 'POST', filter, closeModal 
 
       try {
 
-        const response = await getData('http://localhost:3050/api/private/admin/patrons/active', token, logout);
+        const response = await getData('/api/private/admin/patrons/active', token, logout);
 
         // Set local state
         setPatrons(response.patrons);

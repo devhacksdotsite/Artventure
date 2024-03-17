@@ -72,7 +72,7 @@ export const StudentReactivate = ({
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/students/active/${data.student_id}`; 
+      const url = `/api/private/admin/students/active/${data.student_id}`; 
       response = await patchData(url, payload, token, logout, filter);
 
       // Set students data

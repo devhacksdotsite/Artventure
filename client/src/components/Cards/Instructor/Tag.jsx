@@ -94,7 +94,7 @@ export const Tag = ({
 
       try {
 
-        const response = await getData(`http://localhost:3050/api/private/admin/instructors/${ rowData.instructor_id }/clearance`, token, logout);
+        const response = await getData(`/api/private/admin/instructors/${ rowData.instructor_id }/clearance`, token, logout);
 
         setClearance(response.clearance);
 

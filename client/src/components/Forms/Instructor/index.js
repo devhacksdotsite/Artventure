@@ -74,13 +74,13 @@ export const InstructorForm = ({ data, setter, method = 'POST', filter, closeMod
 
       if (method === 'POST') {
 
-        const url = `http://localhost:3050/api/private/admin/instructors`; 
+        const url = `/api/private/admin/instructors`; 
         response = await postData(url, payload, token, logout, filter);
 
 
       } else if (method === 'PUT') {
 
-        const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
+        const url = `/api/private/admin/instructors/${data.instructor_id}`; 
         response = await putData(url, payload, token, logout, filter);
 
         // Check if data is returned
@@ -90,7 +90,7 @@ export const InstructorForm = ({ data, setter, method = 'POST', filter, closeMod
 
       } else if (method === 'DELETE') {
 
-        const url = `http://localhost:3050/api/private/admin/instructors/${data.instructor_id}`; 
+        const url = `/api/private/admin/instructors/${data.instructor_id}`; 
         response = await deleteData(url, token, logout, filter);
       }
 

@@ -94,7 +94,7 @@ export const Attendance = () => {
     console.log('fetching data...');
     /*const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3050/api/admin/instructors');
+        const response = await fetch('/api/admin/instructors');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

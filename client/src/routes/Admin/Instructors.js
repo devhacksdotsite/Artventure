@@ -84,7 +84,7 @@ export const Instructors = () => {
 
       try {
 
-        const response = await getData('http://localhost:3050/api/private/admin/instructors', token, logout, filter);
+        const response = await getData('/api/private/admin/instructors', token, logout, filter);
 
         console.log(response.instructors);
 

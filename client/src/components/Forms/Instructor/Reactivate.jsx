@@ -71,7 +71,7 @@ export const InstructorReactivate = ({
     try {
       let response;
 
-      const url = `http://localhost:3050/api/private/admin/instructors/active/${data.instructor_id}`; 
+      const url = `/api/private/admin/instructors/active/${data.instructor_id}`; 
       response = await patchData(url, payload, token, logout, filter);
 
       // Set instructors data
